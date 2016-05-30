@@ -9,6 +9,5 @@ class UsersController extends Controller
     {
         $this->view->logs = Log::find();
     }
-
 }
 

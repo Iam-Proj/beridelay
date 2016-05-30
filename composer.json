@@ -5,8 +5,8 @@
     "require": {
         "phalcon/incubator": "^2.0",
         "nesbot/carbon": "^1.21",
-        "intervention/image": "^2.3",
         "illuminate/filesystem": "^5.2",
-        "symfony/http-foundation": "^3.0"
+        "symfony/http-foundation": "^3.0",
+        "illuminate/validation": "^5.2"
     }
 }

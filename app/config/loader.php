@@ -9,6 +9,7 @@ $loader->registerNamespaces(
         'System\Helpers'            => $config->application->classesDir . 'helpers/',
         'System\Traits'             => $config->application->classesDir . 'traits/',
         'System\Behaviors'          => $config->application->classesDir . 'behaviors/',
+        'System\Exceptions'         => $config->application->classesDir . 'exceptions/',
 
         'BeriDelay\Controllers'     => $config->application->controllersDir,
         'BeriDelay\Models'          => $config->application->modelsDir,
