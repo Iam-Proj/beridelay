@@ -1,11 +1,10 @@
 <?php namespace BeriDelay\Controllers;
 
-use System\Controllers\ApiController;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Tag;
 use System\Models\File;
 
-class IndexController extends ApiController
+class IndexController extends ApiBaseController
 {
 
     public function indexAction()

@@ -46,7 +46,7 @@ abstract class UnitTestCase extends PhalconTestCase
         });
 
         $di->setShared('db', function () use ($config) {
-            $dbConfig = $config->database->toArray();
+            $dbConfig = $config->database->main->toArray();
             $adapter = $dbConfig['adapter'];
             unset($dbConfig['adapter']);
 
@@ -59,7 +59,7 @@ abstract class UnitTestCase extends PhalconTestCase
          * MongoDB
          */
         $di->set('mongo', function () use ($config) {
-            $dbConfig = $config->mongo->toArray();
+            $dbConfig = $config->database->mongo->toArray();
             $connectString = 'mongodb://';
             if ($dbConfig['username']) $connectString .= $dbConfig['username'];
             if ($dbConfig['password']) $connectString .= ':' . $dbConfig['password'];

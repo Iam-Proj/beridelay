@@ -21,6 +21,7 @@ class Json extends Behavior implements BehaviorInterface
             break;
 
             case 'afterFetch':
+            case 'afterSave':
                 foreach ($model->json as $field) {
                     $data = json_decode($model->$field, true);
                     $model->$field = $data;

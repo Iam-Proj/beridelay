@@ -1,9 +1,9 @@
 <?php namespace System\Models;
 
 use Phalcon\Mvc\Model as PhalconModel;
-use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Text;
 use Carbon\Carbon;
+use System\Traits\Validation;
 
 /**
  * Базовый класс для всех моделей. Предоставляет более удобный интерфейс объявления связей между моделями.
@@ -12,6 +12,8 @@ use Carbon\Carbon;
  */
 class Model extends PhalconModel
 {
+    use Validation;
+    
     /**
      * @var integer ID модели
      */

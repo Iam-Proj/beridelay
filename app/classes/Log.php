@@ -14,7 +14,7 @@ class Log extends Collection
     public $id;
 
     /**
-     * @var string
+     * @var Carbon
      */
     public $created_at;
 
@@ -53,17 +53,19 @@ class Log extends Collection
         $this->created_at = Carbon::now()->toDateTimeString();
     }
 
+    public function beforeSave()
+    {
+        if ($this->created_at instanceof Carbon)
+            $this->created_at = $this->created_at->toDateTimeString();
+        $this->old_value = json_encode($this->old_value);
+        $this->new_value = json_encode($this->new_value);
+    }
+
     public function afterFetch()
     {
         $this->created_at = new Carbon($this->created_at);
         $this->old_value = json_decode($this->old_value, true);
         $this->new_value = json_decode($this->new_value, true);
-    }
-
-    public function beforeSave()
-    {
-        $this->old_value = json_encode($this->old_value);
-        $this->new_value = json_encode($this->new_value);
     }
 
     public static function log($object, $action, $object_id = null, $old_value = null, $new_value = null)

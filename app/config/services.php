@@ -18,6 +18,7 @@ use Phalcon\Mvc\Dispatcher;
 use Carbon\Carbon;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Events\Event;
 
 //Устанавливаем системную локаль
 setlocale(LC_TIME, 'ru_RU.UTF-8');
@@ -150,9 +151,42 @@ $di->setShared('session', function () {
 });
 
 // Регистрация диспетчера
-$di->set('dispatcher', function () {
+$di->setShared('dispatcher', function () {
+
+    // Создаем EventsManager
+    $eventsManager = new EventsManager();
+
+    // Добавляем слушателся
+    $eventsManager->attach("dispatch:beforeException", function (Event $event, Dispatcher $dispatcher, Exception $exception) {
+
+        $controller = $dispatcher->getControllerName();
+        $method = $dispatcher->getActionName();
+
+        // Отлавливаем исключения
+        switch ($exception->getCode()) {
+            case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                $dispatcher->forward([
+                    'controller' => 'index',
+                    'action' => 'show404',
+                    'params' => [$method, $controller]
+                ]);
+
+                return false;
+
+            case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                $dispatcher->forward([
+                    'action' => 'show404',
+                    'params' => [$method]
+                ]);
+
+                return false;
+        }
+    });
+
     $dispatcher = new Dispatcher();
     $dispatcher->setDefaultNamespace('BeriDelay\Controllers');
+    // Назначаем диспетчеру EventManager
+    $dispatcher->setEventsManager($eventsManager);
     return $dispatcher;
 });
 

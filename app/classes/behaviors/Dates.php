@@ -16,11 +16,13 @@ class Dates extends Behavior implements BehaviorInterface
         switch ($type) {
             case 'beforeSave':
                 foreach ($model->dates as $field) {
-                    $model->$field = $model->$field->toDateTimeString();
+                    if ($model->$field instanceof Carbon)
+                        $model->$field = $model->$field->toDateTimeString();
                 }
             break;
 
             case 'afterFetch':
+            case 'afterSave':
                 foreach ($model->dates as $field) {
                     $data = new Carbon($model->$field);
                     $model->$field = $data;

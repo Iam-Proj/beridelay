@@ -2,12 +2,6 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Email;
-use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\Uniqueness;
-use Phalcon\Validation\Validator\StringLength;
-use Phalcon\Validation\Validator\InclusionIn;
 
 /**
  * Модель "Пользователь"
@@ -17,10 +11,6 @@ use Phalcon\Validation\Validator\InclusionIn;
 class User extends Model
 {
     use SoftDelete;
-    /**
-     * @var string Имя
-     */
-    public $name;
 
     /**
      * @var string Email
@@ -33,31 +23,74 @@ class User extends Model
     protected $password;
 
     /**
+     * @var string Имя
+     */
+    public $name;
+
+    /**
+     * @var string Фамилия
+     */
+    public $surname;
+
+    /**
+     * @var string Отчество
+     */
+    public $patronim;
+
+    /**
+     * @var integer Номер телефона
+     */
+    protected $phone;
+
+    /**
+     * @var integer Возраст
+     */
+    public $age;
+
+    /**
+     * @var integer Пол
+     */
+    public $gender;
+
+    /**
+     * @var string Город
+     */
+    public $city;
+
+    /**
+     * @var integer Уровень зарплаты
+     */
+    public $salary;
+
+    /**
      * @var boolean Является ли пользователь администратором
      */
     public $is_admin;
 
+    /**
+     * @var boolean Является ли пользователь активированным
+     */
+    public $is_activate;
+
     private $password_original;
-
-    //Связи
-    public $hasMany = [
-        'contacts' => ['BeriDelay\Models\Contact']
-    ];
-
-    public $attachMany = [
-        'files' => ['System\Models\File']
-    ];
 
     public $behaviors = [
         'System\Behaviors\Loggable'
     ];
 
-    public function beforeUpdate()
-    {
-        if ($this->id && $this->password_original) {
-            $this->password = $this->hashPassword($this->password_original);
-        }
-    }
+    public $validation = [
+        'email' => 'required|email',
+        'name' => 'required|alpha|between:2,50',
+        'surname' => 'required|alpha|between:2,50',
+        'patronim' => 'required|alpha|between:2,50',
+        'phone' => 'required|between:6,15',
+        'age' => 'required|integer|between:1,99',
+        'gender' => 'required|in:0,1',
+        'city' => 'required',
+        'salary' => 'required|in:1,2,3',
+        'is_admin' => 'in:0,1',
+        'is_activate' => 'in:0,1'
+    ];
 
     public function afterCreate()
     {
@@ -77,48 +110,37 @@ class User extends Model
         if (strlen($password) < 3) {
             throw new \InvalidArgumentException('Пароль слишком короткий');
         }
-        $this->password_original = $password;
+
+        if ($this->id) {
+            $this->password = $this->hashPassword($password);
+        } else {
+            $this->password = $password;
+            $this->password_original = $password;
+        }
     }
 
-    /**
-     * Валидация
-     * @return boolean
-     */
-    public function validation()
+    public function getPassword()
     {
-        $validation = new Validation();
-        $validation->add('name', new PresenceOf([
-            'message' => 'Поле "Имя" обязательно'
-        ]));
-        $validation->add('name', new StringLength([
-            'min' => 2,
-            'max' => 50,
-            'messageMinimum' => 'Слишком короткое имя',
-            'messageMaximum' => 'Слишком длинное имя'
-
-        ]));
-        $validation->add('email', new PresenceOf([
-            'message' => 'Поле "Email" обязательно'
-        ]));
-        $validation->add('email', new Email([
-            'message' => 'Указан неверный email'
-        ]));
-        $validation->add('email', new Uniqueness([
-            'field' => 'email',
-            'message' => 'Такой email уже зарегистрирован',
-            'model' => $this
-        ]));
-        $validation->add('is_admin', new InclusionIn([
-            'message' => 'Поле "Администратор" может принимать значение "True" и "False"',
-            'domain' => [0, 1]
-        ]));
-
-        return $this->validate($validation);
+        return $this->password;
     }
 
-    public function auth()
+    public function setPhone($value)
     {
-        $this->addLogEvent('auth');
+        $phone = preg_replace('/[^0-9]/iu', '', $value);
+        $this->phone = $phone;
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public static function findByEmail($email)
+    {
+        return self::findFirst([
+            'conditions' => 'email = :email:',
+            'bind' => ['email' => $email]
+        ]);
     }
 
 }
