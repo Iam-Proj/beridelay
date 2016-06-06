@@ -7,6 +7,7 @@ use Illuminate\Validation\Validator;
 use Symfony\Component\Translation\Translator;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Token;
+use System\Exceptions\BaseException;
 
 /**
  * Базовый контроллер API
@@ -111,7 +112,7 @@ class ApiBaseController extends Controller
 
         $method = $dispatcher->getActionName();
 
-        if ($method == 'show404') return true;
+        if ($method == 'show404' || $method == 'show503') return true;
 
         if (!isset($this->actions[$method])) {
             return $this->error(self::ERROR_NOT_FOUND, $method);
@@ -135,13 +136,22 @@ class ApiBaseController extends Controller
 
             $token = Token::getByToken($data['token_access']);
             if (!$token) return $this->error(self::ERROR_TOKEN_INVALID, $method);
+            if (!$token->user) {
+                $token->delete();
+                return $this->error(self::ERROR_TOKEN_INVALID, $method);
+            }
 
             if ($token->updated_at->addHour() < Carbon::now()) {
                 $token->delete();
                 return $this->error(self::ERROR_TOKEN_INVALID, $method);
             }
 
-            $token->save();
+            /*$token->updated_at = Carbon::now()->toDateTimeString();
+            if (false == $token->save()) {
+                return $this->error(self::ERROR_TOKEN_INVALID, $method);
+            }*/
+            $token->life();
+
             $this->token = $token;
             $this->user = $token->user;
         }
@@ -175,9 +185,10 @@ class ApiBaseController extends Controller
         $this->send($data);
     }
 
-    public function error($code, $method, $controller = null, $params = null, $extra = [])
+    public function error($code, $method, $controller = null, $params = null, $extra = [], $message = null)
     {
         if ($params == null) $params = $_POST;
+        if ($message == null) $message = $this->getErrorMessage($code);
 
         unset($params['token_access']);
         unset($params['token_refresh']);
@@ -186,7 +197,7 @@ class ApiBaseController extends Controller
 
         $result = [
             'code' => $code,
-            'message' => $this->getErrorMessage($code),
+            'message' => $message,
             'method' => $controller . '/' . $method,
             'params' => $params
         ];
@@ -213,6 +224,12 @@ class ApiBaseController extends Controller
     public function show404Action($method, $controller = null)
     {
         return $this->error(self::ERROR_NOT_FOUND, $method, $controller);
+    }
+    
+    public function errorException(BaseException $exception, $method = null)
+    {
+        if ($method == null) $method = $this->dispatcher->getActionName();
+        return $this->error($exception->getCode(), $method, null, null, [], $exception->getMessage());
     }
 
     public function delete($model)

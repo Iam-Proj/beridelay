@@ -1,5 +1,6 @@
 <?php namespace BeriDelay\Models;
 
+use System\Exceptions\UserException;
 use System\Models\Model;
 use System\Traits\SoftDelete;
 use Carbon\Carbon;
@@ -143,6 +144,34 @@ class User extends Model
             'conditions' => 'phone = :phone: or email = :email:',
             'bind' => ['phone' => $phone, 'email' => $email]
         ]);
+    }
+
+    public static function registration($parameters)
+    {
+
+    }
+
+    public static function signin($email, $password)
+    {
+        $user = static::findFirstByEmail($email);
+
+        if (!$user) throw new UserException(UserException::NOT_FOUND);
+        if ($user->hashPassword($password) != $user->password) throw new UserException(UserException::NOT_FOUND);
+
+        $user->addLogEvent('auth');
+
+        //создаем сессию
+        $session = new Session();
+        $session->user_id = $user->id;
+        $session->save();
+
+        return $user;
+    }
+    
+    public function signout()
+    {
+        //логируем событие
+        $this->user->addLogEvent('signout');
     }
 
 }

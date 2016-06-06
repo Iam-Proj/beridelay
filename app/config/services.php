@@ -162,7 +162,6 @@ $di->setShared('dispatcher', function () {
         $controller = $dispatcher->getControllerName();
         $method = $dispatcher->getActionName();
 
-        // Отлавливаем исключения
         switch ($exception->getCode()) {
             case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
                 $dispatcher->forward([
@@ -185,6 +184,7 @@ $di->setShared('dispatcher', function () {
 
     $dispatcher = new Dispatcher();
     $dispatcher->setDefaultNamespace('BeriDelay\Controllers');
+
     // Назначаем диспетчеру EventManager
     $dispatcher->setEventsManager($eventsManager);
     return $dispatcher;

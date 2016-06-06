@@ -1,5 +1,6 @@
 <?php namespace BeriDelay\Models;
 
+use Carbon\Carbon;
 use System\Models\Model;
 use Phalcon\Validation;
 
@@ -25,10 +26,14 @@ class Token extends Model
      */
     public $user_id;
 
+    public $updated_at;
+
     //Связи
     public $belongsTo = [
         'user' => ['BeriDelay\Models\User']
     ];
+
+    public $dynamicUpdate = false;
 
     public function beforeCreate()
     {
@@ -58,6 +63,26 @@ class Token extends Model
             'bind' => ['user_id' => $user_id, 'type' => $type]
         ]);
         foreach ($tokens as $token) $token->delete();
+    }
+
+    public function life()
+    {
+        $this->updated_at = null;
+        $this->save();
+    }
+
+    public static function add($user_id, $type = 'access')
+    {
+        //очищаем старые токены пользователя
+        static::clearTokens($user_id);
+
+        //создаем новый токен
+        $token = new static();
+        $token->user_id = $user_id;
+        $token->type = $type;
+        $token->save();
+
+        return $token;
     }
 
 }

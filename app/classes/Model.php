@@ -145,6 +145,18 @@ class Model extends PhalconModel
      * @var array
      */
     protected $behaviors = [];
+
+    /**
+     * Динамическое обновление
+     * @var boolean
+     */
+    protected $dynamicUpdate = true;
+
+    /**
+     * Не 
+     * @var bool
+     */
+    protected $skipUpdatedAtField = true;
     
     private $defaultBehaviors = [
         'System\Behaviors\Dates',
@@ -188,7 +200,7 @@ class Model extends PhalconModel
         }
 
         // Динамичное обновление полей
-        $this->useDynamicUpdate(true);
+        $this->useDynamicUpdate($this->dynamicUpdate);
 
         // Пропуск аттрибутов при сохранении
         $this->skipAttributes(['created_at', 'updated_at']);

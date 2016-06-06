@@ -3,6 +3,7 @@
 use BeriDelay\Models\User;
 use BeriDelay\Models\Token;
 use BeriDelay\Models\Session;
+use System\Exceptions\BaseException;
 
 class AuthController extends ApiBaseController
 {
@@ -45,26 +46,14 @@ class AuthController extends ApiBaseController
      */
     public function signinAction()
     {
-        $user = User::findFirstByEmail($this->parameters['email']);
-        if (!$user) return $this->error(self::ERROR_ACCOUNT_NOT_FOUND, 'signin');
-        if ($user->hashPassword($this->parameters['password']) != $user->password) return $this->error(self::ERROR_ACCOUNT_NOT_FOUND, 'signin '.$user->password.'  '.$user->hashPassword($this->parameters['password']) . ' ' .$user->created_at);
+        try {
 
-        //очищаем старые токены пользователя
-        Token::clearTokens($user->id);
+            $user = User::signin($this->parameters['email'], $this->parameters['password']);
+            $token = Token::add($user->id);
 
-        //создаем новый токен
-        $token = new Token();
-        $token->user_id = $user->id;
-        $token->type = 'access';
-        $token->save();
-
-        //создаем сессию
-        $session = new Session();
-        $session->user_id = $user->id;
-        $session->save();
-
-        //логируем событие
-        $user->addLogEvent('auth');
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
 
         return ['token_access' => $token->value];
     }
@@ -77,8 +66,8 @@ class AuthController extends ApiBaseController
         //удаляем текущий токен
         $this->token->delete();
 
-        //логируем событие
-        $this->user->addLogEvent('signout');
+        //выходим
+        $this->user->signout();
 
         return ['success' => true];
     }

@@ -13,11 +13,14 @@ trait Validation
 {
     protected $validation = [];
 
-    public function validation()
+    public function validation($rules = null, $data = null)
     {
+        if ($rules === null) $rules = $this->validation;
+        if ($data === null) $data = $this->toArray();
+
         if (!count($this->validation)) return true;
 
-        $validation = new Validator(new Translator('ru'), $this->toArray(), $this->validation);
+        $validation = new Validator(new Translator('ru'), $data, $rules);
 
         if ($validation->fails()) {
             foreach ($validation->messages()->getMessages() as $field => $errors) {
@@ -30,4 +33,5 @@ trait Validation
 
         return true;
     }
+
 }
