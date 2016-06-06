@@ -41,7 +41,7 @@ class AuthController extends ApiBaseController
     ];
 
     /**
-     * Осуществляет авторизация пользователя в системе
+     * Осуществляет авторизацию пользователя в системе
      */
     public function signinAction()
     {
@@ -52,7 +52,7 @@ class AuthController extends ApiBaseController
         //очищаем старые токены пользователя
         Token::clearTokens($user->id);
 
-        //создаем новые токен
+        //создаем новый токен
         $token = new Token();
         $token->user_id = $user->id;
         $token->type = 'access';

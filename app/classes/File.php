@@ -3,7 +3,6 @@
 use Phalcon\Http\Request\File as UploadedFile;
 use System\Helpers\Filesystem as FileHelper;
 use Exception;
-use System\Helpers\Resizer;
 use System\Traits\SoftDelete;
 use Symfony\Component\HttpFoundation\File\File as FileObj;
 
@@ -70,11 +69,6 @@ class File extends Model
     public $is_public;
 
     public $json = ['info'];
-
-    /**
-     * @var array Расширения файлов
-     */
-    public static $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
     /**
      * @var mixed Локальное имя файла или экземпляр класса \Phalcon\Http\Request\File.
@@ -283,126 +277,9 @@ class File extends Model
     public function afterDelete()
     {
         try {
-            $this->deleteThumbs();
             $this->deleteFile();
         }
         catch (Exception $ex) {}
-    }
-
-    /**
-     * Проверяет по расширению, является ли файл изображением
-     */
-    public function isImage()
-    {
-        return in_array(strtolower($this->getExtension()), static::$imageExtensions);
-    }
-
-    /**
-     * Генерирует миниатюру и возвращает путь к ней
-     * @param integer $width
-     * @param integer $height
-     * @param array $options
-     * @return string
-     */
-    public function thumb($width, $height, $options = [])
-    {
-        if (!$this->isImage()) {
-            return $this->getPath();
-        }
-
-        $width = (int) $width;
-        $height = (int) $height;
-
-        $options = $this->getDefaultThumbOptions($options);
-
-        $thumbFile = $this->getThumbFilename($width, $height, $options);
-        $thumbPath = $this->getUploadDirectory() . $this->getFileDirectory() . $thumbFile;
-        $thumbPublic = $this->getUploadPath() . $this->getFileDirectory() . $thumbFile;
-
-        if (!file_exists($thumbPath)) {
-            $this->makeThumb($thumbPath, $width, $height, $options);
-        }
-
-        return $thumbPublic;
-    }
-
-    /**
-     * Генерирует имя для миниатюры
-     * @param integer $width
-     * @param integer $height
-     * @param array $options
-     * @return string
-     */
-    protected function getThumbFilename($width, $height, $options)
-    {
-        return 'thumb_' . $this->id . '_' . $width . 'x' . $height . '_' . $options['offset'][0] . '_' . $options['offset'][1] . '_' . $options['mode'] . '.' . $options['extension'];
-    }
-
-    /**
-     * Возвращает настройки миниатюры по умолчанию
-     * @param array $overrideOptions
-     * @return array
-     */
-    protected function getDefaultThumbOptions($overrideOptions = [])
-    {
-        $defaultOptions = [
-            'mode'      => 'auto',
-            'offset'    => [0, 0],
-            'quality'   => 95,
-            'extension' => 'auto',
-        ];
-
-        if (!is_array($overrideOptions)) {
-            $overrideOptions = ['mode' => $overrideOptions];
-        }
-
-        $options = array_merge($defaultOptions, $overrideOptions);
-
-        $options['mode'] = strtolower($options['mode']);
-
-        if ((strtolower($options['extension'])) == 'auto') {
-            $options['extension'] = strtolower($this->getExtension());
-        }
-
-        return $options;
-    }
-
-    /**
-     * Генерирует миниатюру на основе оригинального файла
-     * @param string $thumbPath Путь к миниатюре
-     * @param integer $width
-     * @param integer $height
-     * @param array $options
-     */
-    protected function makeThumb($thumbPath, $width, $height, $options)
-    {
-        $resizer = Resizer::open($this->getDiskPath());
-        $resizer->resize($width, $height, $options['mode'], $options['offset']);
-        $resizer->save($thumbPath, $options['quality']);
-
-        FileHelper::instance()->chmod($thumbPath);
-    }
-
-    /*
-     * Удаляет все миниатюры для данного файла
-     */
-    protected function deleteThumbs()
-    {
-        $pattern = 'thumb_'.$this->id.'_';
-
-        $directory = $this->getUploadDirectory() . $this->getFileDirectory();
-        $allFiles = FileHelper::instance()->allFiles($directory);
-
-        $collection = [];
-        foreach ($allFiles as $file) {
-            if (starts_with(basename($file), $pattern)) {
-                $collection[] = $file;
-            }
-        }
-
-        if (!empty($collection)) {
-            FileHelper::instance()->delete($collection);
-        }
     }
 
     /**
@@ -506,54 +383,42 @@ class File extends Model
      * @param boolean $isImage
      * @return array
      */
-    public static function getDefaultFileTypes($isImage = false)
+    public static function getDefaultFileTypes()
     {
-        if ($isImage) {
-            return [
-                'jpg',
-                'jpeg',
-                'bmp',
-                'png',
-                'gif',
-                'svg'
-            ];
-        }
-        else {
-            return [
-                'jpg',
-                'jpeg',
-                'bmp',
-                'png',
-                'gif',
-                'svg',
-                'js',
-                'map',
-                'ico',
-                'css',
-                'less',
-                'scss',
-                'pdf',
-                'swf',
-                'txt',
-                'xml',
-                'xls',
-                'eot',
-                'woff',
-                'woff2',
-                'ttf',
-                'flv',
-                'wmv',
-                'mp3',
-                'ogg',
-                'wav',
-                'avi',
-                'mov',
-                'mp4',
-                'mpeg',
-                'webm',
-                'mkv'
-            ];
-        }
+        return [
+            'jpg',
+            'jpeg',
+            'bmp',
+            'png',
+            'gif',
+            'svg',
+            'js',
+            'map',
+            'ico',
+            'css',
+            'less',
+            'scss',
+            'pdf',
+            'swf',
+            'txt',
+            'xml',
+            'xls',
+            'eot',
+            'woff',
+            'woff2',
+            'ttf',
+            'flv',
+            'wmv',
+            'mp3',
+            'ogg',
+            'wav',
+            'avi',
+            'mov',
+            'mp4',
+            'mpeg',
+            'webm',
+            'mkv'
+        ];
     }
 
     /**

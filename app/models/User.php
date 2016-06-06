@@ -143,4 +143,12 @@ class User extends Model
         ]);
     }
 
+    public static function findExists($email, $phone)
+    {
+        return self::findFirst([
+            'conditions' => 'phone = :phone: or email = :email:',
+            'bind' => ['phone' => $phone, 'email' => $email]
+        ]);
+    }
+
 }

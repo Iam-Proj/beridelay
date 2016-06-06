@@ -1974,3 +1974,33 @@
 [Thu, 02 Jun 16 17:41:26 +0500][INFO] DESCRIBE `user`
 [Thu, 02 Jun 16 17:41:35 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
 [Thu, 02 Jun 16 17:41:35 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 14:46:23 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 14:46:24 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 14:46:24 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 14:46:31 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 14:46:31 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 14:46:31 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:47:51 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:47:52 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:47:52 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:04 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:04 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:04 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:09 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:09 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:09 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:11 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:11 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:11 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:13 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:13 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:13 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:15 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:15 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:15 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:17 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:17 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:17 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Fri, 03 Jun 16 15:48:19 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Fri, 03 Jun 16 15:48:19 +0500][INFO] DESCRIBE `user`
+[Fri, 03 Jun 16 15:48:19 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`email` = :email) AND `user`.`deleted_at`  IS NULL LIMIT :APL0

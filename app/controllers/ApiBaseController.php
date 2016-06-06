@@ -30,6 +30,10 @@ class ApiBaseController extends Controller
     const ERROR_TOO_MANY_REQUESTS = 429;
     const ERROR_INTERNAL = 500;
 
+    const ERROR_INVITE_NOT_FOUND = 209;
+    const ERROR_EMAIL_EXISTS = 210;
+    const ERROR_PHONE_EXISTS = 211;
+
     const ERROR_ACCOUNT_NOT_FOUND = 250;
     const ERROR_ACCOUNT_NOT_ACTIVATED = 251;
     const ERROR_ACCOUNT_BLOCKED = 252;
@@ -50,6 +54,10 @@ class ApiBaseController extends Controller
         self::ERROR_METHOD_NOT_ALLOWED => 'Метод не поддерживается',
         self::ERROR_TOO_MANY_REQUESTS => 'Слишком много запросов',
         self::ERROR_INTERNAL => 'Внутренняя ошибка сервера',
+
+        self::ERROR_INVITE_NOT_FOUND => 'Указанного приглашения не существует',
+        self::ERROR_EMAIL_EXISTS => 'Пользователь с таким email уже зарегистрирован',
+        self::ERROR_PHONE_EXISTS => 'Пользователь с таким номером телефона уже зарегистрирован',
 
         self::ERROR_ACCOUNT_NOT_FOUND => 'Пользователь с указанным email и паролем не найдены в системе',
         self::ERROR_ACCOUNT_NOT_ACTIVATED => 'Аккаунт пользователя не активирован',
