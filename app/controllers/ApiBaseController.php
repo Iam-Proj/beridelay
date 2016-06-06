@@ -133,7 +133,7 @@ class ApiBaseController extends Controller
             $data['token_access'] = $this->request->getPost('token_access');
             if (!strlen($data['token_access'])) return $this->error(self::ERROR_TOKEN_REQUIRED, $method);
 
-            $token = Token::getToken($data['token_access']);
+            $token = Token::getByToken($data['token_access']);
             if (!$token) return $this->error(self::ERROR_TOKEN_INVALID, $method);
 
             if ($token->updated_at->addHour() < Carbon::now()) {
@@ -213,5 +213,40 @@ class ApiBaseController extends Controller
     public function show404Action($method, $controller = null)
     {
         return $this->error(self::ERROR_NOT_FOUND, $method, $controller);
+    }
+
+    public function delete($model)
+    {
+        //проверяем переданные параметры
+        if (!isset($this->parameters['ids']) && !isset($this->parameters['id'])) return $this->error(self::ERROR_PARAM_REQUIRED, 'delete');
+        $ids = isset($this->parameters['ids']) ? $this->parameters['ids'] : [$this->parameters['id']];
+
+        //пользователь должен быть админом
+        if (!$this->user->is_admin) $this->error(self::ERROR_FORBIDDEN, 'delete');
+
+        $results = $deleted = [];
+        $success = true;
+
+        //получаем экземпляр конструктора запросов
+        $query = call_user_func([$model, 'query']);
+
+        //в цикле удаляем все указанные записи
+        foreach ($query->inWhere('id', $ids)->execute() as $model) {
+            $result = ['id' => $model->id, 'success' => true];
+            $deleted[] = $model->id;
+
+            //TODO: отслеживание ошибок при удалении
+            $model->delete();
+
+            $results[]  = $result;
+        }
+
+        if (count($deleted) != count($ids)) {
+            $success = false;
+            $diff = array_diff($ids, $deleted);
+            foreach ($diff as $id) $results[] = ['id' => $id, 'success' => false, 'error' => ['code' => 404, 'message' => 'Запись не существует, либо к ней нет доступа']];
+        }
+
+        return ['success' => $success, 'results' => $results];
     }
 }

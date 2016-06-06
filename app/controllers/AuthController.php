@@ -45,9 +45,9 @@ class AuthController extends ApiBaseController
      */
     public function signinAction()
     {
-        $user = User::findByEmail($this->parameters['email']);
+        $user = User::findFirstByEmail($this->parameters['email']);
         if (!$user) return $this->error(self::ERROR_ACCOUNT_NOT_FOUND, 'signin');
-        if ($user->hashPassword($this->parameters['password']) != $user->password) return $this->error(self::ERROR_ACCOUNT_NOT_FOUND, 'signin');
+        if ($user->hashPassword($this->parameters['password']) != $user->password) return $this->error(self::ERROR_ACCOUNT_NOT_FOUND, 'signin '.$user->password.'  '.$user->hashPassword($this->parameters['password']) . ' ' .$user->created_at);
 
         //очищаем старые токены пользователя
         Token::clearTokens($user->id);

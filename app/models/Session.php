@@ -11,25 +11,21 @@ class Session extends Collection
 {
 
     /**
-     *
      * @var integer
      */
     public $id;
 
     /**
-     *
      * @var Carbon
      */
     public $created_at;
 
     /**
-     *
      * @var integer
      */
     public $user_id;
 
     /**
-     *
      * @var string
      */
     public $ip;
@@ -40,16 +36,21 @@ class Session extends Collection
 
     public function beforeCreate()
     {
-        $this->created_at = Carbon::now();
         $this->ip = isset($_SERVER['HTTP_X_REAL_IP']) && strlen($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER['REMOTE_ADDR'];
     }
 
     public function beforeSave()
     {
-        $this->created_at = $this->created_at->toDateTimeString();
+        if ($this->created_at instanceof Carbon)
+            $this->created_at = $this->created_at->toDateTimeString();
     }
 
     public function afterFetch()
+    {
+        $this->created_at = new Carbon($this->created_at);
+    }
+
+    public function afterSave()
     {
         $this->created_at = new Carbon($this->created_at);
     }

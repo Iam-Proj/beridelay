@@ -35,11 +35,19 @@ class Token extends Model
         $this->value = md5(microtime() . $this->user_id);
     }
 
-    public static function getToken($user_id, $type = 'access')
+    public static function getByUser($user_id, $type = 'access')
     {
         return self::findFirst([
             'conditions' => 'user_id = :user_id: and type = :type:',
             'bind' => ['user_id' => $user_id, 'type' => $type]
+        ]);
+    }
+
+    public static function getByToken($token, $type = 'access')
+    {
+        return self::findFirst([
+            'conditions' => 'value = :value: and type = :type:',
+            'bind' => ['value' => $token, 'type' => $type]
         ]);
     }
 

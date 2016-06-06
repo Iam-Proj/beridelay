@@ -20,6 +20,32 @@ class UsersController extends ApiBaseController
                 'city' => 'required',
                 'salary' => 'required|in:1,2,3',
                 'invite' => 'alpha_num',
+                'password' => 'required|min:3'
+            ]
+        ],
+        'get' => [
+            'isPrivate' => true,
+            'fields' => [
+
+            ]
+        ],
+        'create' => [
+            'isPrivate' => true,
+            'fields' => [
+
+            ]
+        ],
+        'edit' => [
+            'isPrivate' => true,
+            'fields' => [
+
+            ]
+        ],
+        'delete' => [
+            'isPrivate' => true,
+            'fields' => [
+                'id' => 'integer',
+                'ids' => 'array'
             ]
         ]
     ];
@@ -44,7 +70,7 @@ class UsersController extends ApiBaseController
         $user = new User();
 
         $user->email = $this->parameters['email'];
-        $user->password = $this->parametrs['password'];
+        $user->password = $this->parameters['password'];
         $user->name = $this->parameters['name'];
         $user->surname = $this->parameters['surname'];
         $user->patronim = $this->parameters['patronim'];
@@ -56,10 +82,14 @@ class UsersController extends ApiBaseController
 
         $user->save();
 
+        if (false == $user->save()) return $this->error(self::ERROR_INTERNAL, 'registration', null, null, ['errors' => $user->getMessagesArray()]);
+
         //добаляем в приглашение информацию о том, что пользователь зарегистрировался
         if ($invite) {
             $invite->user_id = $user->id;
             $invite->save();
+
+            if (false == $invite->save()) return $this->error(self::ERROR_INTERNAL, 'registration', null, null, ['errors' => $invite->getMessagesArray()]);
         }
 
         //лог
@@ -69,17 +99,40 @@ class UsersController extends ApiBaseController
         $token = new Token();
         $token->user_id = $user->id;
         $token->type = 'access';
-        $token->save();
+        if (false == $token->save()) return $this->error(self::ERROR_INTERNAL, 'registration', null, null, ['errors' => $token->getMessagesArray()]);
 
         //создаем сессию
         $session = new Session();
         $session->user_id = $user->id;
         $session->save();
+        if (false == $session->save()) return $this->error(self::ERROR_INTERNAL, 'registration', null, null, ['errors' => $session->getMessagesArray()]);
 
         //логируем событие
         $user->addLogEvent('auth');
 
+        //TODO: Сгенерировать новое задание и передать его в ответе
+
         return ['token_access' => $token->value];
+    }
+
+    public function getAction()
+    {
+
+    }
+
+    public function createAction()
+    {
+
+    }
+
+    public function editAction()
+    {
+
+    }
+
+    public function deleteAction()
+    {
+        return $this->delete('BeriDelay\Models\User');
     }
 }
 

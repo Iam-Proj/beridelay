@@ -9,6 +9,9 @@ class Loggable extends Behavior implements BehaviorInterface
     public function notify($type, \Phalcon\Mvc\ModelInterface $model)
     {
         switch ($type) {
+            case 'beforeCreate':
+                $model->setSnapshotData($model->toArray());
+                break;
             case 'afterCreate':
                 Log::log(get_class($model), 'create', $model->id);
                 break;

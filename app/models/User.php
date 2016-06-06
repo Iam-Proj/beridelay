@@ -2,6 +2,7 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
+use Carbon\Carbon;
 
 /**
  * Модель "Пользователь"
@@ -92,6 +93,11 @@ class User extends Model
         'is_activate' => 'in:0,1'
     ];
 
+    public function beforeCreate()
+    {
+        $this->created_at = Carbon::now()->toDateTimeString();
+    }
+
     public function afterCreate()
     {
         if ($this->id && $this->password_original) {
@@ -107,10 +113,6 @@ class User extends Model
 
     public function setPassword($password)
     {
-        if (strlen($password) < 3) {
-            throw new \InvalidArgumentException('Пароль слишком короткий');
-        }
-
         if ($this->id) {
             $this->password = $this->hashPassword($password);
         } else {
@@ -133,14 +135,6 @@ class User extends Model
     public function getPhone()
     {
         return $this->phone;
-    }
-
-    public static function findByEmail($email)
-    {
-        return self::findFirst([
-            'conditions' => 'email = :email:',
-            'bind' => ['email' => $email]
-        ]);
     }
 
     public static function findExists($email, $phone)

@@ -471,4 +471,16 @@ class Model extends PhalconModel
         else
             return false;
     }
+
+    /**
+     * Воращает массив сообщений от модели
+     */
+    public function getMessagesArray()
+    {
+        $result = [];
+        foreach ($this->getMessages() as $message) {
+            $result[] = $message->getMessage();
+        }
+        return $result;
+    }
 }

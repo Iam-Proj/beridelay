@@ -191,3 +191,7 @@ $di->setShared('dispatcher', function () {
 });
 
 $di->set('config', $config, true);
+
+\Phalcon\Mvc\Model::setup(array(
+    'notNullValidations' => false
+));

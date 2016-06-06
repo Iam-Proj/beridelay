@@ -29,7 +29,7 @@ trait SoftDelete
     
     protected function beforeDelete()
     {
-        $this->deleted_at = Carbon::now();
+        $this->deleted_at = Carbon::now()->toDateTimeString();
         $this->save();
         return false;
     }
