@@ -31,4 +31,7 @@ class Category extends Model
         'name' => 'between:2,50',
         'is_hide' => 'in:0,1'
     ];
+    
+    
+    
 }

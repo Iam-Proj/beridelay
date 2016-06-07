@@ -1,5 +1,7 @@
 .idea
 /vendor/
+/.phalcon/
 /app/cache/*.php
 composer.lock
 *.log
+/nbproject/
