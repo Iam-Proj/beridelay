@@ -16,7 +16,6 @@ class ApiException extends BaseException
     const NOT_FOUND = 404;
     const METHOD_NOT_ALLOWED = 405;
     const TOO_MANY_REQUESTS = 429;
-    const INTERNAL = 500;
 
     protected $messages = [
         self::OBJECT_ACCESS => 'Доступ к указанному объекту запрещен',
@@ -31,6 +30,5 @@ class ApiException extends BaseException
         self::NOT_FOUND => 'Указанный метод не найден',
         self::METHOD_NOT_ALLOWED => 'Метод не поддерживается',
         self::TOO_MANY_REQUESTS => 'Слишком много запросов',
-        self::INTERNAL => 'Внутренняя ошибка сервера',
     ];
 }

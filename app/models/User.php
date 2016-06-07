@@ -147,9 +147,70 @@ class User extends Model
         ]);
     }
 
-    public static function registration($parameters)
+    public static function registration($data)
     {
+        $rules = [
+            'email' => 'required|email',
+            'name' => 'required|alpha|between:2,50',
+            'surname' => 'required|alpha|between:2,50',
+            'patronim' => 'required|alpha|between:2,50',
+            'phone' => 'required|between:6,15',
+            'age' => 'required|integer|between:1,99',
+            'gender' => 'required|in:0,1',
+            'city' => 'required',
+            'salary' => 'required|in:1,2,3',
+            'invite' => 'alpha_num',
+            'password' => 'required|min:3'
+        ];
 
+        if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
+
+        //проверяем, нет ли такого email или телефона
+        $user = User::findFirst([
+            'conditions' => 'phone = :phone: or email = :email:',
+            'bind' => ['phone' => $data['phone'], 'email' => $data['email']]
+        ]);
+
+        if ($user) {
+            if ($user->email == $data['email']) throw new UserException(UserException::EMAIL_EXISTS);
+            if ($user->phone == $data['phone']) throw new UserException(UserException::PHONE_EXISTS);
+        }
+
+        //если человек зашел по приглашению
+        $invite = null;
+        if ($data['invite']) {
+            $invite = Invite::findByValue($data['invite']);
+            if (!$invite || $invite->user_id != null) throw new UserException(UserException::INVITE_NOT_FOUND);
+        }
+
+        //создаем пользователя
+        $user = new User();
+
+        $user->email = $data['email'];
+        $user->password = $data['password'];
+        $user->name = $data['name'];
+        $user->surname = $data['surname'];
+        $user->patronim = $data['patronim'];
+        $user->phone = $data['phone'];
+        $user->age = $data['age'];
+        $user->gender = $data['gender'];
+        $user->city = $data['city'];
+        $user->salary = $data['salary'];
+
+        $user->save();
+
+        if (false == $user->save()) throw new UserException(UserException::INTERNAL, ['errors' => $user->getMessagesArray()]);
+
+        //добаляем в приглашение информацию о том, что пользователь зарегистрировался
+        if ($invite) {
+            $invite->user_id = $user->id;
+            if (false == $invite->save()) throw new UserException(UserException::INTERNAL, ['errors' => $invite->getMessagesArray()]);
+        }
+
+        //лог
+        $user->addLogEvent('registration');
+
+        return $user;
     }
 
     public static function signin($email, $password)

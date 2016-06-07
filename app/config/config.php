@@ -4,20 +4,18 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 return new \Phalcon\Config(array(
     'database' => array(
-        'main' => array(
-            'adapter'     => 'Mysql',
-            'host'        => 'localhost',
-            'username'    => 'root',
-            'password'    => '',
-            'dbname'      => 'beridelay',
-            'charset'     => 'utf8',
-        ),
-        'operational' => array(
-            'host' => 'localhost',
-            'username' => '',
-            'password' => '',
-            'dbname' => 'beridelay'
-        )
+        'adapter'     => 'Mysql',
+        'host'        => 'localhost',
+        'username'    => 'root',
+        'password'    => '',
+        'dbname'      => 'beridelay',
+        'charset'     => 'utf8',
+    ),
+    'mongo' => array(
+        'host' => 'localhost',
+        'username' => '',
+        'password' => '',
+        'dbname' => 'beridelay'
     ),
     'application' => array(
         'classesDir'     => APP_PATH . '/app/classes/',

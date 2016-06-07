@@ -10,9 +10,9 @@ class ValidationException extends BaseException
         self::PARAM_FORMAT => 'Неверный формат одного или нескольких переданных параметров',
     ];
 
-    public function __construct($validationMessages) {
+    public function __construct(array $validationMessages) {
         if (count($validationMessages['required'])) parent::__construct(ValidationException::PARAM_REQUIRED, ['fields' => $validationMessages['required']]);
         parent::__construct(ValidationException::PARAM_FORMAT, ['fields' => $validationMessages['format']]);
     }
-    
+
 }

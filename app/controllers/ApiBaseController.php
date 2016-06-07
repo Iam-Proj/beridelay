@@ -16,16 +16,6 @@ use BeriDelay\Exceptions\ApiException;
  */
 class ApiBaseController extends Controller
 {
-    const ERROR_INVITE_NOT_FOUND = 209;
-    const ERROR_EMAIL_EXISTS = 210;
-    const ERROR_PHONE_EXISTS = 211;
-
-    protected $messages = [
-        self::ERROR_INVITE_NOT_FOUND => 'Указанного приглашения не существует',
-        self::ERROR_EMAIL_EXISTS => 'Пользователь с таким email уже зарегистрирован',
-        self::ERROR_PHONE_EXISTS => 'Пользователь с таким номером телефона уже зарегистрирован',
-    ];
-
     /**
      * Настройки методов API
      * <code>
@@ -104,10 +94,9 @@ class ApiBaseController extends Controller
         return true;
     }
 
-    public function error($code, $method, $controller = null, $params = null, $extra = [], $message = null)
+    public function error($code, $method, $controller = null, $params = null, $extra = [], $message = 'Unknown error')
     {
         if ($params == null) $params = $this->request->getPost();
-        if ($message == null) $message = $this->getErrorMessage($code);
 
         unset($params['token_access']);
         unset($params['token_refresh']);
@@ -123,12 +112,6 @@ class ApiBaseController extends Controller
         $this->send(['error' => $result + $extra]);
 
         return false;
-    }
-
-    public function getErrorMessage($code)
-    {
-        if (isset($this->messages[$code])) return $this->messages[$code];
-        return 'Unknown error';
     }
 
     public function send($data)

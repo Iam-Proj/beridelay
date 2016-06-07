@@ -4,6 +4,8 @@ use Exception;
 
 class BaseException extends Exception
 {
+    const INTERNAL = 500;
+    
     protected $messages = [];
     protected $info;
 
@@ -15,6 +17,7 @@ class BaseException extends Exception
     protected function getMessageByCode($code)
     {
         if (isset($this->messages[$code])) return $this->messages[$code];
+        if ($code == self::INTERNAL) return 'Внутренняя ошибка сервера';
         return 'Unknown error';
     }
 

@@ -73,7 +73,7 @@ $di->setShared('view', function () use ($config) {
  * Database connection is created based in the parameters defined in the configuration file
  */
 $di->setShared('db', function () use ($config, $di) {
-    $dbConfig = $config->database->main->toArray();
+    $dbConfig = $config->database->toArray();
     $adapter = $dbConfig['adapter'];
     unset($dbConfig['adapter']);
 
@@ -112,15 +112,15 @@ $di->setShared('modelsMetadata', function () {
  * MongoDB
  */
 $di->set('mongo', function () use ($config) {
-    $dbConfig = $config->database->operational->toArray();
+    $dbConfig = $config->mongo;
     $connectString = 'mongodb://';
-    if ($dbConfig['username']) $connectString .= $dbConfig['username'];
-    if ($dbConfig['password']) $connectString .= ':' . $dbConfig['password'];
+    if ($dbConfig['username']) $connectString .= $dbConfig->username;
+    if ($dbConfig['password']) $connectString .= ':' . $dbConfig->password;
     if ($dbConfig['username']) $connectString .= '@';
-    $connectString .= $dbConfig['host'];
+    $connectString .= $dbConfig->host;
 
     $mongo = new MongoClient($connectString);
-    return $mongo->selectDB($dbConfig['dbname']);
+    return $mongo->selectDB($dbConfig->dbname);
 }, true);
 
 $di->set('collectionManager', function(){
