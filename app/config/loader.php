@@ -13,6 +13,7 @@ $loader->registerNamespaces(
 
         'BeriDelay\Controllers'     => $config->application->controllersDir,
         'BeriDelay\Models'          => $config->application->modelsDir,
+        'BeriDelay\Exceptions'      => $config->application->exceptionsDir,
         'BeriDelay\Tests'           => $config->application->testsDir,
         'BeriDelay\Tests\Models'    => $config->application->testsDir . 'unit/',
         'BeriDelay\Tests\Fixtures'  => $config->application->testsDir . 'fixtures/',

@@ -1,4 +1,6 @@
-<?php namespace System\Exceptions;
+<?php namespace BeriDelay\Exceptions;
+
+use System\Exceptions\BaseException;
 
 class UserException extends BaseException
 {

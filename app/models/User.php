@@ -1,6 +1,7 @@
 <?php namespace BeriDelay\Models;
 
-use System\Exceptions\UserException;
+use BeriDelay\Exceptions\UserException;
+use System\Exceptions\ValidationException;
 use System\Models\Model;
 use System\Traits\SoftDelete;
 use Carbon\Carbon;
@@ -153,6 +154,14 @@ class User extends Model
 
     public static function signin($email, $password)
     {
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required|min:3'
+        ];
+
+        if (!self::validateData($rules, ['email' => $email, 'password' => $password])) throw new ValidationException(self::$validationMessages);
+
+
         $user = static::findFirstByEmail($email);
 
         if (!$user) throw new UserException(UserException::NOT_FOUND);

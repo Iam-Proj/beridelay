@@ -23,6 +23,7 @@ return new \Phalcon\Config(array(
         'classesDir'     => APP_PATH . '/app/classes/',
         'controllersDir' => APP_PATH . '/app/controllers/',
         'modelsDir'      => APP_PATH . '/app/models/',
+        'exceptionsDir'  => APP_PATH . '/app/exceptions/',
         'migrationsDir'  => APP_PATH . '/app/migrations/',
         'viewsDir'       => APP_PATH . '/app/views/',
         'pluginsDir'     => APP_PATH . '/app/plugins/',

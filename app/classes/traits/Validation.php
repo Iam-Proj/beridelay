@@ -3,6 +3,8 @@
 use Illuminate\Validation\Validator;
 use Phalcon\Mvc\Model\Message;
 use Symfony\Component\Translation\Translator;
+use System\Exceptions\ValidationException;
+
 
 /**
  * Трайт "Валидация"
@@ -12,22 +14,45 @@ use Symfony\Component\Translation\Translator;
 trait Validation
 {
     protected $validation = [];
+    protected static $validationMessages = [
+        'required' => [],
+        'format' => [],
+        'errors' => []
+    ];
 
-    public function validation($rules = null, $data = null)
+    public function validation()
     {
-        if ($rules === null) $rules = $this->validation;
-        if ($data === null) $data = $this->toArray();
+        $result = self::validateData($this->validation, $this->toArray());
+        if (!$result)
+            foreach (self::$validationMessages['errors'] as $error) $this->appendMessage($error);
 
-        if (!count($this->validation)) return true;
+        return $result;
+    }
+
+    public static function validateData($rules = null, $data = null)
+    {
+        if (!count($rules)) return true;
 
         $validation = new Validator(new Translator('ru'), $data, $rules);
 
         if ($validation->fails()) {
+            $required = [];
+            $format = [];
+
             foreach ($validation->messages()->getMessages() as $field => $errors) {
                 foreach ($errors as $error) {
-                    $this->appendMessage(new Message('', $field, $error));
+                    self::$validationMessages['errors'][] = new Message('', $field, $error);
+
+                    if ($error == 'Required')
+                        $required[$field] = 'Required';
+                    else
+                        $format[$field] = $error;
                 }
             }
+
+            self::$validationMessages['required'] = $required;
+            self::$validationMessages['format'] = $format;
+
             return false;
         }
 

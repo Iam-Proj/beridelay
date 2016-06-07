@@ -7,50 +7,14 @@ use System\Exceptions\BaseException;
 
 class AuthController extends ApiBaseController
 {
-    public $actions = [
-        'signin' => [
-            'fields' => [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]
-        ],
-        'signout' => [
-            'isPrivate' => true
-        ],
-        'restore_init' => [
-            'fields' => [
-                'email' => 'required|email',
-            ]
-        ],
-        'restore' => [
-            'fields' => [
-                'key' => 'required',
-                'password' => 'required|min:5',
-            ]
-        ],
-        'activation' => [
-            'fields' => [
-                'key' => 'required',
-                'password' => 'required|min:5',
-            ]
-        ],
-        'send_activation_mail' => [
-            'fields' => [
-                'email' => 'required|email',
-            ]
-        ]
-    ];
-
     /**
      * Осуществляет авторизацию пользователя в системе
      */
     public function signinAction()
     {
         try {
-
-            $user = User::signin($this->parameters['email'], $this->parameters['password']);
+            $user = User::signin($this->request->getPost('email'), $this->request->getPost('password'));
             $token = Token::add($user->id);
-
         } catch (BaseException $e) {
             return $this->errorException($e);
         }

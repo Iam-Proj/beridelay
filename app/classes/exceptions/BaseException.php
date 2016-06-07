@@ -5,8 +5,10 @@ use Exception;
 class BaseException extends Exception
 {
     protected $messages = [];
+    protected $info;
 
-    public function __construct($code = 0) {
+    public function __construct($code = 0, $info = []) {
+        $this->info = $info;
         parent::__construct($this->getMessageByCode($code), $code);
     }
 
@@ -14,5 +16,10 @@ class BaseException extends Exception
     {
         if (isset($this->messages[$code])) return $this->messages[$code];
         return 'Unknown error';
+    }
+
+    public function getInfo()
+    {
+        return $this->info;
     }
 }

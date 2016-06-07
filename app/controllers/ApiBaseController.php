@@ -8,6 +8,7 @@ use Symfony\Component\Translation\Translator;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Token;
 use System\Exceptions\BaseException;
+use BeriDelay\Exceptions\ApiException;
 
 /**
  * Базовый контроллер API
@@ -15,54 +16,14 @@ use System\Exceptions\BaseException;
  */
 class ApiBaseController extends Controller
 {
-    const ERROR_OBJECT_ACCESS = 103;
-    const ERROR_OBJECT_NOT_FOUND = 104;
-    const ERROR_TOKEN_INVALID = 110;
-    const ERROR_REFRESH_INVALID = 111;
-    const ERROR_TOKEN_REQUIRED = 112;
-    const ERROR_PARAM_REQUIRED = 120;
-    const ERROR_PARAM_FORMAT = 121;
-    const ERROR_CAPTCHA = 130;
-    const ERROR_BAD_REQUEST = 400;
-    const ERROR_UNAUTHORIZED = 401;
-    const ERROR_FORBIDDEN = 403;
-    const ERROR_NOT_FOUND = 404;
-    const ERROR_METHOD_NOT_ALLOWED = 405;
-    const ERROR_TOO_MANY_REQUESTS = 429;
-    const ERROR_INTERNAL = 500;
-
     const ERROR_INVITE_NOT_FOUND = 209;
     const ERROR_EMAIL_EXISTS = 210;
     const ERROR_PHONE_EXISTS = 211;
 
-    const ERROR_ACCOUNT_NOT_FOUND = 250;
-    const ERROR_ACCOUNT_NOT_ACTIVATED = 251;
-    const ERROR_ACCOUNT_BLOCKED = 252;
-
     protected $messages = [
-        self::ERROR_OBJECT_ACCESS => 'Доступ к указанному объекту запрещен',
-        self::ERROR_OBJECT_NOT_FOUND => 'Указанный объект не найден',
-        self::ERROR_TOKEN_INVALID => 'token_access устарел или недействителен',
-        self::ERROR_REFRESH_INVALID => 'token_refresh устарел или недействителен',
-        self::ERROR_TOKEN_REQUIRED => 'token_access не передан',
-        self::ERROR_PARAM_REQUIRED => 'Не передан один или несколько из обязательных параметров',
-        self::ERROR_PARAM_FORMAT => 'Неверный формат одного или нескольких переданных параметров',
-        self::ERROR_CAPTCHA => 'Запрос ввода капчи',
-        self::ERROR_BAD_REQUEST => 'Неверный запрос',
-        self::ERROR_UNAUTHORIZED => 'Для доступа к указанному методу нужна авторизация',
-        self::ERROR_FORBIDDEN => 'Доступ к указанному методу запрещен',
-        self::ERROR_NOT_FOUND => 'Указанный метод не найден',
-        self::ERROR_METHOD_NOT_ALLOWED => 'Метод не поддерживается',
-        self::ERROR_TOO_MANY_REQUESTS => 'Слишком много запросов',
-        self::ERROR_INTERNAL => 'Внутренняя ошибка сервера',
-
         self::ERROR_INVITE_NOT_FOUND => 'Указанного приглашения не существует',
         self::ERROR_EMAIL_EXISTS => 'Пользователь с таким email уже зарегистрирован',
         self::ERROR_PHONE_EXISTS => 'Пользователь с таким номером телефона уже зарегистрирован',
-
-        self::ERROR_ACCOUNT_NOT_FOUND => 'Пользователь с указанным email и паролем не найдены в системе',
-        self::ERROR_ACCOUNT_NOT_ACTIVATED => 'Аккаунт пользователя не активирован',
-        self::ERROR_ACCOUNT_BLOCKED => 'Аккаунт пользователя заблокирован',
     ];
 
     /**
@@ -81,12 +42,6 @@ class ApiBaseController extends Controller
      * @var array
      */
     protected $actions = [];
-
-    /**
-     * Здесь хранятся переданные параметры, отфильтрованные по необходимому методу, а также отвалидированные
-     * @var array
-     */
-    protected $parameters = [];
 
     /**
      * Здесь хранится текущий пользователь
@@ -108,73 +63,36 @@ class ApiBaseController extends Controller
 
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
-        $this->view->disable();
+        try {
+            $this->view->disable();
 
-        $method = $dispatcher->getActionName();
+            $method = $dispatcher->getActionName();
 
-        if ($method == 'show404' || $method == 'show503') return true;
+            if ($method == 'show404') return true;
 
-        if (!isset($this->actions[$method])) {
-            return $this->error(self::ERROR_NOT_FOUND, $method);
+            if (!$this->request->isPost()) throw new ApiException(ApiException::BAD_REQUEST);
+        } catch (BaseException $e) {
+            return $this->errorException($e);
         }
+        return true;
+    }
 
-        if (!$this->request->isPost()) {
-            return $this->error(self::ERROR_BAD_REQUEST, $method);
+    public function hasPrivate()
+    {
+        $token_string = $this->request->getPost('token_access');
+        if (!strlen($token_string)) throw new ApiException(ApiException::TOKEN_REQUIRED);
+
+        $token = Token::getByToken($token_string);
+        if (!$token) throw new ApiException(ApiException::TOKEN_INVALID);
+        
+        if (!$token->user || $token->updated_at->addHour() < Carbon::now()) {
+            $token->delete();
+            throw new ApiException(ApiException::TOKEN_INVALID);
         }
+        
+        $token->life();
 
-        $action = $this->actions[$method];
-        $private = isset($action['isPrivate']) ? $action['isPrivate'] : false;
-        $fields = isset($action['fields']) ? $action['fields'] : [];
-
-        $data = [];
-        foreach ($fields as $key => $field) $data[$key] = $this->request->getPost($key);
-        $this->state = $this->request->getPost('state');
-
-        if ($private) {
-            $data['token_access'] = $this->request->getPost('token_access');
-            if (!strlen($data['token_access'])) return $this->error(self::ERROR_TOKEN_REQUIRED, $method);
-
-            $token = Token::getByToken($data['token_access']);
-            if (!$token) return $this->error(self::ERROR_TOKEN_INVALID, $method);
-            if (!$token->user) {
-                $token->delete();
-                return $this->error(self::ERROR_TOKEN_INVALID, $method);
-            }
-
-            if ($token->updated_at->addHour() < Carbon::now()) {
-                $token->delete();
-                return $this->error(self::ERROR_TOKEN_INVALID, $method);
-            }
-
-            /*$token->updated_at = Carbon::now()->toDateTimeString();
-            if (false == $token->save()) {
-                return $this->error(self::ERROR_TOKEN_INVALID, $method);
-            }*/
-            $token->life();
-
-            $this->token = $token;
-            $this->user = $token->user;
-        }
-
-
-        $validation = new Validator(new Translator('ru'), $data, $fields);
-
-        if ($validation->fails()) {
-            $required = [];
-            $format = [];
-
-            foreach ($validation->failed() as $field => $types) {
-                foreach ($types as $type => $options) {
-                    if ($type == 'Required')
-                        $required[$field] = 'Required';
-                    else
-                        $format[$field] = $type;
-                }
-            }
-            if (count($required)) return $this->error(self::ERROR_PARAM_REQUIRED, $method, null, null, ['fields' => $required]);
-            return $this->error(self::ERROR_PARAM_FORMAT, $method, null, null, ['fields' => $format]);
-        }
-        $this->parameters = $data;
+        return $token;
     }
 
     public function afterExecuteRoute(Dispatcher $dispatcher)
@@ -183,11 +101,12 @@ class ApiBaseController extends Controller
         if ($data === false) return false;
 
         $this->send($data);
+        return true;
     }
 
     public function error($code, $method, $controller = null, $params = null, $extra = [], $message = null)
     {
-        if ($params == null) $params = $_POST;
+        if ($params == null) $params = $this->request->getPost();
         if ($message == null) $message = $this->getErrorMessage($code);
 
         unset($params['token_access']);
@@ -214,7 +133,7 @@ class ApiBaseController extends Controller
 
     public function send($data)
     {
-        if ($this->state !== null) $data = $data + ['state' => $this->state];
+        if ($this->state !== null) $data = $data + ['state' => $this->request->getPost('state')];
         $this->response->setJsonContent($data);
         $this->response->setContentType('application/json');
         $this->response->send();
@@ -223,13 +142,13 @@ class ApiBaseController extends Controller
 
     public function show404Action($method, $controller = null)
     {
-        return $this->error(self::ERROR_NOT_FOUND, $method, $controller);
+        return $this->errorException(new ApiException(ApiException::NOT_FOUND, []), $method, $controller);
     }
     
-    public function errorException(BaseException $exception, $method = null)
+    public function errorException(BaseException $exception, $method = null, $controller = null)
     {
         if ($method == null) $method = $this->dispatcher->getActionName();
-        return $this->error($exception->getCode(), $method, null, null, [], $exception->getMessage());
+        return $this->error($exception->getCode(), $method, $controller, null, $exception->getInfo(), $exception->getMessage());
     }
 
     public function delete($model)
