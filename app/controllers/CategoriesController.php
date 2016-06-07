@@ -6,22 +6,32 @@ use BeriDelay\Models\Token;
 use BeriDelay\Models\Session;
 use BeriDelay\Models\Category;
 use System\Helpers\Logic;
+use System\Exceptions\BaseException;
+use BeriDelay\Exceptions\ApiException;
 
 class CategoriesController extends ApiBaseController {
     
     public function getAction(){
-        $token = $this->hasPrivate();
+        try { $token = $this->hasPrivate(); }
+        catch (BaseException $e) { return $this->errorException($e); }
+        
         if($id = $this->request->getPost('id')){
             $cats = Category::findById($id)->toArray();
         }
+        
         if($ids = $this->request->getPost('ids')){
-            foreach($ids as $k => $v){ if(!is_numeric($v)){ unset($ids[$k]); } }
+            foreach($ids as $k => $v){ 
+                try{ if(!is_numeric($v)){ throw new ApiException(ApiException::PARAMS_ERROR); }  }
+                catch (BaseException $e) { return $this->errorException($e); }
+            }
             $ids = implode(',',$ids);
-            $cats = Logic::recursionGet(Category::find('id IN ('.$ids.')'),'category_id');
+            $cats = Category::find('id IN ('.$ids.')');
         }
+        
         if(!$id && !$ids){
             $cats = Logic::recursionGet(Category::find(),'category_id');
         }
+        
         return [
             'token_access'  => $token->value,
             'categories'    => $cats,
