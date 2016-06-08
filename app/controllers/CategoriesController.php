@@ -11,10 +11,17 @@ use BeriDelay\Exceptions\ApiException;
 
 class CategoriesController extends ApiBaseController {
     
+    protected $token;
+    
+    public function initialize(){
+        try {
+            $this->token = $this->hasPrivate();
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
+    }
+    
     public function getAction(){
-        try { $token = $this->hasPrivate(); }
-        catch (BaseException $e) { return $this->errorException($e); }
-        
         if($id = $this->request->getPost('id')){
             $cats = Category::findById($id)->toArray();
         }
@@ -33,18 +40,13 @@ class CategoriesController extends ApiBaseController {
         }
         
         return [
-            'token_access'  => $token->value,
+            'token_access'  => $this->token->value,
             'categories'    => $cats,
         ];
+        
     }
     
-    /**
-     * 
-     * @return token_access
-     */
     public function createAction(){
-        $token = $this->hasPrivate();
-        
         $name   = $this->request->getPost('name');
         $parent = $this->request->getPost('category_id')? (int)$this->request->getPost('category_id') : 0 ;
         $hide   = $this->request->getPost('is_hide')? $this->request->getPost('is_hide') : 0 ;
@@ -56,18 +58,27 @@ class CategoriesController extends ApiBaseController {
         $cat->save();
         
         return [
-            'token_access'  => $token->value,
+            'token_access'  => $this->token->value,
             'category'      => $cat->toArray(['name','category_id','is_hide']),
         ];
     }
     
     public function editAction(){
-        $this->hasPrivate();
+        $id = $this->request->getPost('id');
         
+        try{ if(!$cat = Category::findFirstById($id)){ throw new ApiException(ApiException::PARAMS_ERROR); }  }
+        catch (BaseException $e) { return $this->errorException($e); }
         
+        $cat->name = $this->request->getPost('name');
+        $cat->category_id = $this->request->getPost('category_id')? $this->request->getPost('category_id') : 0;
+        $cat->is_hide = $this->request->getPost('is_hide')? 1 : 0;
         
+        $cat->save();
+        
+        return [
+            'token_access'  => $this->token->value,
+            'category'      => $cat->toArray(['name','category_id','is_hide']),
+        ];
     }
-    
-    
     
 }
