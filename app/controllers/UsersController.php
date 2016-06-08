@@ -35,12 +35,13 @@ class UsersController extends ApiBaseController
             //приватный метод
             $token = $this->hasPrivate();
 
-            $filters = User::getFilters($this->request->getPost());
+            $data = $this->request->getPost();
+            $filters = User::getFilters($data);
             
             //если фильтр заполнен
-            if (count($filters)) {
+            if ($filters->getWhere() != null) {
                 if (!$token->user->is_admin) throw new ApiException(ApiException::PARAM_ACCESS);
-                return ['result' => User::get($filters)];
+                return ['result' => User::get($data, $filters)];
             } else {
                 $user = $token->user->toArray(User::$fields);
                 return ['result' => [$user]];

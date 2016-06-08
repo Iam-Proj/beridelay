@@ -11,6 +11,8 @@ use Carbon\Carbon;
  * Модель "Пользователь"
  * @package BeriDelay\Models
  * @property Session|array $sessions
+ * @method User findFirstByEmail(string $email)
+ *
  */
 class User extends Model
 {
@@ -232,6 +234,13 @@ class User extends Model
         return $this;
     }
 
+    /**
+     * @param string $email
+     * @param string $password
+     * @return User
+     * @throws UserException
+     * @throws ValidationException
+     */
     public static function signin($email, $password)
     {
         $rules = [
@@ -240,7 +249,6 @@ class User extends Model
         ];
 
         if (!self::validateData($rules, ['email' => $email, 'password' => $password])) throw new ValidationException(self::$validationMessages);
-
 
         $user = static::findFirstByEmail($email);
 
@@ -255,12 +263,30 @@ class User extends Model
         //логируем событие
         $this->user->addLogEvent('signout');
     }
-    
-    public static function getFilters($data)
+
+    /**
+     * @param array $data
+     * @param \Phalcon\Mvc\Model\Criteria $query
+     * @return \Phalcon\Mvc\Model\Criteria
+     * @throws ValidationException
+     */
+    public static function getFiltersBase($data, $query)
     {
-        $query = self::getFiltersBase($data);
+        if (isset($data['name'])) self::filterLike($query, 'name', $data['name']);
+        if (isset($data['surname'])) self::filterLike($query, 'surname', $data['surname']);
+        if (isset($data['patronim'])) self::filterLike($query, 'patronim', $data['patronim']);
+        if (isset($data['email'])) self::filterLike($query, 'email', $data['email']);
+        if (isset($data['city'])) self::filterLike($query, 'city', $data['city']);
+        if (isset($data['phone'])) self::filterLike($query, 'phone', $data['phone']);
         
-        var_dump($query->getWhere());exit();
+        if (isset($data['age'])) self::filterInterval($query, 'age', $data['age']);
+
+        if (isset($data['gender'])) self::filterValue($query, 'gender', $data['gender'], [0, 1]);
+        if (isset($data['is_admin'])) self::filterValue($query, 'is_admin', $data['is_admin'], [0, 1]);
+        if (isset($data['is_activate'])) self::filterValue($query, 'is_activate', $data['is_activate'], [0, 1]);
+        if (isset($data['salary'])) self::filterValue($query, 'salary', $data['salary'], [0, 1, 2]);
+
+        return $query;
     }
 
 }

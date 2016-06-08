@@ -2779,3 +2779,379 @@
 [Wed, 08 Jun 16 11:35:32 +0500][INFO] DESCRIBE `user`
 [Wed, 08 Jun 16 11:35:32 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
 [Wed, 08 Jun 16 11:35:32 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 11:45:00 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:01:05 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:02:06 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:02:21 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:02:38 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:02:38 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:02:38 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:02:38 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:02:38 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:02:39 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:02:39 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:39:40 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:39:54 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`id` = :id) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:40:01 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:40:10 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:40:44 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:40:51 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:51 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:40:51 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:40:52 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:40:52 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:40:52 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:40:52 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:40:52 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`id` IN (:ACP0)) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:55:42 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` = :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:55:47 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` = :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:55:51 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` = :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:56:14 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:56:27 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:56:42 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:56:50 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` LIKE :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:56:54 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` LIKE :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:56:58 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` LIKE :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:57:07 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` LIKE :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 12:57:13 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`name` LIKE :name) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:12:41 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` = :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:12:48 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` = :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:12:52 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:52 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:12:52 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:12:52 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:52 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:12:53 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:12:53 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:12:53 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` >= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:12:59 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` >= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:13:10 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` <= :age2) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:13:54 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:14:00 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:14:00 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:14:01 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:14:01 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:14:01 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:14:01 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:14:01 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:02 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` >= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:08 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:08 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:09 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:09 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:09 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:09 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:09 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:09 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` = :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:13 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` = :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:17 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` >= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:23 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` >= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:27 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` >= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:33 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` <= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:38 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` <= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:42 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` <= :age) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:15:49 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`age` <= :age2) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:16:22 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:16:37 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:16:51 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE ((`user`.`age` >= :age1) AND (`user`.`age` <= :age2)) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:16:55 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE ((`user`.`age` >= :age1) AND (`user`.`age` <= :age2)) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:17:01 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE ((`user`.`age` >= :age1) AND (`user`.`age` <= :age2)) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:17:07 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE ((`user`.`age` >= :age1) AND (`user`.`age` <= :age2)) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:17:15 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE ((`user`.`age` >= :age1) AND (`user`.`age` <= :age2)) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:32:35 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`gender` = :gender) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:32:47 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`is_admin` = :is_admin) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'token' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] DESCRIBE `token`
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] SELECT `token`.`id`, `token`.`type`, `token`.`value`, `token`.`user_id`, `token`.`created_at`, `token`.`updated_at` FROM `token` WHERE `token`.`value` = :value AND `token`.`type` = :type LIMIT :APL0
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] SELECT IF(COUNT(*) > 0, 1, 0) FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME` = 'user' AND `TABLE_SCHEMA` = DATABASE()
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] DESCRIBE `user`
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] SELECT `user`.`id`, `user`.`email`, `user`.`password`, `user`.`name`, `user`.`surname`, `user`.`patronim`, `user`.`phone`, `user`.`age`, `user`.`gender`, `user`.`city`, `user`.`salary`, `user`.`is_admin`, `user`.`is_activate`, `user`.`created_at`, `user`.`updated_at`, `user`.`deleted_at` FROM `user` WHERE (`user`.`id` = :APR0) AND `user`.`deleted_at`  IS NULL LIMIT :APL0
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] UPDATE `token` SET `type` = ?, `value` = ?, `user_id` = ? WHERE `id` = ?
+[Wed, 08 Jun 16 13:32:54 +0500][INFO] SELECT `user`.`id` AS `id`, `user`.`name` AS `name`, `user`.`surname` AS `surname`, `user`.`patronim` AS `patronim`, `user`.`email` AS `email`, `user`.`phone` AS `phone`, `user`.`age` AS `age`, `user`.`gender` AS `gender`, `user`.`city` AS `city`, `user`.`salary` AS `salary` FROM `user` WHERE (`user`.`is_admin` = :is_admin) AND `user`.`deleted_at`  IS NULL ORDER BY `user`.`created_at` ASC LIMIT :APL0
