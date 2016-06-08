@@ -3,11 +3,10 @@
 use Carbon\Carbon;
 use System\Controllers\Controller;
 use Phalcon\Mvc\Dispatcher;
-use Illuminate\Validation\Validator;
-use Symfony\Component\Translation\Translator;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Token;
 use System\Exceptions\BaseException;
+use System\Exceptions\ValidationException;
 use BeriDelay\Exceptions\ApiException;
 
 /**
@@ -16,41 +15,6 @@ use BeriDelay\Exceptions\ApiException;
  */
 class ApiBaseController extends Controller
 {
-    /**
-     * Настройки методов API
-     * <code>
-     * $action = [
-     *  'actionName' => [       //имя метода
-     *      'isPrivate' => true //приватный или нет метод (приватный обязательно требует token_access), по умолчанию false
-     *      'fields' => [       //необходимые параметры и настройки валидации https://laravel.com/docs/5.1/validation
-     *          'email' => 'required|email',
-     *          'is_active' => 'in:0,1'
-     *      ]
-     *  ]
-     * ];
-     * </code>
-     * @var array
-     */
-    protected $actions = [];
-
-    /**
-     * Здесь хранится текущий пользователь
-     * @var User|null
-     */
-    protected $user = null;
-
-    /**
-     * Здесь хранится модель текущего токена
-     * @var Token|null
-     */
-    protected $token = null;
-
-    /**
-     * Здесь хранятся переданные дополнительные параметры
-     * @var mixed|null
-     */
-    protected $state = null;
-
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
         try {
@@ -75,7 +39,7 @@ class ApiBaseController extends Controller
         $token = Token::getByToken($token_string);
         if (!$token) throw new ApiException(ApiException::TOKEN_INVALID);
         
-        if (!$token->user || $token->updated_at->addHour() < Carbon::now()) {
+        if (!$token->user || $token->updated_at->addWeek() < Carbon::now()) {
             $token->delete();
             throw new ApiException(ApiException::TOKEN_INVALID);
         }
@@ -116,7 +80,7 @@ class ApiBaseController extends Controller
 
     public function send($data)
     {
-        if ($this->state !== null) $data = $data + ['state' => $this->request->getPost('state')];
+        if ($this->request->getPost('state') !== null) $data = $data + ['state' => $this->request->getPost('state')];
         $this->response->setJsonContent($data);
         $this->response->setContentType('application/json');
         $this->response->send();
@@ -136,34 +100,41 @@ class ApiBaseController extends Controller
 
     public function delete($model)
     {
-        //проверяем переданные параметры
-        if (!isset($this->parameters['ids']) && !isset($this->parameters['id'])) return $this->error(self::ERROR_PARAM_REQUIRED, 'delete');
-        $ids = isset($this->parameters['ids']) ? $this->parameters['ids'] : [$this->parameters['id']];
+        try {
+            //приватный метод
+            $token = $this->hasPrivate();
 
-        //пользователь должен быть админом
-        if (!$this->user->is_admin) $this->error(self::ERROR_FORBIDDEN, 'delete');
+            //проверяем переданные параметры
+            if ($this->request->getPost('ids') == null && $this->request->getPost('id') == null) throw new ApiException(ApiException::PARAM_REQUIRED);
+            $ids = $this->request->getPost('ids') != null ? $this->request->getPost('ids') : [$this->request->getPost('id')];
 
-        $results = $deleted = [];
-        $success = true;
+            //пользователь должен быть админом
+            if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
 
-        //получаем экземпляр конструктора запросов
-        $query = call_user_func([$model, 'query']);
+            $results = $deleted = [];
+            $success = true;
 
-        //в цикле удаляем все указанные записи
-        foreach ($query->inWhere('id', $ids)->execute() as $model) {
-            $result = ['id' => $model->id, 'success' => true];
-            $deleted[] = $model->id;
+            //получаем экземпляр конструктора запросов
+            $query = call_user_func([$model, 'query']);
 
-            //TODO: отслеживание ошибок при удалении
-            $model->delete();
+            //в цикле удаляем все указанные записи
+            foreach ($query->inWhere('id', $ids)->execute() as $model) {
+                $result = ['id' => $model->id, 'success' => true];
+                $deleted[] = $model->id;
 
-            $results[]  = $result;
-        }
+                //TODO: отслеживание ошибок при удалении
+                $model->delete();
 
-        if (count($deleted) != count($ids)) {
-            $success = false;
-            $diff = array_diff($ids, $deleted);
-            foreach ($diff as $id) $results[] = ['id' => $id, 'success' => false, 'error' => ['code' => 404, 'message' => 'Запись не существует, либо к ней нет доступа']];
+                $results[]  = $result;
+            }
+
+            if (count($deleted) != count($ids)) {
+                $success = false;
+                $diff = array_diff($ids, $deleted);
+                foreach ($diff as $id) $results[] = ['id' => $id, 'success' => false, 'error' => ['code' => 404, 'message' => 'Запись не существует, либо к ней нет доступа']];
+            }
+        } catch (BaseException $e) {
+            return $this->errorException($e);
         }
 
         return ['success' => $success, 'results' => $results];

@@ -4,6 +4,7 @@ use BeriDelay\Exceptions\UserException;
 use System\Exceptions\ValidationException;
 use System\Models\Model;
 use System\Traits\SoftDelete;
+use System\Traits\Filters;
 use Carbon\Carbon;
 
 /**
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 class User extends Model
 {
     use SoftDelete;
+    use Filters;
 
     /**
      * @var string Email
@@ -94,6 +96,11 @@ class User extends Model
         'is_admin' => 'in:0,1',
         'is_activate' => 'in:0,1'
     ];
+
+    /**
+     * @var array Поля для вывода
+     */
+    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary'];
 
     public function beforeCreate()
     {
@@ -178,7 +185,7 @@ class User extends Model
 
         //если человек зашел по приглашению
         $invite = null;
-        if ($data['invite']) {
+        if (isset($data['invite'])) {
             $invite = Invite::findByValue($data['invite']);
             if (!$invite || $invite->user_id != null) throw new UserException(UserException::INVITE_NOT_FOUND);
         }
@@ -210,7 +217,19 @@ class User extends Model
         //лог
         $user->addLogEvent('registration');
 
-        return $user;
+        return $user->auth();
+    }
+
+    public function auth()
+    {
+        $this->addLogEvent('auth');
+
+        //создаем сессию
+        $session = new Session();
+        $session->user_id = $this->id;
+        $session->save();
+
+        return $this;
     }
 
     public static function signin($email, $password)
@@ -228,20 +247,20 @@ class User extends Model
         if (!$user) throw new UserException(UserException::NOT_FOUND);
         if ($user->hashPassword($password) != $user->password) throw new UserException(UserException::NOT_FOUND);
 
-        $user->addLogEvent('auth');
-
-        //создаем сессию
-        $session = new Session();
-        $session->user_id = $user->id;
-        $session->save();
-
-        return $user;
+        return $user->auth();
     }
     
     public function signout()
     {
         //логируем событие
         $this->user->addLogEvent('signout');
+    }
+    
+    public static function getFilters($data)
+    {
+        $query = self::getFiltersBase($data);
+        
+        var_dump($query->getWhere());exit();
     }
 
 }

@@ -153,10 +153,16 @@ class Model extends PhalconModel
     protected $dynamicUpdate = true;
 
     /**
-     * Не 
+     * Не
      * @var bool
      */
     protected $skipUpdatedAtField = true;
+
+    /**
+     * Поля по умолчанию для вывода
+     * @var array
+     */
+    protected static $fields = [];
     
     private $defaultBehaviors = [
         'System\Behaviors\Dates',

@@ -9,6 +9,9 @@ class ApiException extends BaseException
     const TOKEN_INVALID = 110;
     const REFRESH_INVALID = 111;
     const TOKEN_REQUIRED = 112;
+    const PARAM_REQUIRED = 120;
+    const PARAM_FORMAT = 121;
+    const PARAM_ACCESS = 122;
     const CAPTCHA = 130;
     const BAD_REQUEST = 400;
     const UNAUTHORIZED = 401;
@@ -16,7 +19,6 @@ class ApiException extends BaseException
     const NOT_FOUND = 404;
     const METHOD_NOT_ALLOWED = 405;
     const TOO_MANY_REQUESTS = 429;
-    const PARAMS_ERROR = 501;
 
     protected $messages = [
         self::OBJECT_ACCESS => 'Доступ к указанному объекту запрещен',
@@ -31,6 +33,8 @@ class ApiException extends BaseException
         self::NOT_FOUND => 'Указанный метод не найден',
         self::METHOD_NOT_ALLOWED => 'Метод не поддерживается',
         self::TOO_MANY_REQUESTS => 'Слишком много запросов',
-        self::PARAMS_ERROR => 'Ошибка при передачи параметров',
+        self::PARAM_REQUIRED => 'Не передан один или несколько из обязательных параметров',
+        self::PARAM_FORMAT => 'Неверный формат одного или нескольких переданных параметров',
+        self::PARAM_ACCESS => 'У вас нет прав использовать данный метод в указанном контексте',
     ];
 }

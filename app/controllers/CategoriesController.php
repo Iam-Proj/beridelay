@@ -28,7 +28,7 @@ class CategoriesController extends ApiBaseController {
         
         if($ids = $this->request->getPost('ids')){
             foreach($ids as $k => $v){ 
-                try{ if(!is_numeric($v)){ throw new ApiException(ApiException::PARAMS_ERROR); }  }
+                try{ if(!is_numeric($v)){ throw new ApiException(ApiException::PARAM_FORMAT); }  }
                 catch (BaseException $e) { return $this->errorException($e); }
             }
             $ids = implode(',',$ids);
@@ -66,7 +66,7 @@ class CategoriesController extends ApiBaseController {
     public function editAction(){
         $id = $this->request->getPost('id');
         
-        try{ if(!$cat = Category::findFirstById($id)){ throw new ApiException(ApiException::PARAMS_ERROR); }  }
+        try{ if(!$cat = Category::findFirstById($id)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }  }
         catch (BaseException $e) { return $this->errorException($e); }
         
         $cat->name = $this->request->getPost('name');
