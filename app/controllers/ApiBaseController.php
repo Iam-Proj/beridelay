@@ -103,8 +103,8 @@ class ApiBaseController extends Controller
             $token = $this->hasPrivate();
 
             //проверяем переданные параметры
-            if ($this->request->getPost('ids') == null && $this->request->getPost('id') == null) throw new ApiException(ApiException::PARAM_REQUIRED);
-            $ids = $this->request->getPost('ids') != null ? $this->request->getPost('ids') : [$this->request->getPost('id')];
+            if (!$this->request->getPost('ids') && !$this->request->getPost('id')) throw new ApiException(ApiException::PARAM_REQUIRED);
+            $ids = !$this->request->getPost('ids')? $this->request->getPost('ids') : [$this->request->getPost('id')];
 
             //пользователь должен быть админом
             if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);

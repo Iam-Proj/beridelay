@@ -77,5 +77,5 @@ class CategoriesController extends ApiBaseController {
         
         return [ 'category' => $cat->toArray(['name','category_id','is_hide']), ];
     }
-    
+        
 }
