@@ -33,11 +33,9 @@ class ApiBaseController extends Controller
 
     public function hasPrivate()
     {
-        $token_string = $this->request->getPost('token_access');
-        if (!strlen($token_string)) throw new ApiException(ApiException::TOKEN_REQUIRED);
-
-        $token = Token::getByToken($token_string);
-        if (!$token) throw new ApiException(ApiException::TOKEN_INVALID);
+        if(!$token_string = $this->request->getPost('token_access')) throw new ApiException(ApiException::TOKEN_REQUIRED);
+        
+        if(!$token = Token::getByToken($token_string)) throw new ApiException(ApiException::TOKEN_INVALID);
         
         if (!$token->user || $token->updated_at->addWeek() < Carbon::now()) {
             $token->delete();

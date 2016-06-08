@@ -39,10 +39,7 @@ class CategoriesController extends ApiBaseController {
             $cats = Logic::recursionGet(Category::find(),'category_id');
         }
         
-        return [
-            'token_access'  => $this->token->value,
-            'categories'    => $cats,
-        ];
+        return [ 'categories' => $cats, ];
         
     }
     
@@ -57,17 +54,20 @@ class CategoriesController extends ApiBaseController {
         $cat->is_hide     = $hide;
         $cat->save();
         
-        return [
-            'token_access'  => $this->token->value,
-            'category'      => $cat->toArray(['name','category_id','is_hide']),
-        ];
+        return [ 'category' => $cat->toArray(['name','category_id','is_hide']), ];
     }
     
     public function editAction(){
         $id = $this->request->getPost('id');
         
+        // если объект не найден
         try{ if(!$cat = Category::findFirstById($id)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }  }
         catch (BaseException $e) { return $this->errorException($e); }
+        
+        // если id и id родителя совпадают
+        try{ if($id == $this->request->getPost('category_id')){
+            throw new ApiException(ApiException::PARAM_FORMAT); }  
+        } catch (BaseException $e) { return $this->errorException($e); }
         
         $cat->name = $this->request->getPost('name');
         $cat->category_id = $this->request->getPost('category_id')? $this->request->getPost('category_id') : 0;
@@ -75,10 +75,7 @@ class CategoriesController extends ApiBaseController {
         
         $cat->save();
         
-        return [
-            'token_access'  => $this->token->value,
-            'category'      => $cat->toArray(['name','category_id','is_hide']),
-        ];
+        return [ 'category' => $cat->toArray(['name','category_id','is_hide']), ];
     }
     
 }
