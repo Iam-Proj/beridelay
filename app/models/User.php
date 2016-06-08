@@ -156,6 +156,12 @@ class User extends Model
         ]);
     }
 
+    /**
+     * @param array $data
+     * @return User
+     * @throws UserException
+     * @throws ValidationException
+     */
     public static function registration($data)
     {
         $rules = [
@@ -222,6 +228,9 @@ class User extends Model
         return $user->auth();
     }
 
+    /**
+     * @return $this
+     */
     public function auth()
     {
         $this->addLogEvent('auth');

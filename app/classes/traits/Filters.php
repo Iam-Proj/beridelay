@@ -107,7 +107,7 @@ trait Filters
      */
     protected static function filterLike(&$query, $name, $value)
     {
-        return $query->where($name . ' LIKE :' . $name . ':')->bind([$name => '%' . $value . '%']);
+        $query->andWhere($name . ' LIKE   :' . $name . ':')->bind([$name => '%' . $value . '%'], true);
     }
 
     /**
@@ -143,15 +143,14 @@ trait Filters
 
             if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
 
-            if (isset($data['min'])) $query->where($name . ' >= :' . $name . '_min:')->bind([$name . '_min' => $values[1]]);
-            if (isset($data['max'])) $query->where($name . ' <= :' . $name . '_max:')->bind([$name . '_max' => $values[1]]);
-
-            return $query;
+            if (isset($data['min'])) $query->andWhere($name . ' >= :' . $name . '_min:')->bind([$name . '_min' => $values[1]], true);
+            if (isset($data['max'])) $query->andWhere($name . ' <= :' . $name . '_max:')->bind([$name . '_max' => $values[1]], true);
+            
         } else {
             $data['value'] = $value;
             if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
 
-            return $query->where($name . ' = :' . $name . ':')->bind([$name => $data['value']]);
+            $query->andWhere($name . ' = :' . $name . ':')->bind([$name => $data['value']], true);
         }
     }
 
@@ -167,7 +166,7 @@ trait Filters
     {
         if (!in_array($value, $list)) throw new ValidationException(['required' => [$name => 'in']]);
 
-        return $query->where($name . ' = :' . $name . ':')->bind([$name => $value]);
+        $query->andWhere($name . ' = :' . $name . ':')->bind([$name => $value], true);
     }
     
 }
