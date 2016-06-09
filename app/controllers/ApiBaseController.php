@@ -33,11 +33,9 @@ class ApiBaseController extends Controller
 
     public function hasPrivate()
     {
-        $token_string = $this->request->getPost('token_access');
-        if (!strlen($token_string)) throw new ApiException(ApiException::TOKEN_REQUIRED);
-
-        $token = Token::getByToken($token_string);
-        if (!$token) throw new ApiException(ApiException::TOKEN_INVALID);
+        if(!$token_string = $this->request->getPost('token_access')) throw new ApiException(ApiException::TOKEN_REQUIRED);
+        
+        if(!$token = Token::getByToken($token_string)) throw new ApiException(ApiException::TOKEN_INVALID);
         
         if (!$token->user || $token->updated_at->addWeek() < Carbon::now()) {
             $token->delete();
@@ -105,8 +103,8 @@ class ApiBaseController extends Controller
             $token = $this->hasPrivate();
 
             //проверяем переданные параметры
-            if ($this->request->getPost('ids') == null && $this->request->getPost('id') == null) throw new ApiException(ApiException::PARAM_REQUIRED);
-            $ids = $this->request->getPost('ids') != null ? $this->request->getPost('ids') : [$this->request->getPost('id')];
+            if (!$this->request->getPost('ids') && !$this->request->getPost('id')) throw new ApiException(ApiException::PARAM_REQUIRED);
+            $ids = !$this->request->getPost('ids')? $this->request->getPost('ids') : [$this->request->getPost('id')];
 
             //пользователь должен быть админом
             if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
