@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class CategoryMigration_100
+ * Class CategoryMigration_102
  */
-class CategoryMigration_100 extends Migration
+class CategoryMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -34,7 +34,9 @@ class CategoryMigration_100 extends Migration
                         'category_id',
                         array(
                             'type' => Column::TYPE_INTEGER,
+                            'default' => "0",
                             'unsigned' => true,
+                            'notNull' => true,
                             'size' => 11,
                             'after' => 'id'
                         )
@@ -89,21 +91,7 @@ class CategoryMigration_100 extends Migration
                     )
                 ),
                 'indexes' => array(
-                    new Index('PRIMARY', array('id'), 'PRIMARY'),
-                    new Index('FK_category_category', array('category_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_category_category',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'category',
-                            'columns' => array('category_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
+                    new Index('PRIMARY', array('id'), 'PRIMARY')
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

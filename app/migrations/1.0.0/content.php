@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class ContentMigration_100
+ * Class ContentMigration_102
  */
-class ContentMigration_100 extends Migration
+class ContentMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -113,30 +113,6 @@ class ContentMigration_100 extends Migration
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
                     new Index('FK_content_user', array('user_id'), null),
                     new Index('FK_content_history', array('history_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_content_history',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'history',
-                            'columns' => array('history_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    ),
-                    new Reference(
-                        'FK_content_user',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'user',
-                            'columns' => array('user_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class Task2targetMigration_100
+ * Class Task2targetMigration_102
  */
-class Task2targetMigration_100 extends Migration
+class Task2targetMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -43,30 +43,6 @@ class Task2targetMigration_100 extends Migration
                 'indexes' => array(
                     new Index('PRIMARY', array('task_id', 'target_id'), 'PRIMARY'),
                     new Index('FK_task2target_target', array('target_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_task2target_target',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'target',
-                            'columns' => array('target_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    ),
-                    new Reference(
-                        'FK_task2target_task',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'task',
-                            'columns' => array('task_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

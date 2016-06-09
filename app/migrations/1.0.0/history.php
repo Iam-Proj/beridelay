@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class HistoryMigration_100
+ * Class HistoryMigration_102
  */
-class HistoryMigration_100 extends Migration
+class HistoryMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -110,41 +110,6 @@ class HistoryMigration_100 extends Migration
                     new Index('FK_history_user', array('user_id'), null),
                     new Index('FK_history_target', array('target_id'), null),
                     new Index('FK_history_task', array('task_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_history_target',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'target',
-                            'columns' => array('target_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    ),
-                    new Reference(
-                        'FK_history_task',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'task',
-                            'columns' => array('task_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    ),
-                    new Reference(
-                        'FK_history_user',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'user',
-                            'columns' => array('user_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

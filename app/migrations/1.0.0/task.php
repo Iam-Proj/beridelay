@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class TaskMigration_100
+ * Class TaskMigration_102
  */
-class TaskMigration_100 extends Migration
+class TaskMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -109,19 +109,6 @@ class TaskMigration_100 extends Migration
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
                     new Index('Индекс 2', array('user_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_task_user',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'user',
-                            'columns' => array('user_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

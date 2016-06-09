@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class Target2userMigration_100
+ * Class Target2userMigration_102
  */
-class Target2userMigration_100 extends Migration
+class Target2userMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -65,30 +65,6 @@ class Target2userMigration_100 extends Migration
                 'indexes' => array(
                     new Index('PRIMARY', array('target_id', 'user_id'), 'PRIMARY'),
                     new Index('FK_target2user_user', array('user_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_target2user_target',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'target',
-                            'columns' => array('target_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    ),
-                    new Reference(
-                        'FK_target2user_user',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'user',
-                            'columns' => array('user_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

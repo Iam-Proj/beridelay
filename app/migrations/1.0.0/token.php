@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class TokenMigration_100
+ * Class TokenMigration_102
  */
-class TokenMigration_100 extends Migration
+class TokenMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -44,7 +44,6 @@ class TokenMigration_100 extends Migration
                         'value',
                         array(
                             'type' => Column::TYPE_VARCHAR,
-                            'notNull' => true,
                             'size' => 50,
                             'after' => 'type'
                         )
@@ -84,22 +83,9 @@ class TokenMigration_100 extends Migration
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
                     new Index('FK_token_user', array('user_id'), null)
                 ),
-                'references' => array(
-                    new Reference(
-                        'FK_token_user',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'user',
-                            'columns' => array('user_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
-                ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
+                    'AUTO_INCREMENT' => '14',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ),

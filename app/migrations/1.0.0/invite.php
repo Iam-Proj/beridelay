@@ -6,9 +6,9 @@ use Phalcon\Db\Reference;
 use Phalcon\Mvc\Model\Migration;
 
 /**
- * Class InviteMigration_100
+ * Class InviteMigration_102
  */
-class InviteMigration_100 extends Migration
+class InviteMigration_102 extends Migration
 {
     /**
      * Define the table structure
@@ -79,19 +79,6 @@ class InviteMigration_100 extends Migration
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
                     new Index('FK_invite_user', array('user_id'), null)
-                ),
-                'references' => array(
-                    new Reference(
-                        'FK_invite_user',
-                        array(
-                            'referencedSchema' => 'beridelay',
-                            'referencedTable' => 'user',
-                            'columns' => array('user_id'),
-                            'referencedColumns' => array('id'),
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
-                        )
-                    )
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',
