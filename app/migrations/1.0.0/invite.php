@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class InviteMigration_102
  */
-class InviteMigration_102 extends Migration
+class InviteMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -78,7 +78,6 @@ class InviteMigration_102 extends Migration
                 ),
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
-                    new Index('FK_invite_user', array('user_id'), null)
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

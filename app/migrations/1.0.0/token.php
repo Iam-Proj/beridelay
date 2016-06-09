@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class TokenMigration_102
  */
-class TokenMigration_102 extends Migration
+class TokenMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -81,7 +81,6 @@ class TokenMigration_102 extends Migration
                 ),
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
-                    new Index('FK_token_user', array('user_id'), null)
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

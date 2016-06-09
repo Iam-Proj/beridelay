@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class TaskMigration_102
  */
-class TaskMigration_102 extends Migration
+class TaskMigration_100 extends Migration
 {
     /**
      * Define the table structure

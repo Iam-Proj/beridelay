@@ -29,7 +29,43 @@ class TargetsController extends ApiBaseController {
     }
     
     public function editAction(){
-        
+        try{
+            if(!$id = $this->request->getPost('id')){ throw new ApiException(ApiException::PARAM_FORMAT); }
+            if(!$target = Target::findFirstById($id)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }
+            
+            if($name = $this->request->getPost('name')){
+                $target->name = $name;
+            }
+            if($description = $this->request->getPost('description')){
+                $target->description = $description;
+            }
+            if($category_id = $this->request->getPost('category_id')){
+                if(!is_numeric($category_id)){ throw new ApiException(ApiException::PARAM_FORMAT); }
+                $target->category_id = $category_id;
+            }
+            if($is_hide = $this->request->getPost('is_hide')){
+                if(!is_numeric($is_hide)){ throw new ApiException(ApiException::PARAM_FORMAT); }
+                $target->is_hide = $is_hide;
+            }
+            
+            $arrTarget = $target->toArray();
+            
+            if($tags = $this->request->getPost('tags')){
+                if(is_array($tags) && $tags){
+                    Tag2Target::removeOldDependancyTags($target->id);
+                    $idsTags = Tag::checkIssetTags($tags);
+                    Tag2Target::createDependancy($idsTags,$target->id);
+                    $arrTarget['tags'] = Tag::find([
+                        'conditions' => 'id IN ('.implode(',',$idsTags).')',
+                        'columns'    => implode(',',Tag::$fields),
+                    ])->toArray();
+                } else {  throw new ApiException(ApiException::PARAM_FORMAT); }
+            }
+            
+            $target->save();
+            return [ 'target' => $arrTarget ];
+            
+        } catch (Exception $ex) { return $this->errorException($e);  }
     }
     
     public function createAction(){

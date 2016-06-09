@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class TargetMigration_102
  */
-class TargetMigration_102 extends Migration
+class TargetMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -133,7 +133,6 @@ class TargetMigration_102 extends Migration
                 ),
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
-                    new Index('FK_target_category', array('category_id'), null)
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

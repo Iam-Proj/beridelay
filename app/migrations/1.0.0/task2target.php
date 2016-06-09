@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class Task2targetMigration_102
  */
-class Task2targetMigration_102 extends Migration
+class Task2targetMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -42,7 +42,6 @@ class Task2targetMigration_102 extends Migration
                 ),
                 'indexes' => array(
                     new Index('PRIMARY', array('task_id', 'target_id'), 'PRIMARY'),
-                    new Index('FK_task2target_target', array('target_id'), null)
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

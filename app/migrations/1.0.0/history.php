@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class HistoryMigration_102
  */
-class HistoryMigration_102 extends Migration
+class HistoryMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -107,9 +107,6 @@ class HistoryMigration_102 extends Migration
                 ),
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
-                    new Index('FK_history_user', array('user_id'), null),
-                    new Index('FK_history_target', array('target_id'), null),
-                    new Index('FK_history_task', array('task_id'), null)
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

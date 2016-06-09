@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model\Migration;
 /**
  * Class ContentMigration_102
  */
-class ContentMigration_102 extends Migration
+class ContentMigration_100 extends Migration
 {
     /**
      * Define the table structure
@@ -111,8 +111,6 @@ class ContentMigration_102 extends Migration
                 ),
                 'indexes' => array(
                     new Index('PRIMARY', array('id'), 'PRIMARY'),
-                    new Index('FK_content_user', array('user_id'), null),
-                    new Index('FK_content_history', array('history_id'), null)
                 ),
                 'options' => array(
                     'TABLE_TYPE' => 'BASE TABLE',

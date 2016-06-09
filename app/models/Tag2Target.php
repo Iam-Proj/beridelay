@@ -34,4 +34,10 @@ class Tag2Target extends Model
         }
     }
     
+    public static function removeOldDependancyTags($targetId){
+        if($deps = self::find('target_id = '.$targetId)){
+            $deps->delete();
+        }
+    }
+    
 }

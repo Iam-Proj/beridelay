@@ -34,7 +34,7 @@ class Tag extends Model
     
     public $validation = [
         'name' => 'required',
-        'color' => 'required',
+        //'color' => '',
     ];
     
     public $attachOne = [
@@ -44,7 +44,7 @@ class Tag extends Model
     public static function checkIssetTags($tags){
         $idsTags = [];
         foreach ($tags as $tagName) {
-            if ($tagItem = self::findFirst('name = "' . $tagName . '"')) {
+            if ($tagItem = self::findFirstByName($tagName)) {
                 $idsTags[$tagItem->id] = $tagItem->id;
             } else {
                 $tgNew = new self();
