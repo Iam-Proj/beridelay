@@ -32,7 +32,7 @@ trait Validation
     }
 
 
-    public static function validateData($rules = null, $data = null)
+    public static function validateData($rules = null, $data = [])
     {
         self::$validationMessages = [
             'required' => [],
