@@ -12,8 +12,8 @@ use Carbon\Carbon;
  * Модель "Пользователь"
  * @package BeriDelay\Models
  * @property Session|array $sessions
- * @method User findFirstByEmail(string $email)
- *
+ * @method static User findFirstByEmail(string $email)
+ * @method static User findFirstById(integer $id)
  */
 class User extends Model
 {
@@ -122,6 +122,20 @@ class User extends Model
         }
 
         $this->created_at = Carbon::now()->toDateTimeString();
+    }
+
+    public function beforeUpdate()
+    {
+        //проверяем, нет ли такого email или телефона
+        $user = User::findFirst([
+            'conditions' => '(phone = :phone: or email = :email:) and id <> :id:',
+            'bind' => ['phone' => $this->phone, 'email' => $this->email, 'id' => $this->id]
+        ]);
+
+        if ($user) {
+            if ($user->email == $this->email) throw new UserException(UserException::EMAIL_EXISTS);
+            if ($user->phone == $this->phone) throw new UserException(UserException::PHONE_EXISTS);
+        }
     }
 
     public function afterCreate()

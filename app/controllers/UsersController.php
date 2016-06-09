@@ -5,6 +5,7 @@ use BeriDelay\Exceptions\UserException;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Token;
 use BeriDelay\Models\Invite;
+use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
 
 class UsersController extends ApiBaseController
@@ -102,9 +103,29 @@ class UsersController extends ApiBaseController
             $token = $this->hasPrivate();
             
             $data = $this->request->getPost();
-            //if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
 
-            
+            if (isset($data['id']) || isset($data['password']) || isset($data['is_admin']) || isset($data['is_activate'])) {
+                // Только для администратора
+                if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
+
+                if (!isset($data['id'])) throw new ValidationException(['required' => ['id' => 'Required']]);
+                
+                $user = User::findFirstById($data['id']);
+                $user->update($data, ['name', 'surname', 'patronim', 'gender', 'city', 'age', 'salary', 'phone', 'email', 'password', 'is_admin', 'is_activate']);
+
+            } else {
+                // Пользователь редактирует свои данные
+                $user = $token->user;
+
+                if (isset($data['new_password'])) {
+                    if (!isset($data['old_password'])) throw new ValidationException(['required' => ['old_password' => 'Required']]);
+                    if ($user->hashPassword($data['old_password']) != $user->password) throw new UserException(UserException::INCORRECT_PASSWORD);
+                    $user->password = $data['new_password'];
+                }
+                $user->update($data, ['name', 'surname', 'patronim', 'phone', 'email', 'gender', 'city', 'age', 'salary']);
+            }
+
+            return ['success' => true];
         } catch (BaseException $e) {
             $this->errorException($e);
         }

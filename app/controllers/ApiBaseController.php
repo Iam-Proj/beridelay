@@ -31,6 +31,10 @@ class ApiBaseController extends Controller
         return true;
     }
 
+    /**
+     * @return Token
+     * @throws ApiException
+     */
     public function hasPrivate()
     {
         if(!$token_string = $this->request->getPost('token_access')) throw new ApiException(ApiException::TOKEN_REQUIRED);

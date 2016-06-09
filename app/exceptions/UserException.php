@@ -10,6 +10,7 @@ class UserException extends BaseException
     const INVITE_NOT_FOUND = 209;
     const EMAIL_EXISTS = 210;
     const PHONE_EXISTS = 211;
+    const INCORRECT_PASSWORD = 215;
 
     protected $messages = [
         self::NOT_FOUND => 'Пользователь с указанным email и паролем не найдены в системе',
@@ -18,5 +19,6 @@ class UserException extends BaseException
         self::INVITE_NOT_FOUND => 'Указанного приглашения не существует',
         self::EMAIL_EXISTS => 'Пользователь с таким email уже зарегистрирован',
         self::PHONE_EXISTS => 'Пользователь с таким номером телефона уже зарегистрирован',
+        self::INCORRECT_PASSWORD => 'Старый пароль указан неверно',
     ];
 }
