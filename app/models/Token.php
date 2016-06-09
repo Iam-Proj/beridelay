@@ -11,6 +11,9 @@ use Phalcon\Validation;
  */
 class Token extends Model
 {
+    const TOKEN_ACCESS = 'access';
+    const TOKEN_RESTORE = 'restore';
+    const TOKEN_ACTIVATION = 'activation';
     /**
      * @var string Тип токена
      */
@@ -71,10 +74,10 @@ class Token extends Model
         $this->save();
     }
 
-    public static function add($user_id, $type = 'access')
+    public static function add($user_id, $type = self::TOKEN_ACCESS)
     {
         //очищаем старые токены пользователя
-        static::clearTokens($user_id);
+        static::clearTokens($user_id, $type);
 
         //создаем новый токен
         $token = new static();
