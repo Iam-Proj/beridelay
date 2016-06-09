@@ -26,6 +26,10 @@ class TargetsController extends ApiBaseController {
     
     public function getAction(){
         
+        
+        
+        
+        
     }
     
     public function editAction(){
@@ -71,15 +75,21 @@ class TargetsController extends ApiBaseController {
     public function createAction(){
         $target = new Target();
         try{
+            
             if(!$target->name = $this->request->getPost('name')){
                 throw new ApiException(ApiException::PARAM_FORMAT);
             }
+            
             if(!$target->description = $this->request->getPost('description')){
                 throw new ApiException(ApiException::PARAM_FORMAT);
             }
-            if(!$target->category_id = $this->request->getPost('category_id')){
+            
+            $category_id = $this->request->getPost('category_id');
+            if($category_id === null){
                 throw new ApiException(ApiException::PARAM_FORMAT);
             }
+            $target->category_id = $category_id;
+            
             $target->is_hide = $this->request->getPost('is_hide')? $this->request->getPost('is_hide') : 0 ;
             $target->save();
             
