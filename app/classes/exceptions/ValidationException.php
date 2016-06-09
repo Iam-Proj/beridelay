@@ -11,8 +11,10 @@ class ValidationException extends BaseException
     ];
 
     public function __construct(array $validationMessages) {
-        if (count($validationMessages['required'])) parent::__construct(ValidationException::PARAM_REQUIRED, ['fields' => $validationMessages['required']]);
-        parent::__construct(ValidationException::PARAM_FORMAT, ['fields' => $validationMessages['format']]);
+        if (count($validationMessages['required']))
+            parent::__construct(ValidationException::PARAM_REQUIRED, ['fields' => $validationMessages['required']]);
+        else
+            parent::__construct(ValidationException::PARAM_FORMAT, ['fields' => $validationMessages['format']]);
     }
 
 }

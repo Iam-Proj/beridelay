@@ -13,24 +13,33 @@ use System\Exceptions\ValidationException;
  */
 trait Validation
 {
+    protected $validationExceptions = false;
     protected $validation = [];
-    protected static $validationMessages = [
-        'required' => [],
-        'format' => [],
-        'errors' => []
-    ];
+    protected static $validationMessages = [];
 
     public function validation()
     {
         $result = self::validateData($this->validation, $this->toArray());
-        if (!$result)
-            foreach (self::$validationMessages['errors'] as $error) $this->appendMessage($error);
+        if (!$result) {
+            if ($this->validationExceptions) {
+                throw new ValidationException(self::$validationMessages);
+            } else {
+                foreach (self::$validationMessages['errors'] as $error) $this->appendMessage($error);
+            }
+        }
 
         return $result;
     }
 
+
     public static function validateData($rules = null, $data = null)
     {
+        self::$validationMessages = [
+            'required' => [],
+            'format' => [],
+            'errors' => []
+        ];
+
         if (!count($rules)) return true;
 
         $validation = new Validator(new Translator('ru'), $data, $rules);
@@ -43,7 +52,7 @@ trait Validation
                 foreach ($errors as $error) {
                     self::$validationMessages['errors'][] = new Message('', $field, $error);
 
-                    if ($error == 'Required')
+                    if ($error == 'validation.required')
                         $required[$field] = 'Required';
                     else
                         $format[$field] = $error;

@@ -501,4 +501,10 @@ class Model extends PhalconModel
         }
         return $result;
     }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(self::$fields)) $columns = self::$fields;
+        parent::toArray($columns);
+    }
 }

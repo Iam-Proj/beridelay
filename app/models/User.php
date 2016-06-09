@@ -1,6 +1,7 @@
 <?php namespace BeriDelay\Models;
 
 use BeriDelay\Exceptions\UserException;
+use Phalcon\Http\Client\Exception;
 use System\Exceptions\ValidationException;
 use System\Models\Model;
 use System\Traits\SoftDelete;
@@ -80,6 +81,7 @@ class User extends Model
     public $is_activate;
 
     private $password_original;
+    public $validationExceptions = true;
 
     public $behaviors = [
         'System\Behaviors\Loggable'
@@ -102,10 +104,23 @@ class User extends Model
     /**
      * @var array Поля для вывода
      */
-    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary'];
+    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'is_activate', 'is_admin'];
 
     public function beforeCreate()
     {
+        if (!$this->password) throw new ValidationException(['required' => ['password' => 'Required']]);
+
+        //проверяем, нет ли такого email или телефона
+        $user = User::findFirst([
+            'conditions' => 'phone = :phone: or email = :email:',
+            'bind' => ['phone' => $this->phone, 'email' => $this->email]
+        ]);
+
+        if ($user) {
+            if ($user->email == $this->email) throw new UserException(UserException::EMAIL_EXISTS);
+            if ($user->phone == $this->phone) throw new UserException(UserException::PHONE_EXISTS);
+        }
+
         $this->created_at = Carbon::now()->toDateTimeString();
     }
 
@@ -180,24 +195,6 @@ class User extends Model
 
         if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
 
-        //проверяем, нет ли такого email или телефона
-        $user = User::findFirst([
-            'conditions' => 'phone = :phone: or email = :email:',
-            'bind' => ['phone' => $data['phone'], 'email' => $data['email']]
-        ]);
-
-        if ($user) {
-            if ($user->email == $data['email']) throw new UserException(UserException::EMAIL_EXISTS);
-            if ($user->phone == $data['phone']) throw new UserException(UserException::PHONE_EXISTS);
-        }
-
-        //если человек зашел по приглашению
-        $invite = null;
-        if (isset($data['invite'])) {
-            $invite = Invite::findByValue($data['invite']);
-            if (!$invite || $invite->user_id != null) throw new UserException(UserException::INVITE_NOT_FOUND);
-        }
-
         //создаем пользователя
         $user = new User();
 
@@ -215,6 +212,13 @@ class User extends Model
         $user->save();
 
         if (false == $user->save()) throw new UserException(UserException::INTERNAL, ['errors' => $user->getMessagesArray()]);
+
+        //если человек зашел по приглашению
+        $invite = null;
+        if (isset($data['invite'])) {
+            $invite = Invite::findByValue($data['invite']);
+            if (!$invite || $invite->user_id != null) throw new UserException(UserException::INVITE_NOT_FOUND);
+        }
 
         //добаляем в приглашение информацию о том, что пользователь зарегистрировался
         if ($invite) {

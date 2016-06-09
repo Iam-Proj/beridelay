@@ -6,6 +6,7 @@ use System\Traits\SoftDelete;
 /**
  * Модель "Приглашение"
  * @package BeriDelay\Models
+ * @method static Invite findByValue(string $value)
  */
 class Invite extends Model
 {
