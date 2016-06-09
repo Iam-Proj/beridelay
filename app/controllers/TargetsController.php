@@ -55,7 +55,10 @@ class TargetsController extends ApiBaseController {
             if($idsTags){
                 Tag2Target::createDependancy($idsTags,$arrTarget['id']);
                 $idsTags = implode(',',$idsTags);
-                $arrTarget['tags'] = Tag::find('id IN ('.$idsTags.')')->toArray();
+                $arrTarget['tags'] = Tag::find([
+                        'conditions' => 'id IN ('.$idsTags.')',
+                        'columns'    => implode(',',Tag::$fields),
+                    ])->toArray();
             }
 
             return [ 'target' => $arrTarget ];
