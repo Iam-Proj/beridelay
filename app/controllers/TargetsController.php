@@ -50,32 +50,18 @@ class TargetsController extends ApiBaseController {
             // Проверка на наличие тегов (если нет, то создаются)
             $tags = $this->request->getPost('tags');
             $idsTags = [];
-            if(is_array($tags) && $tags){
-                foreach($tags as $tagName){
-                    if($tagItem = Tag::findFirst('name = "'.$tagName.'"')){ 
-                        $idsTags[$tagItem->id] = $tagItem->id;
-                    } else {
-                        $tgNew = new Tag();
-                        $tgNew->name = $tagName;
-                        $tgNew->color = '';
-                        $tgNew->save();
-                        $idsTags[$tgNew->id] = $tgNew->id;
-                    }
-                }
-            }
-            
+            if(is_array($tags) && $tags){ $idsTags = Tag::checkIssetTags($tags); }
+            $arrTarget = $target->toArray(['id','category_id','name','description','is_hide']);
             if($idsTags){
-                foreach($idsTags as $item){
-                    $T2T = new Tag2Target();
-                    $T2T->tag_id = $item;
-                    $T2T->target_id = $target->id;
-                    $T2T->save();
-                }
+                Tag2Target::createDependancy($idsTags,$arrTarget['id']);
                 $idsTags = implode(',',$idsTags);
-                $target->tags = Tag::find('name IN ('.$idsTags.')')->toArray();
+                $arrTarget['tags'] = Tag::find([
+                        'conditions' => 'id IN ('.$idsTags.')',
+                        'columns'    => implode(',',Tag::$fields),
+                    ])->toArray();
             }
 
-            return [ 'target' => $target->toArray()];
+            return [ 'target' => $arrTarget ];
         } catch (BaseException $e) { return $this->errorException($e); }
     }
     
