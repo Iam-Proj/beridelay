@@ -108,8 +108,6 @@ class User extends Model
 
     public function beforeCreate()
     {
-        if (!$this->password) throw new ValidationException(['required' => ['password' => 'Required']]);
-
         //проверяем, нет ли такого email или телефона
         $user = User::findFirst([
             'conditions' => 'phone = :phone: or email = :email:',
@@ -204,7 +202,6 @@ class User extends Model
             'city' => 'required',
             'salary' => 'required|in:1,2,3',
             'invite' => 'alpha_num',
-            'password' => 'required|min:3'
         ];
 
         if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
@@ -213,7 +210,6 @@ class User extends Model
         $user = new User();
 
         $user->email = $data['email'];
-        $user->password = $data['password'];
         $user->name = $data['name'];
         $user->surname = $data['surname'];
         $user->patronim = $data['patronim'];
@@ -224,8 +220,6 @@ class User extends Model
         $user->salary = $data['salary'];
 
         $user->save();
-
-        if (false == $user->save()) throw new UserException(UserException::INTERNAL, ['errors' => $user->getMessagesArray()]);
 
         //если человек зашел по приглашению
         $invite = null;

@@ -13,6 +13,7 @@ class Dates extends Behavior implements BehaviorInterface
 {
     public function notify($type, \Phalcon\Mvc\ModelInterface $model)
     {
+        /** @var \System\Models\Model $model */
         switch ($type) {
             case 'beforeSave':
                 foreach ($model->dates as $field) {
@@ -24,8 +25,7 @@ class Dates extends Behavior implements BehaviorInterface
             case 'afterFetch':
             case 'afterSave':
                 foreach ($model->dates as $field) {
-                    $data = new Carbon($model->$field);
-                    $model->$field = $data;
+                    $model->$field = new Carbon($model->$field);
                 }
             break;
         }
