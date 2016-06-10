@@ -9,12 +9,6 @@ use Carbon\Carbon;
  */
 class Session extends Collection
 {
-
-    /**
-     * @var integer
-     */
-    public $id;
-
     /**
      * @var Carbon
      */
@@ -30,31 +24,14 @@ class Session extends Collection
      */
     public $ip;
 
-    public $belongsTo = [
+    protected $belongsTo = [
         'user' => ['BeriDelay\Models\User']
     ];
 
     public function beforeCreate()
     {
         $this->ip = isset($_SERVER['HTTP_X_REAL_IP']) && strlen($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER['REMOTE_ADDR'];
+        $this->created_at = new \MongoDate(time());
     }
-
-    public function beforeSave()
-    {
-        if ($this->created_at instanceof Carbon)
-            $this->created_at = $this->created_at->toDateTimeString();
-    }
-
-    public function afterFetch()
-    {
-        $this->created_at = new Carbon($this->created_at);
-    }
-
-    public function afterSave()
-    {
-        $this->created_at = new Carbon($this->created_at);
-    }
-
-
 
 }

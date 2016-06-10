@@ -15,6 +15,8 @@ use BeriDelay\Exceptions\ApiException;
  */
 class ApiBaseController extends Controller
 {
+    public $user = null;
+
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
         try {
@@ -40,13 +42,20 @@ class ApiBaseController extends Controller
         if(!$token_string = $this->request->getPost('token_access')) throw new ApiException(ApiException::TOKEN_REQUIRED);
         
         if(!$token = Token::getByToken($token_string)) throw new ApiException(ApiException::TOKEN_INVALID);
-        
-        if (!$token->user || $token->updated_at->addWeek() < Carbon::now()) {
+
+        if ($token->last_seen->addWeek() < Carbon::now()) {
             $token->delete();
             throw new ApiException(ApiException::TOKEN_INVALID);
         }
-        
+
         $token->life();
+
+        if (!$token->user) {
+            $token->delete();
+            throw new ApiException(ApiException::TOKEN_INVALID);
+        }
+
+        $this->di->set('user', $token->user, true);
 
         return $token;
     }

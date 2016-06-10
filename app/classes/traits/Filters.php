@@ -70,12 +70,13 @@ trait Filters
 
         if (isset($data['ids'])) {
             $ids = [];
-            if (!is_array($data['ids'])) throw new ValidationException(['required' => [], 'format' => ['ids' => 'integer.array']]);
+            if (!is_array($data['ids'])) throw new ValidationException(['format' => ['ids' => 'array.integer']]);
             foreach ($data['ids'] as $id) if (is_numeric($id) && $id > 0) $ids[] = $id;
-            if (!count($ids)) throw new ValidationException(['required' => [], 'format' => ['ids' => 'integer.array']]);
+            if (!count($ids)) throw new ValidationException(['format' => ['ids' => 'array.integer']]);
 
             $query->inWhere('id', $ids);
         } elseif (isset($data['id'])) {
+            if (!is_numeric($data['id']) && $data['id'] < 0)  throw new ValidationException(['format' => ['id' => 'integer']]);
             $query->where('id = :id:')->bind(['id' => $data['id']]);
         }
 

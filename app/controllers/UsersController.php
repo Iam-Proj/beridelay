@@ -104,7 +104,7 @@ class UsersController extends ApiBaseController
             
             $data = $this->request->getPost();
 
-            if (isset($data['id']) || isset($data['password']) || isset($data['is_admin']) || isset($data['is_activate'])) {
+            if (isset($data['id']) || isset($data['password']) || isset($data['is_admin']) || isset($data['is_activate']) || isset($data['email']) || isset($data['salary']) || isset($data['phone'])) {
                 // Только для администратора
                 if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
 
@@ -122,7 +122,7 @@ class UsersController extends ApiBaseController
                     if ($user->hashPassword($data['old_password']) != $user->password) throw new UserException(UserException::INCORRECT_PASSWORD);
                     $user->password = $data['new_password'];
                 }
-                $user->update($data, ['name', 'surname', 'patronim', 'phone', 'email', 'gender', 'city', 'age', 'salary']);
+                $user->update($data, ['name', 'surname', 'patronim', 'gender', 'city', 'age']);
             }
 
             return ['success' => true];

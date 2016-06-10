@@ -1,8 +1,9 @@
 <?php namespace BeriDelay\Models;
 
-use Carbon\Carbon;
 use System\Models\Model;
 use Phalcon\Validation;
+use Phalcon\Db\RawValue;
+use Carbon\Carbon;
 
 /**
  * Модель "Токен"
@@ -29,14 +30,18 @@ class Token extends Model
      */
     public $user_id;
 
-    public $updated_at;
+    /**
+     * @var Carbon Последнее обновление
+     */
+    public $last_seen;
 
-    //Связи
+    public $timestamps = false;
+
+    public $dates = ['last_seen'];
+
     public $belongsTo = [
         'user' => ['BeriDelay\Models\User']
     ];
-
-    public $dynamicUpdate = false;
 
     public function beforeCreate()
     {
@@ -70,16 +75,17 @@ class Token extends Model
 
     public function life()
     {
-        $this->updated_at = null;
+        //var_dump($this->getChangedFields());exit;
+        $this->last_seen = Carbon::now();
         $this->save();
     }
 
     public static function add($user_id, $type = self::TOKEN_ACCESS)
     {
-        //очищаем старые токены пользователя
+        // Очищаем старые токены пользователя
         static::clearTokens($user_id, $type);
 
-        //создаем новый токен
+        // Создаем новый токен
         $token = new static();
         $token->user_id = $user_id;
         $token->type = $type;

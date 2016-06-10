@@ -147,16 +147,16 @@ class Model extends PhalconModel
     protected $behaviors = [];
 
     /**
+     * Поля, которые не будут участвовать в сохранении
+     * @var array
+     */
+    protected $skipped = [];
+
+    /**
      * Динамическое обновление
      * @var boolean
      */
     protected $dynamicUpdate = true;
-
-    /**
-     * Не
-     * @var bool
-     */
-    protected $skipUpdatedAtField = true;
 
     /**
      * Поля по умолчанию для вывода
@@ -209,7 +209,8 @@ class Model extends PhalconModel
         $this->useDynamicUpdate($this->dynamicUpdate);
 
         // Пропуск аттрибутов при сохранении
-        $this->skipAttributes(['created_at', 'updated_at']);
+        if ($this->timestamps) $this->skipped = $this->skipped + ['created_at', 'updated_at'];
+        $this->skipAttributes($this->skipped);
 
         $this->keepSnapshots(true);
     }
@@ -252,6 +253,7 @@ class Model extends PhalconModel
         } else {
             $this->hasMany($field, $referenceModel, $referencedField, ['alias' => $alias]);
         }
+        $this->skipped[] = $alias;
     }
 
     /**
@@ -276,6 +278,7 @@ class Model extends PhalconModel
         } else {
             $this->hasOne($field, $referenceModel, $referencedField, ['alias' => $alias]);
         }
+        $this->skipped[] = $alias;
     }
 
     /**
@@ -300,6 +303,7 @@ class Model extends PhalconModel
         } else {
             $this->belongsTo($field, $referenceModel, $referencedField, ['alias' => $alias]);
         }
+        $this->skipped[] = $alias;
     }
 
     /**
@@ -325,6 +329,7 @@ class Model extends PhalconModel
             $referenceModel, $referencedField,
             ['alias' => $alias]
         );
+        $this->skipped[] = $alias;
     }
 
     /**
@@ -363,6 +368,7 @@ class Model extends PhalconModel
         } else {
             $this->hasMany($field, $referenceModel, $keyField, $params);
         }
+        $this->skipped[] = $alias;
     }
 
     /**

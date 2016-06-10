@@ -8,6 +8,9 @@ class Loggable extends Behavior implements BehaviorInterface
 {
     public function notify($type, \Phalcon\Mvc\ModelInterface $model)
     {
+        /**
+         * @var \System\Models\Model $model
+         */
         switch ($type) {
             case 'beforeCreate':
                 $model->setSnapshotData($model->toArray());

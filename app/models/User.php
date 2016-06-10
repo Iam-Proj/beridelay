@@ -175,14 +175,6 @@ class User extends Model
         return $this->phone;
     }
 
-    public static function findExists($email, $phone)
-    {
-        return self::findFirst([
-            'conditions' => 'phone = :phone: or email = :email:',
-            'bind' => ['phone' => $phone, 'email' => $email]
-        ]);
-    }
-
     /**
      * @param array $data
      * @return User
