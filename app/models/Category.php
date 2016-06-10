@@ -32,6 +32,8 @@ class Category extends Model
         'is_hide' => 'in:0,1'
     ];
     
-    
+    public static function countChilds($catId){
+        return self::count('category_id = '.$catId);
+    }
     
 }

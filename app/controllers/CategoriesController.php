@@ -5,6 +5,7 @@ use BeriDelay\Models\Invite;
 use BeriDelay\Models\Token;
 use BeriDelay\Models\Session;
 use BeriDelay\Models\Category;
+use BeriDelay\Models\Target;
 use System\Helpers\Logic;
 use System\Exceptions\BaseException;
 use BeriDelay\Exceptions\ApiException;
@@ -22,24 +23,76 @@ class CategoriesController extends ApiBaseController {
     }
     
     public function getAction(){
+        
+        // По ID категории
         if($id = $this->request->getPost('id')){
-            $cats = Category::findById($id)->toArray();
+            
+            try{ if(!$cat = Category::findFirstById($id)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }  }
+            catch (BaseException $e) { return $this->errorException($e); }
+            
+            $cat = $cat->toArray();
+            $cat['count_childs'] = Category::countChilds($cat['id']);
+            $cat['count_targets'] = Target::countTargetsByCategory($cat['id']);
+            
+            return [ 'categories' => $cat ];
         }
         
+        // По массиву ID категорий
         if($ids = $this->request->getPost('ids')){
-            foreach($ids as $k => $v){ 
-                try{ if(!is_numeric($v)){ throw new ApiException(ApiException::PARAM_FORMAT); }  }
+            foreach($ids as $item){ 
+                try{ if(!is_numeric($item)){ throw new ApiException(ApiException::PARAM_FORMAT); }  }
                 catch (BaseException $e) { return $this->errorException($e); }
             }
             $ids = implode(',',$ids);
-            $cats = Category::find('id IN ('.$ids.')');
+            $cats = Category::find('id IN ('.$ids.')')->toArray();
+            if($cats){
+                foreach($cats as &$item){
+                    $item['count_childs'] = Category::countChilds($item['id']);
+                    $item['count_targets'] = Target::countTargetsByCategory($item['id']);
+                }
+            }
+            return [ 'categories' => $cats ];
         }
         
-        if(!$id && !$ids){
-            $cats = Logic::recursionGet(Category::find(),'category_id');
+        // Все корневые категории
+        $dataPost = $this->request->getPost();
+        unset($dataPost['token_access']);
+        if(!$dataPost){
+            $catsItems = Category::find('category_id = 0')->toArray();
+            if(count($catsItems)){
+                foreach($catsItems as &$item){
+                    $item['count_childs'] = Category::countChilds($item['id']);
+                    $item['count_targets'] = Target::countTargetsByCategory($item['id']);
+                }
+            }
+            return [ 'categories' => $catsItems ];
         }
         
-        return [ 'categories' => $cats, ];
+        $cats = Category::query();
+        
+        // По имени
+        if($name = $this->request->getPost('name')){
+            $cats->andWhere('name LIKE "%'.$name.'%"');
+        }
+        
+        // По родительской категории
+        if($catId = $this->request->getPost('category_id')){
+            $cats->andWhere('category_id = '.$catId);
+        }
+        
+        $response = [];
+        if($cats->getWhere()){
+            $cats = $cats->execute();
+            if(count($cats)){
+                $response = $cats->toArray();
+                foreach($response as &$item){
+                    $item['count_childs'] = Category::countChilds($item['id']);
+                    $item['count_targets'] = Target::countTargetsByCategory($item['id']);
+                }
+            }
+        }
+        
+        return [ 'categories' => $response, ];
         
     }
     

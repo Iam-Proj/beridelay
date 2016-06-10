@@ -2,6 +2,8 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
+use BeriDelay\Models\Target;
+use BeriDelay\Models\Tag2Target;
 
 /**
  * Model Tag
@@ -39,6 +41,13 @@ class Tag extends Model
     
     public $attachOne = [
         'file' => ['System\Models\File']
+    ];
+    
+    protected $hasManyToMany = [
+        'Targets' => [
+            'BeriDelay\Models\Target',
+            'model' => 'BeriDelay\Models\Tag2Target'
+        ]
     ];
     
     public static function checkIssetTags($tags){
