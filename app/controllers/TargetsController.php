@@ -25,11 +25,90 @@ class TargetsController extends ApiBaseController {
     }
     
     public function getAction(){
-        
-        
-        
-        
-        
+        try{
+            
+            // По ID
+            if($id = $this->request->getPost('id')){
+                if(is_numeric($id)){
+                    $target = Target::findFirstById($id);
+                    if(!$target){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }
+                    $arrTarget = $target->toArray();
+                    $arrTarget['tags'] = $target->Tags->toArray();
+                    return [ 'target' => $arrTarget ];
+                } else { throw new ApiException(ApiException::PARAM_FORMAT); }
+            }
+            
+            // По массиву ID
+            if($ids = $this->request->getPost('ids')){
+                if(is_array($ids)){
+                    foreach($ids as $item){ if(!is_numeric($item)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); } }
+                    $targets = Target::find('id IN ('.implode(',',$ids).')');
+                    if(!count($targets)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }
+                    $targetsItems = [];
+                    foreach($targets as $item){
+                        $tags = $item->Tags->toArray();
+                        $item = $item->toArray();
+                        $item['tags'] = $tags;
+                        $targetsItems[] = $item;
+                    }
+                    return [ 'targets' => $targetsItems ];
+                } else { throw new ApiException(ApiException::PARAM_FORMAT); }
+            }
+            
+            // По всем остальным фильтрам 
+            $target = Target::query();
+            
+            // По категории
+            if($this->request->getPost('category_id')){
+                $category_id = $this->request->getPost('category_id');
+                if(!is_numeric($category_id)){ throw new ApiException(ApiException::PARAM_FORMAT); }
+                $target->andWhere('category_id = '.$category_id);
+            }
+            
+            // По тегам
+            $tags = $this->request->getPost('tags');
+            if(is_array($tags)){
+                $idsTags = [];
+                $ids = [];
+                $targetsItems = [];
+                foreach($tags as &$item){ $item = '"'.$item.'"'; }
+                $tgs = Tag::find('name IN ('.implode(',',$tags).')');
+                foreach($tgs as $itmTgs){ $idsTags[$itmTgs->id] = $itmTgs->id; }
+                if($idsTags){
+                    $targs = Tag2Target::find('tag_id in ('.implode(',',$idsTags).')');
+                    foreach($targs as $itm){
+                        $targetsItems[$itm->target_id] = $itm->target_id;
+                    }
+                }
+                if($targetsItems){
+                    $target->andWhere('id IN ('.implode(',',$targetsItems).')');
+                }
+            }
+            
+            // Остальные фильтры
+            if($data = $this->request->getPost()){
+                $target = Target::getFiltered($target,$data);
+            }
+            
+            $response = [];
+            
+            if($target->getWhere()){
+                $targets = $target->execute();
+                if(count($targets)){
+                    foreach($targets as $item){
+                        $tags = $item->Tags->toarray();
+                        $item = $item->toArray();
+                        $item['tags'] = $tags;
+                        $response[] = $item;
+                    }
+                }
+            }
+            
+            return [ 'targets' => $response ];
+            
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
     }
     
     public function editAction(){
