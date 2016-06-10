@@ -1,31 +1,38 @@
 <?php namespace BeriDelay\Controllers;
 
 use BeriDelay\Exceptions\ApiException;
-use System\Models\Log;
+use BeriDelay\Models\Session;
 use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
 
-class LogsController extends ApiBaseController
+class SessionsController extends ApiBaseController
 {
     public function getAction()
     {
         try {
             //приватный метод
             $token = $this->hasPrivate();
-            if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
 
             $data = $this->request->getPost();
 
             if (isset($data['ids'])) {
+                if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
                 if (!is_array($data['ids']) || !count($data['ids'])) throw new ValidationException(['format' => ['ids' => 'array.integer']]);
-                $logs = Log::findByIds($data['ids']);
+                $logs = Session::findByIds($data['ids']);
                 $count = count($logs);
             } elseif(isset($data['id'])) {
-                $logs = [Log::findById($data['id'])];
+                if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
+                $logs = [Session::findById($data['id'])];
                 $count = count($logs);
             } else {
-                $logs = Log::findByFilters($data);
-                $count = Log::countByFilters($data);
+                if (isset($data['user_id'])) {
+                    if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
+                } else {
+                    $data['count'] = 5;
+                }
+
+                $logs = Session::findByFilters($data);
+                $count = Session::countByFilters($data);
             }
 
         } catch (BaseException $e) {

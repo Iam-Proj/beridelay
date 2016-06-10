@@ -2,6 +2,9 @@
 
 use Phalcon\Mvc\Collection as PhalconCollection;
 use Phalcon\Text;
+use MongoId;
+use MongoDate;
+use System\Exceptions\ValidationException;
 
 /**
  * Class Collection
@@ -187,5 +190,64 @@ class Collection extends PhalconCollection
                 $relation['key'] . ' = \'' . $value . '\''
             ]);
         }
+    }
+
+    public static function findByIds(array $ids)
+    {
+        $mongo_ids = [];
+        foreach ($ids as $id) $mongo_ids[] = new MongoId($id);
+
+        return static::find([
+            'conditions' => [
+                '_id' => [
+                    '$in' => $mongo_ids
+                ]
+            ]
+        ]);
+    }
+
+    public static function findByFilters($data)
+    {
+        $params = static::getFilters($data);
+
+        if (isset($data['offset'])) $params['skip'] = $data['offset'];
+        if (isset($data['count'])) $params['limit'] = $data['count'];
+        if (isset($data['fields'])) {
+            foreach($data['fields'] as $field) $params['fields'][$field] = true;
+        }
+
+        if (isset($data['sort'])) $sort_field = $data['sort'];
+        $sort_direction = (!isset($data['sort_direction'])) ? 1 : $data['sort_direction'] == 0 ? 1 : -1;
+
+        if (isset($sort_field)) $params['sort'] = [$sort_field => $sort_direction];
+
+        return static::find($params);
+    }
+
+    public static function countByFilters($data)
+    {
+        return static::count(static::getFilters($data));
+    }
+
+    public static function getFilters($data, $params = [])
+    {
+        if (isset($data['created_at'])) {
+            $filter = $data['created_at'];
+
+            if (isset($filter['less'])) {
+                if (!is_numeric($filter['less']) || $filter['less'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
+                $time = new MongoDate($filter['less']);
+
+                $params['conditions']['created_at']['$lte'] = $time;
+            }
+            if (isset($filter['more'])) {
+                if (!is_numeric($filter['more']) || $filter['more'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
+                $time = new MongoDate($filter['more']);
+
+                $params['conditions']['created_at']['$gte'] = $time;
+            }
+        }
+
+        return $params;
     }
 }

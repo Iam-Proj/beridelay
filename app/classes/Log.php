@@ -1,9 +1,8 @@
 <?php namespace System\Models;
 
 use Carbon\Carbon;
-use MongoId;
 use MongoRegex;
-use BeriDelay\Models\Token;
+
 /**
  * Лог событий
  * @package System\Models
@@ -73,57 +72,15 @@ class Log extends Collection
         $log->new_value = $new_value;
         $log->save();
     }
-    
-    public static function findByIds(array $ids)
+
+    public static function getFilters($data, $params = [])
     {
-        $mongo_ids = [];
-        foreach ($ids as $id) $mongo_ids[] = new MongoId($id);
-
-        return static::find([
-            'conditions' => [
-                '_id' => [
-                    '$in' => $mongo_ids
-                ]
-            ]
-        ]);
-    }
-
-    public static function findByFilters($data)
-    {
-        $params = static::getFilters($data);
-        if (isset($data['offset'])) $params['skip'] = $data['offset'];
-        if (isset($data['count'])) $params['limit'] = $data['count'];
-        if (isset($data['fields'])) {
-            foreach($data['fields'] as $field) $params['fields'][$field] = true;
-        }
-
-        if (isset($data['sort'])) $sort_field = $data['sort'];
-        $sort_direction = (!isset($data['sort_direction'])) ? 1 : $data['sort_direction'] == 0 ? 1 : -1;
-
-        if (isset($sort_field)) $params['sort'] = [$sort_field => $sort_direction];
-
-        // var_dump($params); exit;
-        return static::find($params);
-    }
-
-    public static function countByFilters($data)
-    {
-
-    }
-
-    public static function getFilters($data)
-    {
-        $params = [];
-        if (isset($data['object'])) {
-            $regex = new MongoRegex('/.*' . $data['object'] . '.*/i');
-            $params['conditions']['object'] = $regex;
-        }
-        if (isset($data['action'])) {
-            $regex = new MongoRegex('/.*' . $data['action'] . '.*/i');
-            $params['conditions']['action'] = $regex;
-        }
+        if (isset($data['object'])) $params['conditions']['object'] = $regex = new MongoRegex('/.*' . $data['object'] . '.*/i');
+        if (isset($data['action'])) $params['conditions']['action'] = $regex = new MongoRegex('/.*' . $data['action'] . '.*/i');
         if (isset($data['object_id'])) $params['conditions']['object_id'] = (int) $data['object_id'];
         if (isset($data['user_id'])) $params['conditions']['user_id'] = (int) $data['user_id'];
+
+        $params = parent::getFilters($data, $params);
 
         return $params;
     }
