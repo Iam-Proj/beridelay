@@ -73,4 +73,14 @@ class Target extends Model
         return $query;
     }
     
+    /**
+     * 
+     * @param int $categoryId - ID категории
+     */
+    public static function countTargetsByCategory($categoryId){
+        return self::count('category_id = '.$categoryId);
+        
+        
+    }
+    
 }
