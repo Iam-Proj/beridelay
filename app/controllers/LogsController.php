@@ -32,7 +32,7 @@ class LogsController extends ApiBaseController
             return $this->errorException($e);
         }
 
-        return ['result' => $logs];
+        return ['result' => $logs, 'count' => $count];
     }
 }
 
