@@ -13,6 +13,8 @@ class Contract extends Model
     use SoftDelete;
     use Filters;
 
+    public $table = 'contract';
+
     /**
      * @var string Текст договора
      */
@@ -27,6 +29,8 @@ class Contract extends Model
         'text' => 'required',
         'type' => 'in:public,private',
     ];
+
+    public static $fields = ['id', 'text', 'type'];
 
     /**
      * @param array $data

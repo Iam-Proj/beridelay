@@ -20,8 +20,12 @@ trait SoftDelete
                 $conditions = $parameters['conditions'];
             else
                 $conditions = array_shift($parameters);
-            var_dump($parameters);exit;
-            $parameters['conditions'] = '(' . $conditions . ') and deleted_at is null';
+
+            if (is_string($conditions))
+                $parameters['conditions'] = '(' . $conditions . ') and deleted_at is null';
+            else
+                $parameters['conditions'] = 'deleted_at is null';
+
             return $parameters;
         }
 

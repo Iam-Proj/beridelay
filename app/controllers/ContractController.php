@@ -19,8 +19,8 @@ class ContractController extends ApiBaseController
     {
         try {
 
-            Contract::find(['id = 1'])->delete();
-            return ['result' => [Contract::get($this->request->getPost())]];
+            //$this->modelsManager->createBuilder()->
+            return Contract::get($this->request->getPost());
 
         } catch (BaseException $e) {
             return $this->errorException($e);
