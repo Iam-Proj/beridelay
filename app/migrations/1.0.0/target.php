@@ -70,6 +70,16 @@ class TargetMigration_100 extends Migration
                         )
                     ),
                     new Column(
+                        'salary',
+                        array(
+                            'type' => Column::TYPE_INTEGER,
+                            'unsigned' => true,
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'is_hide'
+                        )
+                    ),
+                    new Column(
                         'content_count',
                         array(
                             'type' => Column::TYPE_INTEGER,

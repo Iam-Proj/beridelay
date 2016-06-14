@@ -17,7 +17,7 @@ trait Filters
      */
     public static function get($data, $query = null)
     {
-        if (!$query  == null) $query = static::getFilters($data);
+        if ($query == null) $query = static::getFilters($data);
 
         $columns = isset($data['fields']) ? array_intersect(static::$fields, $data['fields']) : static::$fields;
         $query->columns($columns);
