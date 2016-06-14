@@ -27,7 +27,11 @@ trait Filters
         $rowCount = $query->columns('COUNT(*) as count')->execute()->toArray()[0]['count'];
 
         $columns = isset($data['fields']) ? array_intersect(static::$fields, $data['fields']) : static::$fields;
-        $query->columns($columns);
+        if (count($columns)) {
+            $query->columns($columns);
+        } else {
+            $query->columns('*');
+        }
 
         $count = isset($data['count']) ? $data['count'] : 100;
 
@@ -121,25 +125,6 @@ trait Filters
         if (isset($data['created_at'])) static::filterDates($query, 'created_at', $data['created_at']);
         if (isset($data['updated_at'])) static::filterDates($query, 'updated_at', $data['updated_at']);
 
-        if (isset($data['created_at'])) {
-            $filter = $data['created_at'];
-
-
-        }
-
-        if (isset($filter['less'])) {
-            if (!is_numeric($filter['less']) || $filter['less'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
-            //$time = new MongoDate($filter['less']);
-
-            //$params['conditions']['created_at']['$lte'] = $time;
-        }
-        if (isset($filter['more'])) {
-            if (!is_numeric($filter['more']) || $filter['more'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
-            $time = new MongoDate($filter['more']);
-
-            $params['conditions']['created_at']['$gte'] = $time;
-        }
-
         return $query;
     }
 
@@ -205,7 +190,7 @@ trait Filters
      */
     protected static function filterValue(&$query, $name, $value, $list = null)
     {
-        if (!in_array($value, $list)) throw new ValidationException(['required' => [$name => 'in']]);
+        if ($list != null && !in_array($value, $list)) throw new ValidationException(['required' => [$name => 'in']]);
 
         $query->andWhere($name . ' = :' . $name . ':')->bind([$name => $value], true);
     }
@@ -220,7 +205,6 @@ trait Filters
     {
         if (isset($value['less'])) {
             if (!is_numeric($value['less']) || $value['less'] < 1) throw new ValidationException(['format' => [$name . '.less' => 'timestamp']]);
-            $time =
             $query->andWhere($name . ' <= :' . $name . '_less:')->bind([$name . '_less' => $value['less']], true);
         }
         if (isset($value['more'])) {
