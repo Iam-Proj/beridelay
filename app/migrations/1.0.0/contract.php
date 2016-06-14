@@ -55,7 +55,7 @@ class ContractMigration_100 extends Migration
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
                             'size' => 1,
-                            'after' => 'is_hide'
+                            'after' => 'type'
                         )
                     ),
                     new Column(
