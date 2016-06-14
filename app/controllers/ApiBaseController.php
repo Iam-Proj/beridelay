@@ -117,7 +117,7 @@ class ApiBaseController extends Controller
 
             //проверяем переданные параметры
             if (!$this->request->getPost('ids') && !$this->request->getPost('id')) throw new ApiException(ApiException::PARAM_REQUIRED);
-            $ids = $this->request->getPost('ids')? $this->request->getPost('ids') : [$this->request->getPost('id')];
+            $ids = $this->request->getPost('ids') ? $this->request->getPost('ids') : [$this->request->getPost('id')];
 
             //пользователь должен быть админом
             if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
@@ -130,6 +130,7 @@ class ApiBaseController extends Controller
 
             //в цикле удаляем все указанные записи
             foreach ($query->inWhere('id', $ids)->execute() as $model) {
+                /** @var \System\Models\Model $model */
                 $result = ['id' => $model->id, 'success' => true];
                 $deleted[] = $model->id;
 
