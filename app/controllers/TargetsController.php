@@ -163,6 +163,11 @@ class TargetsController extends ApiBaseController {
                 throw new ApiException(ApiException::PARAM_FORMAT);
             }
             
+            if($salary = $this->request->getPost('salary')){
+                if(is_numeric($salary)){ throw new ApiException(ApiException::PARAM_FORMAT); }
+                $target->salary = $salary;
+            }
+            
             $category_id = $this->request->getPost('category_id');
             if($category_id === null){
                 throw new ApiException(ApiException::PARAM_FORMAT);

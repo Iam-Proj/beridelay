@@ -12,8 +12,38 @@ use BeriDelay\Exceptions\ApiException;
 
 class TaskController extends ApiBaseController {
     
+    protected $token;
     
+    public function initialize(){
+        try {
+            $this->token = $this->hasPrivate();
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
+    }
     
+    public function getAction(){
+        
+        
+        
+        
+        
+    }
     
+    public function editAction(){
+        
+        
+        
+        
+        
+    }
+    
+    public function createAction(){
+        
+        
+        
+        
+        
+    }
     
 }
