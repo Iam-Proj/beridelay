@@ -1,6 +1,7 @@
 <?php namespace System\Traits;
 
 use System\Exceptions\ValidationException;
+use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 /**
  * Трайт "Фильтры"
  * Позволяет фильтровать данные
@@ -17,19 +18,41 @@ trait Filters
      */
     public static function get($data, $query = null)
     {
+        //$this->modelsManager->createBuilder()
         if ($query == null) $query = static::getFilters($data);
-
-        $columns = isset($data['fields']) ? array_intersect(static::$fields, $data['fields']) : static::$fields;
-        $query->columns($columns);
 
         $sort_field = isset($data['sort']) ? $data['sort'] : 'created_at';
         $sort_order = isset($data['sort_direction']) ? $data['sort_direction'] == 1 ? 'desc' : 'asc' : 'asc';
 
         $query->orderBy($sort_field . ' ' . $sort_order);
 
+        $count = $query->columns('COUNT(*)')->execute();
+
+        $columns = isset($data['fields']) ? array_intersect(static::$fields, $data['fields']) : static::$fields;
+        $query->columns($columns);
+
         $query->limit(isset($data['count']) ? $data['count'] : 100, isset($data['offset']) ? $data['offset'] : null);
 
-        return $query->execute()->toArray();
+        $result = $query->execute();
+
+        return ['result' => $result, 'count' => $count->toArray()[0]];
+
+        /*$paginator = new PaginatorModel(
+            array(
+                "data"  => Products::find(),
+                "limit" => 10,
+                "page"  => $currentPage
+            )
+        );*/
+
+
+        //return $result
+    }
+
+    public static function getCount($data, $query = null)
+    {
+        if ($query == null) $query = static::getFilters($data);
+        return $query->columns('COUNT(*) AS count')->execute();
     }
 
     /**

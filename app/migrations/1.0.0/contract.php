@@ -47,6 +47,34 @@ class ContractMigration_100 extends Migration
                             'size' => 50,
                             'after' => 'text'
                         )
+                    ),
+                    new Column(
+                        'created_at',
+                        array(
+                            'type' => Column::TYPE_TIMESTAMP,
+                            'default' => "CURRENT_TIMESTAMP",
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'is_hide'
+                        )
+                    ),
+                    new Column(
+                        'updated_at',
+                        array(
+                            'type' => Column::TYPE_TIMESTAMP,
+                            'default' => "CURRENT_TIMESTAMP",
+                            'notNull' => true,
+                            'size' => 1,
+                            'after' => 'created_at'
+                        )
+                    ),
+                    new Column(
+                        'deleted_at',
+                        array(
+                            'type' => Column::TYPE_TIMESTAMP,
+                            'size' => 1,
+                            'after' => 'updated_at'
+                        )
                     )
                 ),
                 'indexes' => array(
