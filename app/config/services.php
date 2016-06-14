@@ -26,6 +26,7 @@ setlocale(LC_TIME, 'ru_RU.UTF-8');
 date_default_timezone_set($config->timeformat->timezone);
 //Устанавливаем локаль для Carbon
 Carbon::setLocale($config->timeformat->localeCarbon);
+Carbon::setToStringFormat('U');
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework

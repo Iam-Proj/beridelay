@@ -1,11 +1,14 @@
 <?php namespace BeriDelay\Controllers;
 
 use BeriDelay\Exceptions\ApiException;
+use BeriDelay\Exceptions\UserException;
 use BeriDelay\Models\Contract;
+use BeriDelay\Models\Token;
+use BeriDelay\Models\Invite;
 use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
 
-class ContractController extends ApiBaseController
+class InviteController extends ApiBaseController
 {
 
     /**

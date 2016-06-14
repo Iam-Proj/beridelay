@@ -241,7 +241,7 @@ class Collection extends PhalconCollection
                 $params['conditions']['created_at']['$lte'] = $time;
             }
             if (isset($filter['more'])) {
-                if (!is_numeric($filter['more']) || $filter['more'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
+                if (!is_numeric($filter['more']) || $filter['more'] < 1) throw new ValidationException(['format' => ['created_at.more' => 'timestamp']]);
                 $time = new MongoDate($filter['more']);
 
                 $params['conditions']['created_at']['$gte'] = $time;

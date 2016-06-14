@@ -1,7 +1,6 @@
 <?php namespace System\Traits;
 
 use System\Exceptions\ValidationException;
-use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 /**
  * Трайт "Фильтры"
  * Позволяет фильтровать данные
@@ -18,7 +17,6 @@ trait Filters
      */
     public static function get($data, $query = null)
     {
-        //$this->modelsManager->createBuilder()
         if ($query == null) $query = static::getFilters($data);
 
         $sort_field = isset($data['sort']) ? $data['sort'] : 'created_at';
@@ -26,33 +24,37 @@ trait Filters
 
         $query->orderBy($sort_field . ' ' . $sort_order);
 
-        $count = $query->columns('COUNT(*)')->execute();
+        $rowCount = $query->columns('COUNT(*) as count')->execute()->toArray()[0]['count'];
 
         $columns = isset($data['fields']) ? array_intersect(static::$fields, $data['fields']) : static::$fields;
         $query->columns($columns);
 
-        $query->limit(isset($data['count']) ? $data['count'] : 100, isset($data['offset']) ? $data['offset'] : null);
+        $count = isset($data['count']) ? $data['count'] : 100;
 
-        $result = $query->execute();
+        $offset = 0;
+        $page = 1;
+        if (isset($data['page'])) {
+            $offset = ($data['page'] - 1) * $count;
+            $page = $data['page'];
+        }
+        
+        if (isset($data['offset'])) {
+            $offset = $data['offset'];
+            $page = floor($offset / $count) + 1;
+        }
 
-        return ['result' => $result, 'count' => $count->toArray()[0]];
+        $query->limit($count, $offset);
 
-        /*$paginator = new PaginatorModel(
-            array(
-                "data"  => Products::find(),
-                "limit" => 10,
-                "page"  => $currentPage
-            )
-        );*/
+        $result = $query->execute()->toArray();
 
+        return [
+            'result' => $result,
+            'count' => (int) $rowCount,
+            'offset' => (int) $offset,
+            'page' => (int) $page,
+            'pageCount' => ceil($rowCount / $count)
+        ];
 
-        //return $result
-    }
-
-    public static function getCount($data, $query = null)
-    {
-        if ($query == null) $query = static::getFilters($data);
-        return $query->columns('COUNT(*) AS count')->execute();
     }
 
     /**
@@ -116,8 +118,26 @@ trait Filters
     {
         if ($query === null) $query = static::query();
 
-        if (isset($data['minute'])) {
-            if (!is_numeric($data['minute']) || $data['minute'] < 0 || $data['minute'] > 59) throw new ValidationException(['required' => [], 'format' => ['minute' => 'minute']]);
+        if (isset($data['created_at'])) static::filterDates($query, 'created_at', $data['created_at']);
+        if (isset($data['updated_at'])) static::filterDates($query, 'updated_at', $data['updated_at']);
+
+        if (isset($data['created_at'])) {
+            $filter = $data['created_at'];
+
+
+        }
+
+        if (isset($filter['less'])) {
+            if (!is_numeric($filter['less']) || $filter['less'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
+            //$time = new MongoDate($filter['less']);
+
+            //$params['conditions']['created_at']['$lte'] = $time;
+        }
+        if (isset($filter['more'])) {
+            if (!is_numeric($filter['more']) || $filter['more'] < 1) throw new ValidationException(['format' => ['created_at.less' => 'timestamp']]);
+            $time = new MongoDate($filter['more']);
+
+            $params['conditions']['created_at']['$gte'] = $time;
         }
 
         return $query;
@@ -127,7 +147,6 @@ trait Filters
      * @param \Phalcon\Mvc\Model\Criteria $query
      * @param string $name
      * @param string $value
-     * @return \Phalcon\Mvc\Model\Criteria
      */
     protected static function filterLike(&$query, $name, $value)
     {
@@ -140,7 +159,6 @@ trait Filters
      * @param string $value
      * @param int|null $min
      * @param int|null $max
-     * @return \Phalcon\Mvc\Model\Criteria
      * @throws ValidationException;
      */
     protected static function filterInterval(&$query, $name, $value, $min = null, $max = null)
@@ -183,7 +201,6 @@ trait Filters
      * @param string $name
      * @param string $value
      * @param array|null $list
-     * @return \Phalcon\Mvc\Model\Criteria
      * @throws ValidationException
      */
     protected static function filterValue(&$query, $name, $value, $list = null)
@@ -191,6 +208,25 @@ trait Filters
         if (!in_array($value, $list)) throw new ValidationException(['required' => [$name => 'in']]);
 
         $query->andWhere($name . ' = :' . $name . ':')->bind([$name => $value], true);
+    }
+
+    /**
+     * @param \Phalcon\Mvc\Model\Criteria $query
+     * @param string $name
+     * @param string $value
+     * @throws ValidationException
+     */
+    protected static function filterDates(&$query, $name, $value)
+    {
+        if (isset($value['less'])) {
+            if (!is_numeric($value['less']) || $value['less'] < 1) throw new ValidationException(['format' => [$name . '.less' => 'timestamp']]);
+            $time =
+            $query->andWhere($name . ' <= :' . $name . '_less:')->bind([$name . '_less' => $value['less']], true);
+        }
+        if (isset($value['more'])) {
+            if (!is_numeric($value['more']) || $value['more'] < 1) throw new ValidationException(['format' => [$name . '.more' => 'timestamp']]);
+            $query->andWhere($name . ' >= :' . $name . '_more:')->bind([$name . '_more' => $value['more']], true);
+        }
     }
     
 }

@@ -7,6 +7,7 @@ use System\Traits\Filters;
 /**
  * Модель "Договор-оферта"
  * @package BeriDelay\Models
+ * @method static Contract findFirstById(integer $id)
  */
 class Contract extends Model
 {

@@ -511,6 +511,7 @@ class Model extends PhalconModel
     public function toArray($columns = null)
     {
         if ($columns == null && !empty(self::$fields)) $columns = self::$fields;
+
         return parent::toArray($columns);
     }
 }
