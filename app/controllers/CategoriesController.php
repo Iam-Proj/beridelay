@@ -34,7 +34,7 @@ class CategoriesController extends ApiBaseController {
             $cat['count_childs'] = Category::countChilds($cat['id']);
             $cat['count_targets'] = Target::countTargetsByCategory($cat['id']);
             
-            return [ 'categories' => $cat ];
+            return [ 'categories' => [$cat] ];
         }
         
         // По массиву ID категорий
@@ -107,7 +107,7 @@ class CategoriesController extends ApiBaseController {
         $cat->is_hide     = $hide;
         $cat->save();
         
-        return [ 'category' => $cat->toArray(['name','category_id','is_hide']), ];
+        return [ 'categories' => [$cat->toArray(['name','category_id','is_hide'])], ];
     }
     
     public function editAction(){
@@ -128,7 +128,7 @@ class CategoriesController extends ApiBaseController {
         
         $cat->save();
         
-        return [ 'category' => $cat->toArray(['name','category_id','is_hide']), ];
+        return [ 'categories' => [$cat->toArray(['name','category_id','is_hide'])], ];
     }
         
 }

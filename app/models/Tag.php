@@ -50,6 +50,8 @@ class Tag extends Model
         ]
     ];
     
+    public static $countDefault = 20;
+    
     public static function checkIssetTags($tags){
         $idsTags = [];
         foreach ($tags as $tagName) {
