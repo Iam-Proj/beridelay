@@ -2,6 +2,7 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
+use System\Traits\Filters;
 
 /**
  * Модель "Договор-оферта"
@@ -10,6 +11,7 @@ use System\Traits\SoftDelete;
 class Contract extends Model
 {
     use SoftDelete;
+    use Filters;
 
     /**
      * @var string Текст договора
@@ -25,4 +27,16 @@ class Contract extends Model
         'text' => 'required',
         'type' => 'in:public,private',
     ];
+
+    /**
+     * @param array $data
+     * @param \Phalcon\Mvc\Model\Criteria $query
+     * @return \Phalcon\Mvc\Model\Criteria
+     */
+    public static function getFiltersBase($data, $query)
+    {
+        if (isset($data['type'])) self::filterValue($query, 'type', $data['type'], ['public', 'private']);
+
+        return $query;
+    }
 }
