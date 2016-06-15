@@ -6,6 +6,13 @@ use System\Helpers\Filesystem as FileHelper;
 
 class Photo extends File
 {
+    public static $fields = ['id', 'path', 'thumbs', 'size', 'info'];
+
+    public static $sizes = [
+        'small' => [100, 100],
+        'medium' => [400, 400],
+        'big' => [1600, 1200],
+    ];
     /**
      * @var array Расширения файлов
      */
@@ -155,6 +162,20 @@ class Photo extends File
         else {
             return parent::getDefaultFileTypes();
         }
+    }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
+        
+        $result = parent::toArray($columns);
+        if ($columns != null && in_array('thumbs', $columns)) {
+            $result['small'] = $this->thumb(static::$sizes['small'][0], static::$sizes['small'][1]);
+            $result['medium'] = $this->thumb(static::$sizes['medium'][0], static::$sizes['medium'][1]);
+            $result['big'] = $this->thumb(static::$sizes['big'][0], static::$sizes['big'][1]);
+        }
+
+        return $result;
     }
 
 }

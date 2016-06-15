@@ -70,6 +70,12 @@ class File extends Model
 
     public static $json = ['info'];
 
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+
+    public static $fields = ['id', 'path', 'size', 'info'];
+
     /**
      * @var mixed Локальное имя файла или экземпляр класса \Phalcon\Http\Request\File.
      */
@@ -441,5 +447,15 @@ class File extends Model
         }
 
         return FileHelper::instance()->copy($sourcePath, $destinationPath . $destinationFileName);
+    }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
+
+        $result = parent::toArray($columns);
+        if ($columns != null && in_array('path', $columns)) $result['path'] = $this->getPath();
+
+        return $result;
     }
 }

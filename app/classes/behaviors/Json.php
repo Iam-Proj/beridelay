@@ -2,6 +2,7 @@
 
 use Phalcon\Mvc\Model\Behavior;
 use Phalcon\Mvc\Model\BehaviorInterface;
+use Phalcon\Mvc\ModelInterface;
 
 /**
  * Поведение "JSON"
@@ -10,7 +11,7 @@ use Phalcon\Mvc\Model\BehaviorInterface;
  */
 class Json extends Behavior implements BehaviorInterface
 {
-    public function notify($type, \Phalcon\Mvc\ModelInterface $model)
+    public function notify($type, ModelInterface $model)
     {
         /** @var \System\Models\Model $model */
         switch ($type) {

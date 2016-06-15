@@ -166,7 +166,7 @@ class Model extends PhalconModel
      */
     protected static $fields = [];
     
-    private $defaultBehaviors = [
+    private static $defaultBehaviors = [
         'System\Behaviors\Dates',
         'System\Behaviors\Json'
     ];
@@ -189,7 +189,7 @@ class Model extends PhalconModel
         foreach ($this->attachOne as $alias => $attach) $this->attachRelation('one', $alias, $attach);
         foreach ($this->attachMany as $alias => $attach) $this->attachRelation('many', $alias, $attach);
 
-        foreach ($this->defaultBehaviors as $behavior) $this->behaviors[] = $behavior;
+        foreach (self::$defaultBehaviors as $behavior) $this->behaviors[] = $behavior;
 
         // Устанавливаем поведения
         foreach ($this->behaviors as $behavior) {
@@ -513,7 +513,7 @@ class Model extends PhalconModel
 
     public function toArray($columns = null)
     {
-        if ($columns == null && !empty(self::$fields)) $columns = self::$fields;
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
 
         return parent::toArray($columns);
     }

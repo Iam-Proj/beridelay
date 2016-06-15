@@ -62,10 +62,20 @@ class ContentController extends ApiBaseController
                 $content->history_id = $history->id;
                 $content->content_type = $data['content_type'];
                 $content->save();
+
+                if ($content->content_type == 0)
+                    $content->attachImage($file);
+                else
+                    $content->attachVideo($file);
+
+                $contentArray = $content->toArray(Content::$fields);
+
+                if ($content->content_type == 0)
+                    $contentArray['image'] = $content->image->toArray();
+                else
+                    $contentArray['video'] = $content->video->toArray();
                 
-                $content->attachFile($file);
-                
-                $result[] = $content->toArray();
+                $result[] = $contentArray;
             }
 
             return ['result' => $result, 'count' => count($result), 'page' => 1, 'pageCount' => 1, 'offset' => 0];

@@ -8,7 +8,10 @@ use System\Models\File;
 /**
  * Модель "Контент"
  * @package BeriDelay\Models
- * @method boolean attachFile(File $object)
+ * @property \System\Models\Photo $image
+ * @property \System\Models\Video $video
+ * @method boolean attachImage(File $object)
+ * @method boolean attachVideo(File $object)
  */
 class Content extends Model
 {
@@ -41,7 +44,8 @@ class Content extends Model
     public $content_type;
 
     public $attachOne = [
-        'file' => ['System\Models\File']
+        'image' => ['System\Models\Photo'],
+        'video' => ['System\Models\Video']
     ];
 
     public $validation = [

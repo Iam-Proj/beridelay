@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Phalcon\Mvc\Model\Behavior;
 use Phalcon\Mvc\Model\BehaviorInterface;
+use Phalcon\Mvc\ModelInterface;
 
 /**
  * Поведение "Даты"
@@ -11,11 +12,10 @@ use Phalcon\Mvc\Model\BehaviorInterface;
  */
 class Dates extends Behavior implements BehaviorInterface
 {
-    public function notify($type, \Phalcon\Mvc\ModelInterface $model)
+    public function notify($type, ModelInterface $model)
     {
 
         /** @var \System\Models\Model $model */
-        //var_dump(get_class($model), $model::$dates, $type, $model->id);
         switch ($type) {
             case 'beforeSave':
                 foreach ($model::$dates as $field) {
