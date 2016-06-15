@@ -75,7 +75,6 @@ class Token extends Model
 
     public function life()
     {
-        //var_dump($this->getChangedFields());exit;
         $this->last_seen = Carbon::now();
         $this->save();
     }

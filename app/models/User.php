@@ -185,6 +185,7 @@ class User extends Model
     {
         $rules = [
             'email' => 'required|email',
+            'password' => 'required',
             'name' => 'required|alpha|between:2,50',
             'surname' => 'required|alpha|between:2,50',
             'patronim' => 'required|alpha|between:2,50',
@@ -202,6 +203,8 @@ class User extends Model
         $user = new User();
 
         $user->email = $data['email'];
+        $user->password = $data['password'];
+        $user->password_original = $data['password'];
         $user->name = $data['name'];
         $user->surname = $data['surname'];
         $user->patronim = $data['patronim'];
