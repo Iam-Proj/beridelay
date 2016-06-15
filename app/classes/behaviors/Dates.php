@@ -25,7 +25,7 @@ class Dates extends Behavior implements BehaviorInterface
             case 'afterFetch':
             case 'afterSave':
                 foreach ($model->dates as $field) {
-                    $model->$field = new Carbon($model->$field);
+                    if (!$model->$field instanceof Carbon) $model->$field = new Carbon($model->$field);
                 }
             break;
         }

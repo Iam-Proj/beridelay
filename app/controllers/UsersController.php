@@ -27,7 +27,7 @@ class UsersController extends ApiBaseController
             return $this->errorException($e);
         }
 
-        return ['token_access' => $token->value];
+        return ['response' => ['token_access' => $token->value]];
     }
 
     /**
@@ -49,7 +49,7 @@ class UsersController extends ApiBaseController
                 return ['result' => User::get($data, $filters)];
             } else {
                 $user = $token->user->toArray(['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary']);
-                return ['result' => [$user]];
+                return ['response' => $user];
             }
 
         } catch (BaseException $e) {
@@ -90,7 +90,7 @@ class UsersController extends ApiBaseController
         } catch (BaseException $e) {
             return $this->errorException($e);
         }
-        return ['success' => $result, 'user' => $user->toArray(User::$fields)];
+        return ['response' => $user->toArray(User::$fields)];
     }
 
     /**

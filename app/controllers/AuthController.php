@@ -21,7 +21,7 @@ class AuthController extends ApiBaseController
             return $this->errorException($e);
         }
 
-        return ['token_access' => $token->value];
+        return ['response' => ['token_access' => $token->value]];
     }
 
     /**
@@ -123,6 +123,8 @@ class AuthController extends ApiBaseController
         } catch (BaseException $e) {
             return $this->errorException($e);
         }
+
+        return ['success' => true];
     }
 
     /**
@@ -143,6 +145,8 @@ class AuthController extends ApiBaseController
         } catch (BaseException $e) {
             return $this->errorException($e);
         }
+
+        return ['success' => true];
     }
 }
 

@@ -15,7 +15,7 @@ trait Validation
 {
     protected $validationExceptions = false;
     protected $validation = [];
-    protected static $validationMessages = [];
+    public static $validationMessages = [];
 
     public function validation()
     {

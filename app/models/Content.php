@@ -2,6 +2,7 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
+use System\Traits\Filters;
 
 /**
  * Модель "Контент"
@@ -10,6 +11,7 @@ use System\Traits\SoftDelete;
 class Content extends Model
 {
     use SoftDelete;
+    use Filters;
 
     /**
      * @var int ID пользователя
@@ -42,4 +44,6 @@ class Content extends Model
         'is_hide' => 'in:0,1',
         'content_type' => 'in:0,1'
     ];
+
+    public static $fields = ['id', 'user_id', 'history_id', 'description', 'is_hide', 'content_type'];
 }
