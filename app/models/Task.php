@@ -37,6 +37,19 @@ class Task extends Model
      */
     public $finished_at;
 
+    /**
+     *
+     * @var int Все статусы 
+     */
+    public static $statuses = [
+        0 => 'новое задание',
+        1 => 'в работе',
+        2 => 'на проверку',
+        10 => 'завершено',
+        20 => 'отклонено',
+        30 => 'заблокировано',
+    ];
+    
     public $dates = ['finished_at'];
 
     protected $hasManyToMany = [
