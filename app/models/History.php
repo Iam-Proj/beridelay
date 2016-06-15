@@ -2,11 +2,13 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
+use System\Models\File;
 
 /**
  * Модель "История"
  * @package BeriDelay\Models
  * @method static History findFirstById(integer $id)
+ * @method boolean attachFile(File $object)
  */
 class History extends Model
 {
@@ -37,6 +39,10 @@ class History extends Model
      */
     public $comment;
 
+    public $attachOne = [
+        'file' => ['System\Models\File']
+    ];
+    
     public $validation = [
         'user_id' => 'required|integer',
         'task_id' => 'required|integer',

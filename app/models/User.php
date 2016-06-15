@@ -146,7 +146,7 @@ class User extends Model
     public function hashPassword($password)
     {
         $created_at = ($this->created_at instanceof Carbon) ? $this->created_at->toDateTimeString() : $this->created_at;
-        return sha1(sha1(sha1($password) . $this->id) . $this->created_at);
+        return sha1(sha1(sha1($password) . $this->id) . $created_at);
     }
 
     public function setPassword($password)
