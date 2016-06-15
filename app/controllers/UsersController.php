@@ -75,7 +75,7 @@ class UsersController extends ApiBaseController
             }
 
             $user = new User();
-            $result = $user->create($this->request->getPost(), [
+            $user->create($this->request->getPost(), [
                 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'invite', 'password', 'is_activate', 'is_admin'
             ]);
             $user->refresh();
@@ -125,10 +125,11 @@ class UsersController extends ApiBaseController
                 $user->update($data, ['name', 'surname', 'patronim', 'gender', 'city', 'age']);
             }
 
-            return ['success' => true];
         } catch (BaseException $e) {
             $this->errorException($e);
         }
+
+        return ['success' => true];
     }
 
     /**

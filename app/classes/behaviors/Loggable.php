@@ -3,10 +3,11 @@
 use Phalcon\Mvc\Model\Behavior;
 use Phalcon\Mvc\Model\BehaviorInterface;
 use System\Models\Log;
+use Phalcon\Mvc\ModelInterface;
 
 class Loggable extends Behavior implements BehaviorInterface
 {
-    public function notify($type, \Phalcon\Mvc\ModelInterface $model)
+    public function notify($type, ModelInterface $model)
     {
         /**
          * @var \System\Models\Model $model
@@ -38,8 +39,9 @@ class Loggable extends Behavior implements BehaviorInterface
         return true;
     }
 
-    public function missingMethod(\Phalcon\Mvc\ModelInterface $model, $method, $arguments = null)
+    public function missingMethod(ModelInterface $model, $method, $arguments = null)
     {
+        /** @var \System\Models\Model $model */
         if ($method == 'addLogEvent') {
             switch (count($arguments)) {
                 case 0: Log::log(get_class($model), 'unknown', $model->id); break;
@@ -52,5 +54,6 @@ class Loggable extends Behavior implements BehaviorInterface
             }
             return true;
         }
+        return false;
     }
 }

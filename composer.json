@@ -7,6 +7,7 @@
         "nesbot/carbon": "^1.21",
         "illuminate/filesystem": "^5.2",
         "symfony/http-foundation": "^3.0",
-        "illuminate/validation": "^5.2"
+        "illuminate/validation": "^5.2",
+        "vlucas/phpdotenv": "^2.3"
     }
 }

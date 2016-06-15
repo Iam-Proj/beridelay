@@ -5,8 +5,7 @@ use BeriDelay\Models\Content;
 use BeriDelay\Models\History;
 use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
-use Illuminate\Validation\Validator;
-use Symfony\Component\Translation\Translator;
+use System\Models\File;
 
 class ContentController extends ApiBaseController
 {
@@ -50,10 +49,26 @@ class ContentController extends ApiBaseController
 
             if (!$token->user->is_admin && $history->user_id != $token->user_id) throw new ApiException(ApiException::OBJECT_ACCESS);
 
-            //$invite = new Invite();
-            //$invite->save();
+            if (!$this->request->hasFiles()) throw new ValidationException(['required' => ['photos' => 'Required', 'video' => 'Required']]);
 
-            return ['value' => 'dsfds'];
+            $result = [];
+
+            foreach ($this->request->getUploadedFiles() as $upload) {
+                $file = new File();
+                $file->data = $upload;
+
+                $content = new Content();
+                $content->user_id = $token->user_id;
+                $content->history_id = $history->id;
+                $content->content_type = $data['content_type'];
+                $content->save();
+                
+                $content->attachFile($file);
+
+                $result = $content->toArray();
+            }
+
+            return ['result' => $result, 'count' => count($result), 'page' => 1, 'pageCount' => 1, 'offset' => 0];
         } catch (BaseException $e) {
             return $this->errorException($e);
         }
@@ -70,10 +85,10 @@ class ContentController extends ApiBaseController
 
             if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
 
-            $invite = new Invite();
-            $invite->save();
+            //$invite = new Invite();
+            //$invite->save();
 
-            return ['success' => true, 'value' => $invite->value];
+            //return ['success' => true, 'value' => $invite->value];
         } catch (BaseException $e) {
             return $this->errorException($e);
         }

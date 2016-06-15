@@ -1,7 +1,6 @@
 <?php namespace BeriDelay\Models;
 
 use BeriDelay\Exceptions\UserException;
-use Phalcon\Http\Client\Exception;
 use System\Exceptions\ValidationException;
 use System\Models\Model;
 use System\Traits\SoftDelete;
@@ -277,7 +276,7 @@ class User extends Model
     public function signout()
     {
         //логируем событие
-        $this->user->addLogEvent('signout');
+        $this->addLogEvent('signout');
     }
 
     /**

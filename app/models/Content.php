@@ -3,10 +3,12 @@
 use System\Models\Model;
 use System\Traits\SoftDelete;
 use System\Traits\Filters;
+use System\Models\File;
 
 /**
  * Модель "Контент"
  * @package BeriDelay\Models
+ * @method boolean attachFile(File $object)
  */
 class Content extends Model
 {
@@ -37,6 +39,10 @@ class Content extends Model
      * @var integer Тип контента
      */
     public $content_type;
+
+    public $attachOne = [
+        'file' => ['System\Models\File']
+    ];
 
     public $validation = [
         'user_id' => 'required|integer',

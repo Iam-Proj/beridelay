@@ -1,5 +1,6 @@
 <?php namespace System\Models;
 
+use BeriDelay\Exceptions\ApiException;
 use Phalcon\Mvc\Model as PhalconModel;
 use Phalcon\Text;
 use Carbon\Carbon;
@@ -9,6 +10,7 @@ use System\Traits\Validation;
  * Базовый класс для всех моделей. Предоставляет более удобный интерфейс объявления связей между моделями.
  * Кроме того, реализаует связи типа ORM->ODM.
  * @package System\Models
+ * @method addLogEvent(string $action = null, array $old_value = null, array $new_value = null)
  */
 class Model extends PhalconModel
 {
@@ -384,7 +386,7 @@ class Model extends PhalconModel
 
     public function __get($property)
     {
-        if (isset($this->relations[$property])) return $this->getRelationObject($this->relations[$property]);
+        if (isset($this->relations[$property])) return $this->getRelation($this->relations[$property]);
 
         return parent::__get($property);
     }
@@ -423,7 +425,7 @@ class Model extends PhalconModel
     public function __isset($property)
     {
         if (isset($this->relations[$property])) return true;
-        if (isset($this->attachments[$property])) return true;
+        if (isset($this->attaches[$property])) return true;
 
         return parent::__isset($property);
     }
@@ -469,13 +471,16 @@ class Model extends PhalconModel
     public function attach($alias, Model $object)
     {
         if (!isset($this->attaches[$alias])) return false;
+        //var_dump($alias);exit;
         $attach = $this->attaches[$alias];
 
         $object->$attach['classField'] = get_class($this);
         $object->$attach['keyField'] = $this->$attach['field'];
         $object->$attach['aliasField'] = $alias;
 
-        return $object->save();
+        if (!$object->save()) throw new ApiException(ApiException::INTERNAL);
+
+        return true;
     }
 
     /**
@@ -503,6 +508,7 @@ class Model extends PhalconModel
     {
         $result = [];
         foreach ($this->getMessages() as $message) {
+            /** @var \Phalcon\Mvc\Model\MessageInterface $message */
             $result[] = $message->getMessage();
         }
         return $result;

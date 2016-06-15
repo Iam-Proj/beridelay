@@ -18,6 +18,5 @@ $loader->registerNamespaces(
         'BeriDelay\Tests\Models'    => $config->application->testsDir . 'unit/',
         'BeriDelay\Tests\Fixtures'  => $config->application->testsDir . 'fixtures/',
         'BeriDelay\Tests\Database'  => $config->application->testsDir . 'database/',
-        'Carbon\Carbon'
     )
 )->register();

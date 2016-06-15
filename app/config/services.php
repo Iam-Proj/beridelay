@@ -92,6 +92,7 @@ $di->setShared('db', function () use ($config, $di) {
     });
 
     $connection = new $class($dbConfig);
+    //$connection = new \Phalcon\Db\Adapter\Pdo\Mysql();
 
     $connection->setEventsManager($eventsManager);
 

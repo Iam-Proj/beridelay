@@ -5,18 +5,18 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 return new \Phalcon\Config(array(
     'database' => array(
         'adapter'     => 'Mysql',
-        'host'        => '192.168.0.105',
-        //'host'        => '127.0.0.1',
-        'username'    => 'root',
-        'password'    => '',
-        'dbname'      => 'beridelay',
+        'host'        => getenv('DATABASE_HOST'),
+        'username'    => getenv('DATABASE_USERNAME'),
+        'password'    => getenv('DATABASE_PASSWORD'),
+        'dbname'      => getenv('DATABASE_NAME'),
+        'options'     => [PDO::ATTR_TIMEOUT => getenv('DATABASE_CONNECT_TIMEOUT')],
         'charset'     => 'utf8',
     ),
     'mongo' => array(
-        'host' => 'localhost',
-        'username' => '',
-        'password' => '',
-        'dbname' => 'beridelay'
+        'host' => getenv('MONGO_HOST'),
+        'username' => getenv('MONGO_USERNAME'),
+        'password' => getenv('MONGO_PASSWORD'),
+        'dbname' => getenv('MONGO_NAME')
     ),
     'application' => array(
         'classesDir'     => APP_PATH . '/app/classes/',
@@ -36,8 +36,9 @@ return new \Phalcon\Config(array(
         'uploadUri'      => '/public/upload/',
     ),
     'timeformat' => array(
-        'timezone' => 'Asia/Yekaterinburg',
-        'locale' => 'ru_RU.UTF-8',
-        'localeCarbon' => 'ru'
-    )
+        'timezone' => getenv('TIMEFORMAT_TIMEZONE'),
+        'locale' => getenv('TIMEFORMAT_LOCALE'),
+        'localeCarbon' => getenv('TIMEFORMAT_LOCALECARBON')
+    ),
+    'environment' => getenv('ENVIRONMENT'),
 ));

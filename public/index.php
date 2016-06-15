@@ -6,6 +6,11 @@ define('APP_PATH', realpath('..'));
 
 try {
 
+    include APP_PATH . "/vendor/autoload.php";
+
+    $dotenv = new Dotenv\Dotenv(APP_PATH);
+    $dotenv->load();
+
     /**
      * Read the configuration
      */
@@ -15,7 +20,6 @@ try {
      * Read auto-loader
      */
     include APP_PATH . "/app/config/loader.php";
-    include APP_PATH . "/vendor/autoload.php";
 
     /**
      * Read services
