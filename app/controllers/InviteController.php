@@ -1,11 +1,7 @@
 <?php namespace BeriDelay\Controllers;
 
 use BeriDelay\Exceptions\ApiException;
-use BeriDelay\Exceptions\UserException;
-use BeriDelay\Models\Contract;
-use BeriDelay\Models\Token;
 use BeriDelay\Models\Invite;
-use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
 
 class InviteController extends ApiBaseController
@@ -40,7 +36,7 @@ class InviteController extends ApiBaseController
             $invite = new Invite();
             $invite->save();
 
-            return ['success' => true, 'value' => $invite->value];
+            return ['response' => $invite];
         } catch (BaseException $e) {
             return $this->errorException($e);
         }

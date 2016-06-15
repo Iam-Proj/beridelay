@@ -6,6 +6,7 @@ use System\Traits\SoftDelete;
 /**
  * Модель "История"
  * @package BeriDelay\Models
+ * @method static History findFirstById(integer $id)
  */
 class History extends Model
 {
