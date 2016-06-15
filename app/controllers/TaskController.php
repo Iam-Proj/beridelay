@@ -124,36 +124,14 @@ class TaskController extends ApiBaseController {
             // массив использованных ID
             $histsByTaskIds = array_merge($histsByTaskIds,$usedTargetsIds);
             
-            
-            echo '<pre>';
-            print_r(count($histsByTaskIds));
-            echo '</pre>';
-            
-            echo '<pre>';
-            print_r(Target::count('salary = '.$this->token->user->salary));
-            echo '</pre>';
-            
             // если цели закончились
             if(count($histsByTaskIds) >= Target::count('salary = '.$this->token->user->salary)){
-                if(!$histsByTask->delete()){
-                    foreach($histsByTask->getMessages() as $item){
-                        echo '<pre>';
-                        print_r($item);
-                        echo '</pre>';
-                    }
+                foreach($histsByTask as $itmHist){
+                    $itmHist->delete();
                 }
-                
-                echo '<pre>';
-                print_r($histsByTaskIds);
-                echo '</pre>';
-                
                 $histsByTaskIds = $usedTargetsIds;
             }
-            
-            exit;
-            
-            
-            
+
             // если существует, удаление элемента из Task2Target
             unset($usedTargetsIds[$id]);
             Task2Target::find('target_id = '.$id.' AND task_id = '.$task_id)->delete();
@@ -181,7 +159,8 @@ class TaskController extends ApiBaseController {
                     'order' => 'start_count ASC',
                 ])->toArray();
             }
-                
+            
+            // Создание новой зависимости
             $taskTarget = new Task2Target();
             $taskTarget->task_id = $task->id;
             $taskTarget->target_id = $itemTarget[0]['id'];

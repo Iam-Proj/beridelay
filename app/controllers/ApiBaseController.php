@@ -94,6 +94,7 @@ class ApiBaseController extends Controller
         if ($this->request->getPost('state') !== null) $data = $data + ['state' => $this->request->getPost('state')];
         $this->response->setJsonContent($data);
         $this->response->setContentType('application/json');
+        $this->response->setHeader('Access-Control-Allow-Origin','*');
         $this->response->send();
         exit;
     }

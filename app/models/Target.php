@@ -50,6 +50,11 @@ class Target extends Model
      */
     public $finish_count;
     
+    /**
+     * @var int Количество целей в задании (по умолчанию)
+     */
+    public static $countTargetUser = 3;
+    
     protected $hasManyToMany = [
         'Tags' => [
             'BeriDelay\Models\Tag',

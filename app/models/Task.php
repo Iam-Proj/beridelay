@@ -39,6 +39,13 @@ class Task extends Model
 
     public $dates = ['finished_at'];
 
+    protected $hasManyToMany = [
+        'Targets' => [
+            'BeriDelay\Models\Target',
+            'model' => 'BeriDelay\Models\Task2Target'
+        ]
+    ];
+    
     public $validation = [
         'user_id' => 'required|integer',
         'status' => 'in:0,1,2,10,20,30',
