@@ -1,6 +1,7 @@
 <?php namespace System\Traits;
 
 use System\Exceptions\ValidationException;
+use System\Models\Model;
 /**
  * Трайт "Фильтры"
  * Позволяет фильтровать данные
@@ -49,7 +50,26 @@ trait Filters
 
         $query->limit($count, $offset);
 
-        $result = $query->execute()->toArray();
+        $result = $query->execute();
+        //var_dump(get_class($result));
+        //var_dump($query);
+
+        //$result->filter(function($item) { var_dump(get_class($item)); return $item; });
+
+        //$content = new Model();
+        //$content->assign(, $data)
+
+        /*$resultArray = [];
+        foreach ($result as $item) {
+            /** @var Model $model */
+            //var_dump(get_class($item))
+            //$model = Model::cloneResult(new static, $item->toArray());
+            //var_dump(get_class($model));
+            //$resultArray[] = $model->toArray();
+
+        //}*/
+        //var_dump($resultArray);
+        //exit;
 
         return [
             'result' => $result,

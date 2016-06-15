@@ -2,6 +2,7 @@
 /vendor/
 /.phalcon/
 /app/cache/*.php
+/public/upload/*
 composer.lock
 *.log
 .env

@@ -517,4 +517,9 @@ class Model extends PhalconModel
 
         return parent::toArray($columns);
     }
+
+    public function toArrayMagic($columns = null)
+    {
+        return $this->toArray($columns);
+    }
 }

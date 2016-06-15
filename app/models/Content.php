@@ -4,6 +4,7 @@ use System\Models\Model;
 use System\Traits\SoftDelete;
 use System\Traits\Filters;
 use System\Models\File;
+use Phalcon\Mvc\Model\Criteria;
 
 /**
  * Модель "Контент"
@@ -56,4 +57,21 @@ class Content extends Model
     ];
 
     public static $fields = ['id', 'user_id', 'history_id', 'description', 'is_hide', 'content_type'];
+
+    /**
+     * @param array $data
+     * @param Criteria $query
+     * @return Criteria
+     */
+    public static function getFiltersBase($data, $query)
+    {
+        if (isset($data['description'])) self::filterLike($query, 'description', $data['description']);
+
+        if (isset($data['user_id'])) self::filterValue($query, 'user_id', $data['user_id']);
+        if (isset($data['history_id'])) self::filterValue($query, 'history_id', $data['history_id']);
+        if (isset($data['target_id'])) self::filterValue($query, 'target_id', $data['target_id']);
+
+        return $query;
+    }
+
 }
