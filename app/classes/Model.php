@@ -129,12 +129,12 @@ class Model extends PhalconModel
     /**
      * @var array Поля, для которых необходима конвертация в дату
      */
-    public $dates = [];
+    public static $dates = [];
 
     /**
      * @var array Поля, для которых нужна автоматическая конвертация в JSON
      */
-    public $json = [];
+    public static $json = [];
 
     /**
      * Автоматическая конвертация полей created_at, updated_at и deleted_at в дату
@@ -171,8 +171,8 @@ class Model extends PhalconModel
         'System\Behaviors\Json'
     ];
 
-    private $relations = [];
-    private $attaches = [];
+    private static $relations = [];
+    private static $attaches = [];
 
     protected function initialize()
     {
@@ -202,9 +202,9 @@ class Model extends PhalconModel
 
         // Устанавливаем формат дат
         if ($this->timestamps) {
-            $this->dates[] = 'created_at';
-            $this->dates[] = 'updated_at';
-            $this->dates[] = 'deleted_at';
+            if (!in_array('created_at', static::$dates)) static::$dates[] = 'created_at';
+            if (!in_array('updated_at', static::$dates)) static::$dates[] = 'updated_at';
+            if (!in_array('deleted_at', static::$dates)) static::$dates[] = 'deleted_at';
         }
 
         // Динамичное обновление полей
@@ -251,7 +251,7 @@ class Model extends PhalconModel
                 'otherKey' => $field,
             ];
 
-            $this->relations[$alias] = $reference;
+            self::$relations[$alias] = $reference;
         } else {
             $this->hasMany($field, $referenceModel, $referencedField, ['alias' => $alias]);
         }
@@ -276,7 +276,7 @@ class Model extends PhalconModel
                 'otherKey' => $field,
             ];
 
-            $this->relations[$alias] = $reference;
+            self::$relations[$alias] = $reference;
         } else {
             $this->hasOne($field, $referenceModel, $referencedField, ['alias' => $alias]);
         }
@@ -301,7 +301,7 @@ class Model extends PhalconModel
                 'otherKey' => $field,
             ];
 
-            $this->relations[$alias] = $reference;
+            self::$relations[$alias] = $reference;
         } else {
             $this->belongsTo($field, $referenceModel, $referencedField, ['alias' => $alias]);
         }
@@ -358,7 +358,7 @@ class Model extends PhalconModel
             ]
         ];
 
-        $this->attaches[$alias] = [
+        self::$attaches[$alias] = [
             'classField' => $classField,
             'keyField' => $keyField,
             'aliasField' => $aliasField,
@@ -386,7 +386,7 @@ class Model extends PhalconModel
 
     public function __get($property)
     {
-        if (isset($this->relations[$property])) return $this->getRelation($this->relations[$property]);
+        if (isset(self::$relations[$property])) return $this->getRelation($property);
 
         return parent::__get($property);
     }
@@ -398,8 +398,8 @@ class Model extends PhalconModel
      */
     public function getRelation($alias)
     {
-        if (!isset($this->relations[$alias])) return false;
-        $relation = $this->relations[$alias];
+        if (!isset(self::$relations[$alias])) return false;
+        $relation = self::$relations[$alias];
         $value = $this->$relation['otherKey'];
         if (is_numeric($value)) $value = $value + 0;
 
@@ -424,8 +424,8 @@ class Model extends PhalconModel
 
     public function __isset($property)
     {
-        if (isset($this->relations[$property])) return true;
-        if (isset($this->attaches[$property])) return true;
+        if (isset(self::$relations[$property])) return true;
+        if (isset(self::$attaches[$property])) return true;
 
         return parent::__isset($property);
     }
@@ -434,12 +434,12 @@ class Model extends PhalconModel
     {
         if ($field = $this->is_method($name, 'count')) {
 
-            if (!isset($this->relations[$field])) return parent::__call($name, $arguments);
+            if (!isset(self::$relations[$field])) return parent::__call($name, $arguments);
             return $this->relationCount($field);
 
         } elseif ($field = $this->is_method($name, 'attach')) {
 
-            if (!isset($this->attaches[$field])) return parent::__call($name, $arguments);
+            if (!isset(self::$attaches[$field])) return parent::__call($name, $arguments);
             return $this->attach($field, $arguments[0]);
 
         } else return parent::__call($name, $arguments);
@@ -452,7 +452,7 @@ class Model extends PhalconModel
      */
     public function relationCount($alias)
     {
-        $relation = $this->relations[$alias];
+        $relation = self::$relations[$alias];
 
         $value = $this->$relation['otherKey'];
         if (is_numeric($value)) $value = $value + 0;
@@ -470,17 +470,14 @@ class Model extends PhalconModel
      */
     public function attach($alias, Model $object)
     {
-        if (!isset($this->attaches[$alias])) return false;
-        //var_dump($alias);exit;
-        $attach = $this->attaches[$alias];
+        if (!isset(self::$attaches[$alias])) return false;
+        $attach = self::$attaches[$alias];
 
         $object->$attach['classField'] = get_class($this);
         $object->$attach['keyField'] = $this->$attach['field'];
         $object->$attach['aliasField'] = $alias;
 
-        if (!$object->save()) throw new ApiException(ApiException::INTERNAL);
-
-        return true;
+        return $object->save();
     }
 
     /**

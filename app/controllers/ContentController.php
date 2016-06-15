@@ -64,8 +64,8 @@ class ContentController extends ApiBaseController
                 $content->save();
                 
                 $content->attachFile($file);
-
-                $result = $content->toArray();
+                
+                $result[] = $content->toArray();
             }
 
             return ['result' => $result, 'count' => count($result), 'page' => 1, 'pageCount' => 1, 'offset' => 0];

@@ -12,9 +12,10 @@ class Json extends Behavior implements BehaviorInterface
 {
     public function notify($type, \Phalcon\Mvc\ModelInterface $model)
     {
+        /** @var \System\Models\Model $model */
         switch ($type) {
             case 'beforeSave':
-                foreach ($model->json as $field) {
+                foreach ($model::$json as $field) {
                     $data = json_encode($model->$field);
                     $model->$field = $data;
                 }
@@ -22,7 +23,7 @@ class Json extends Behavior implements BehaviorInterface
 
             case 'afterFetch':
             case 'afterSave':
-                foreach ($model->json as $field) {
+                foreach ($model::$json as $field) {
                     $data = json_decode($model->$field, true);
                     $model->$field = $data;
                 }

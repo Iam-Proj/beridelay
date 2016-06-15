@@ -68,7 +68,7 @@ class File extends Model
      */
     public $is_public;
 
-    public $json = ['info'];
+    public static $json = ['info'];
 
     /**
      * @var mixed Локальное имя файла или экземпляр класса \Phalcon\Http\Request\File.

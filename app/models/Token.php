@@ -37,7 +37,7 @@ class Token extends Model
 
     public $timestamps = false;
 
-    public $dates = ['last_seen'];
+    public static $dates = ['last_seen'];
 
     public $belongsTo = [
         'user' => ['BeriDelay\Models\User']

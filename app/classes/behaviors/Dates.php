@@ -13,10 +13,12 @@ class Dates extends Behavior implements BehaviorInterface
 {
     public function notify($type, \Phalcon\Mvc\ModelInterface $model)
     {
+
         /** @var \System\Models\Model $model */
+        //var_dump(get_class($model), $model::$dates, $type, $model->id);
         switch ($type) {
             case 'beforeSave':
-                foreach ($model->dates as $field) {
+                foreach ($model::$dates as $field) {
                     if ($model->$field instanceof Carbon)
                         $model->$field = $model->$field->toDateTimeString();
                 }
@@ -24,7 +26,7 @@ class Dates extends Behavior implements BehaviorInterface
 
             case 'afterFetch':
             case 'afterSave':
-                foreach ($model->dates as $field) {
+                foreach ($model::$dates as $field) {
                     if (!$model->$field instanceof Carbon) $model->$field = new Carbon($model->$field);
                 }
             break;
