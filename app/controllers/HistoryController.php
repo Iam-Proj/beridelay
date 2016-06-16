@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use System\Models\File;
+use System\Models\Photo;
 use System\Helpers\Logic;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Invite;
@@ -67,42 +68,18 @@ class HistoryController extends ApiBaseController {
             $response = [];
             $histItems = $hist->execute();
             
-            if(count($histItems)){
-                
-                // Получение с контентом
-                $contents = [];
-                if($this->request->getPost('with_content')){
-                    foreach($histItems as $itmHist){
-                        $arrItem = $itmHist->toArray();
-                        
-                        echo '<pre>';
-                        print_r($arrItem);
-                        echo '</pre>';
-                        
-                    }
+            // Изображения
+            if($histItems->toArray()){
+                foreach($histItems as $item){
+                    $image = $item->image->toArray();
+                    $item = $item->toArray();
+                    $item['image'] = $image;
+                    $response[] = $item;
                 }
             }
             
+            return [ 'result' => $response ];
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            /*
-            
-            content — параметры работы с коллекицями, применяются к вложенному контенту
-            
-            */
-            
-            
-            
-        
         } catch (BaseException $e) { return $this->errorException($e); }
     }
     
@@ -119,9 +96,9 @@ class HistoryController extends ApiBaseController {
             // Файл
             if($this->request->getUploadedFiles()){
                 foreach ($this->request->getUploadedFiles() as $upload) {
-                    $file = new File();
+                    $file = new Photo();
                     $file->data = $upload;
-                    $hist->attachFile($file);
+                    $hist->attachImage($file);
                 }
             } 
             

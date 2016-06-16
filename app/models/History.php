@@ -3,6 +3,7 @@
 use System\Models\Model;
 use System\Traits\SoftDelete;
 use System\Models\File;
+use System\Models\Photo;
 
 /**
  * Модель "История"
@@ -40,8 +41,10 @@ class History extends Model
     public $comment;
 
     public $attachOne = [
-        'file' => ['System\Models\File']
+        'image' => ['System\Models\Photo'],
     ];
+    
+    public static $fields = ['id','user_id','task_id','target_id','description'];
     
     public $validation = [
         'user_id' => 'required|integer',
