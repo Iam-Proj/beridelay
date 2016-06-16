@@ -6,6 +6,7 @@ use BeriDelay\Models\History;
 use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
 use System\Models\File;
+use Phalcon\Mvc\Model\Resultset;
 
 class ContentController extends ApiBaseController
 {
@@ -17,8 +18,15 @@ class ContentController extends ApiBaseController
     public function getAction()
     {
         try {
-            
-            return Content::get($this->request->getPost());
+            //приватный метод
+            $token = $this->hasPrivate();
+
+            $data = $this->request->getPost();
+
+            //если пользователь не админ - тофильтровать результат по его id
+            if (!$token->user->is_admin) $data['user_id'] = $token->user_id;
+
+            return Content::get($data);
 
         } catch (BaseException $e) {
             return $this->errorException($e);
@@ -70,10 +78,10 @@ class ContentController extends ApiBaseController
 
                 $contentArray = $content->toArray(Content::$fields);
 
-                if ($content->content_type == 0)
+                /*if ($content->content_type == 0)
                     $contentArray['image'] = $content->image->toArray();
                 else
-                    $contentArray['video'] = $content->video->toArray();
+                    $contentArray['video'] = $content->video->toArray();*/
                 
                 $result[] = $contentArray;
             }
@@ -93,12 +101,25 @@ class ContentController extends ApiBaseController
         try {
             $token = $this->hasPrivate();
 
-            if (!$token->user->is_admin) throw new ApiException(ApiException::FORBIDDEN);
+            $data = $this->request->getPost();
 
-            //$invite = new Invite();
-            //$invite->save();
+            $rules = [
+                'id' => 'required|integer',
+                'description' => 'required'
+            ];
 
-            //return ['success' => true, 'value' => $invite->value];
+            if (!Content::validateData($rules, $data)) throw new ValidationException(Content::$validationMessages);
+
+            $content = Content::findFirstById($data['id']);
+
+            if (!$content) throw new ApiException(ApiException::OBJECT_NOT_FOUND);
+
+            if (!$token->user->is_admin && $content->user_id != $token->user_id) throw new ApiException(ApiException::OBJECT_ACCESS);
+
+            $content->description = $data['description'];
+            $content->save();
+
+            return ['success' => true];
         } catch (BaseException $e) {
             return $this->errorException($e);
         }

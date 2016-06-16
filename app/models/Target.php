@@ -49,6 +49,10 @@ class Target extends Model
      * @var int Количество завершений цели
      */
     public $finish_count;
+
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
     
     /**
      * @var int Количество целей в задании (по умолчанию)

@@ -25,6 +25,10 @@ class Contract extends Model
      * @var string Тип договора
      */
     public $type;
+    
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
 
     public $validation = [
         'text' => 'required',

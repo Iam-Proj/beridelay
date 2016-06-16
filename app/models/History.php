@@ -2,14 +2,13 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
-use System\Models\File;
 use System\Models\Photo;
 
 /**
  * Модель "История"
  * @package BeriDelay\Models
  * @method static History findFirstById(integer $id)
- * @method boolean attachFile(File $object)
+ * @method boolean attachImage(File $object)
  */
 class History extends Model
 {
@@ -43,9 +42,13 @@ class History extends Model
     public $attachOne = [
         'image' => ['System\Models\Photo'],
     ];
-    
+
     public static $fields = ['id','user_id','task_id','target_id','description'];
-    
+
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+
     public $validation = [
         'user_id' => 'required|integer',
         'task_id' => 'required|integer',

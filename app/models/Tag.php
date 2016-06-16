@@ -13,21 +13,19 @@ class Tag extends Model
 {
     use SoftDelete;
     /**
-     *
      * @var string
      */
     public $name;
 
     /**
-     *
      * @var string
      */
     public $color;
 
-    /**
-     *
-     * @var array 
-     */
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+    
     public static $fields = [
         'id',
         'name',

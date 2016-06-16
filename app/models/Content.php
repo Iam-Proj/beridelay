@@ -13,6 +13,7 @@ use Phalcon\Mvc\Model\Criteria;
  * @property \System\Models\Video $video
  * @method boolean attachImage(File $object)
  * @method boolean attachVideo(File $object)
+ * @method static Content findFirstById(integer $id)
  */
 class Content extends Model
 {
@@ -44,6 +45,10 @@ class Content extends Model
      */
     public $content_type;
 
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+
     public $attachOne = [
         'image' => ['System\Models\Photo'],
         'video' => ['System\Models\Video']
@@ -56,7 +61,7 @@ class Content extends Model
         'content_type' => 'in:0,1'
     ];
 
-    public static $fields = ['id', 'user_id', 'history_id', 'description', 'is_hide', 'content_type'];
+    public static $fields = ['id', 'user_id', 'history_id', 'description', 'is_hide', 'content_type', 'photo', 'video'];
 
     /**
      * @param array $data
@@ -72,6 +77,21 @@ class Content extends Model
         if (isset($data['target_id'])) self::filterValue($query, 'target_id', $data['target_id']);
 
         return $query;
+    }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
+
+        $result = parent::toArray($columns);
+        if ($columns != null && in_array('photo', $columns) && $this->content_type == 0) {
+            if ($this->image) $result['photo'] = $this->image->toArray();
+        }
+        if ($columns != null && in_array('video', $columns) && $this->content_type == 1) {
+            if ($this->video) $result['video'] = $this->video->toArray();
+        }
+
+        return $result;
     }
 
 }

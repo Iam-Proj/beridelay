@@ -37,8 +37,11 @@ class Task extends Model
      */
     public $finished_at;
 
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+
     /**
-     *
      * @var int Все статусы 
      */
     public static $statuses = [

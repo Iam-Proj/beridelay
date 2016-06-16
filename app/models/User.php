@@ -10,7 +10,7 @@ use Carbon\Carbon;
 /**
  * Модель "Пользователь"
  * @package BeriDelay\Models
- * @property Session|array $sessions
+ * @property User $referral
  * @method static User findFirstByEmail(string $email)
  * @method static User findFirstById(integer $id)
  */
@@ -70,6 +70,11 @@ class User extends Model
     public $salary;
 
     /**
+     * @var integer ID приглоасившего пользователя
+     */
+    public $referral_id;
+
+    /**
      * @var boolean Является ли пользователь администратором
      */
     public $is_admin;
@@ -86,6 +91,13 @@ class User extends Model
         'System\Behaviors\Loggable'
     ];
 
+    public $belongsTo = [
+        'referral' => [
+            'BeriDelay\Models\User',
+            'key' => 'referral_id'
+        ]
+    ];
+
     public $validation = [
         'email' => 'required|email',
         'name' => 'required|alpha|between:2,50',
@@ -97,13 +109,14 @@ class User extends Model
         'city' => 'required',
         'salary' => 'required|in:1,2,3',
         'is_admin' => 'in:0,1',
-        'is_activate' => 'in:0,1'
+        'is_activate' => 'in:0,1',
+        'referral_id' => 'integer'
     ];
 
     /**
      * @var array Поля для вывода
      */
-    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'is_activate', 'is_admin'];
+    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'is_activate', 'is_admin', 'referral'];
 
     public function beforeCreate()
     {
@@ -195,6 +208,7 @@ class User extends Model
             'city' => 'required',
             'salary' => 'required|in:1,2,3',
             'invite' => 'alpha_num',
+            'referral_id' => 'integer',
         ];
 
         if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
@@ -213,6 +227,9 @@ class User extends Model
         $user->gender = $data['gender'];
         $user->city = $data['city'];
         $user->salary = $data['salary'];
+        $user->is_admin = 0;
+        $user->is_activate = 0;
+        $user->referral_id = isset($data['referral_id']) ? $data['referral_id'] : 0;
 
         $user->save();
 
@@ -228,9 +245,6 @@ class User extends Model
             $invite->user_id = $user->id;
             if (false == $invite->save()) throw new UserException(UserException::INTERNAL, ['errors' => $invite->getMessagesArray()]);
         }
-
-        //лог
-        $user->addLogEvent('registration');
 
         return $user->auth();
     }
@@ -297,12 +311,23 @@ class User extends Model
         
         if (isset($data['age'])) self::filterInterval($query, 'age', $data['age']);
 
+        if (isset($data['referral_id'])) self::filterValue($query, 'referral_id', $data['referral_id']);
         if (isset($data['gender'])) self::filterValue($query, 'gender', $data['gender'], [0, 1]);
         if (isset($data['is_admin'])) self::filterValue($query, 'is_admin', $data['is_admin'], [0, 1]);
         if (isset($data['is_activate'])) self::filterValue($query, 'is_activate', $data['is_activate'], [0, 1]);
         if (isset($data['salary'])) self::filterValue($query, 'salary', $data['salary'], [0, 1, 2]);
 
         return $query;
+    }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
+
+        $result = parent::toArray($columns);
+        if ($columns != null && in_array('referral', $columns) && $this->referral) $result['referral'] = $this->referral->toArray(['id', 'name', 'surname', 'patronim']);
+
+        return $result;
     }
 
 }

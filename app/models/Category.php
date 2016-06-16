@@ -26,6 +26,10 @@ class Category extends Model
      */
     public $is_hide;
 
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+
     public $validation = [
         'category_id' => 'integer',
         'name' => 'between:2,50',

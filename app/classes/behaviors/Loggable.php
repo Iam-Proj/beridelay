@@ -21,12 +21,13 @@ class Loggable extends Behavior implements BehaviorInterface
                 break;
             case 'afterUpdate':
                 $old_data = $model->getSnapshotData();
+                if ($old_data == null) break;
                 $fields = $model->getChangedFields();
                 $old_value = [];
                 $new_value = [];
 
                 foreach($fields as $field) {
-                    $old_value[$field] = $old_data[$field];
+                    $old_value[$field] = !isset($old_data[$field]) ? null : $old_data[$field];
                     $new_value[$field] = $model->$field;
                 }
 

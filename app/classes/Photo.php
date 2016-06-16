@@ -170,9 +170,9 @@ class Photo extends File
         
         $result = parent::toArray($columns);
         if ($columns != null && in_array('thumbs', $columns)) {
-            $result['small'] = $this->thumb(static::$sizes['small'][0], static::$sizes['small'][1]);
-            $result['medium'] = $this->thumb(static::$sizes['medium'][0], static::$sizes['medium'][1]);
-            $result['big'] = $this->thumb(static::$sizes['big'][0], static::$sizes['big'][1]);
+            $result['thumbs']['small'] = $this->thumb(static::$sizes['small'][0], static::$sizes['small'][1]);
+            $result['thumbs']['medium'] = $this->thumb(static::$sizes['medium'][0], static::$sizes['medium'][1]);
+            $result['thumbs']['big'] = $this->thumb(static::$sizes['big'][0], static::$sizes['big'][1]);
         }
 
         return $result;

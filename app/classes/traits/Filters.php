@@ -2,6 +2,7 @@
 
 use System\Exceptions\ValidationException;
 use System\Models\Model;
+use Phalcon\Mvc\Model\Resultset;
 /**
  * Трайт "Фильтры"
  * Позволяет фильтровать данные
@@ -27,12 +28,8 @@ trait Filters
 
         $rowCount = $query->columns('COUNT(*) as count')->execute()->toArray()[0]['count'];
 
+        $query->columns('*');
         $columns = isset($data['fields']) ? array_intersect(static::$fields, $data['fields']) : static::$fields;
-        if (count($columns)) {
-            $query->columns($columns);
-        } else {
-            $query->columns('*');
-        }
 
         $count = isset($data['count']) ? $data['count'] : 100;
 
@@ -49,30 +46,14 @@ trait Filters
         }
 
         $query->limit($count, $offset);
-
         $result = $query->execute();
-        //var_dump(get_class($result));
-        //var_dump($query);
 
-        //$result->filter(function($item) { var_dump(get_class($item)); return $item; });
-
-        //$content = new Model();
-        //$content->assign(, $data)
-
-        /*$resultArray = [];
-        foreach ($result as $item) {
-            /** @var Model $model */
-            //var_dump(get_class($item))
-            //$model = Model::cloneResult(new static, $item->toArray());
-            //var_dump(get_class($model));
-            //$resultArray[] = $model->toArray();
-
-        //}*/
-        //var_dump($resultArray);
-        //exit;
+        $resultArray = [];
+        /** @var Model $item */
+        foreach ($result as $item) $resultArray[] = $item->toArray($columns);
 
         return [
-            'result' => $result,
+            'result' => $resultArray,
             'count' => (int) $rowCount,
             'offset' => (int) $offset,
             'page' => (int) $page,

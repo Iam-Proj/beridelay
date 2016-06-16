@@ -34,6 +34,10 @@ class Invite extends Model
 
     public static $fields = ['id', 'value', 'user_id'];
 
+    public $behaviors = [
+        'System\Behaviors\Loggable'
+    ];
+
     public function beforeCreate()
     {
         $this->value = md5(microtime() . $this->user_id);

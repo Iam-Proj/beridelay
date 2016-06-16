@@ -45,10 +45,11 @@ class UsersController extends ApiBaseController
             
             //если фильтр заполнен
             if ($filters->getWhere() != null) {
+                if (isset($data['referral_id']) && $data['referral_id'] == $token->user_id) return User::get(['referral_id' => $token->user_id]);
                 if (!$token->user->is_admin) throw new ApiException(ApiException::PARAM_ACCESS);
-                return ['result' => User::get($data, $filters)];
+                return User::get($data, $filters);
             } else {
-                $user = $token->user->toArray(['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary']);
+                $user = $token->user->toArray(['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'referral']);
                 return ['response' => $user];
             }
 
@@ -76,7 +77,7 @@ class UsersController extends ApiBaseController
 
             $user = new User();
             $user->create($this->request->getPost(), [
-                'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'invite', 'password', 'is_activate', 'is_admin'
+                'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'invite', 'password', 'is_activate', 'is_admin', 'referral_id'
             ]);
             $user->refresh();
 

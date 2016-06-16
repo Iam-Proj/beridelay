@@ -1,6 +1,5 @@
 <?php namespace System\Models;
 
-use BeriDelay\Exceptions\ApiException;
 use Phalcon\Mvc\Model as PhalconModel;
 use Phalcon\Text;
 use Carbon\Carbon;
@@ -518,8 +517,4 @@ class Model extends PhalconModel
         return parent::toArray($columns);
     }
 
-    public function toArrayMagic($columns = null)
-    {
-        return $this->toArray($columns);
-    }
 }
