@@ -1,19 +1,11 @@
 <?php namespace BeriDelay\Controllers;
 
 use Carbon\Carbon;
-use BeriDelay\Models\User;
-use BeriDelay\Models\Invite;
 use BeriDelay\Models\Task;
 use BeriDelay\Models\Task2Target;
-use BeriDelay\Models\Token;
-use BeriDelay\Models\Session;
-use BeriDelay\Models\Category;
-use BeriDelay\Models\Target;
-use BeriDelay\Models\History;
-use System\Helpers\Logic;
 use System\Exceptions\BaseException;
 use BeriDelay\Exceptions\ApiException;
-use BeriDelay\Exceptions\TaskException;
+use System\Exceptions\ValidationException;
 
 class TaskController extends ApiBaseController {
     
@@ -29,43 +21,46 @@ class TaskController extends ApiBaseController {
     
     public function getAction(){
         try {
-            if($id = $this->request->getPost('id')){
-                if(!$task = Task::findFirstById($id)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }
-                return ['task' => [$task->toArray()]];
-            }
-            if($ids = $this->request->getPost('ids')){
-                foreach($ids as $id){ if(!is_numeric($id)){ throw new ApiException(ApiException::PARAM_FORMAT); } }
-                $tasks = Task::find('id IN ('.implode(',',$ids).')');
-                return ['task' => $tasks->toArray()];
-            }
-            
-            $task = Task::query();
-            
-            if($this->token->user->is_admin){
-                
-                // по пользователю
-                if($user_id = $this->request->getPost('user_id')){
-                    if(!is_numeric($user_id)){ throw new ApiException(ApiException::OBJECT_NOT_FOUND); }
-                    $task->andWhere('user_id = '.$user_id);
-                }
-                
+            $data = $this->request->getPost();
+
+            //если фильтр заполнен
+            if (isset($data['id']) || isset($data['ids']) || isset($data['user_id'])) {
+                if (!$this->token->user->is_admin) throw new ApiException(ApiException::PARAM_ACCESS);
+                return Task::get($data);
+            } else {
+                $filter = ['user_id' => $this->token->user_id];
+                if (isset($data['status'])) $filter['status'] = $data['status'];
+                return Task::get($filter);
             }
             
-            // по статусу
-            $status = $this->request->getPost('status');
-            if($status != null){
-                $status = (int)$status;
-                if(!is_numeric($status)){ throw new ApiException(ApiException::PARAM_FORMAT); }
-                if(!isset(Task::$statuses[$status])){ throw new ApiException(ApiException::PARAM_FORMAT); }
-                $task->andWhere('status = '.$status);
-            }
-            
-            return ['task' => $task->execute()->toArray()];
-            
-        } catch (BaseException $e) { return $this->errorException($e); }
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
+    }
+
+    public function createAction()
+    {
+        try {
+            $task = new Task();
+            $task->user_id = $this->token->user_id;
+            $task->save();
+
+            $targets = $task->generate($this->token->user->salary);
+
+            return [
+                'response' => [
+                    'id' => $task->id,
+                    'targets' => $targets
+                ]
+            ];
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
+
     }
     
-    public function editAction(){
+    public function editAction()
+    {
         try {
             
             if(!$id = $this->request->getPost('id')){ throw new ApiException(ApiException::PARAM_FORMAT); }
@@ -114,141 +109,43 @@ class TaskController extends ApiBaseController {
                 
             }
             
-        } catch (BaseException $e) { return $this->errorException($e); }
+        } catch (BaseException $e) {
+            return $this->errorException($e);
+        }
     }
     
-    public function createAction(){
-        $idsTargets = []; // массив ID целей
-        
-        // Цели для отдельного пользователя
-        $targets = Target::find([
-            'conditions' => 'salary = '.$this->token->user->salary,
-            'limit' => Target::$countTargetUser,
-            'order' => 'start_count ASC',
-            'group' => 'category_id',
-        ]);
-        
-        foreach($targets as $item){
-            $idsTargets[] = $item->id;
-        }
-        
-        // Создание задания
-        $task = new Task();
-        $task->user_id = $this->token->user_id;
-        $task->save();
-        
-        // Создание зависимостей относительно задания
-        foreach($idsTargets as $item){
-            $taskTarget = new Task2Target();
-            $taskTarget->task_id = $task->id;
-            $taskTarget->target_id = $item;
-            $taskTarget->save();
-        }
-        
-        return [ 'task' => [
-            'targets' => Target::find('id IN ('.implode(',',$idsTargets).')'),
-            'id' => $task->id,
-        ]];
-    }
-    
-    public function changeAction(){
+    public function changeAction()
+    {
         try {
             
-            // если не передан ID
-            if (!$id = $this->request->getPost('id')) {
-                throw new ApiException(ApiException::PARAM_FORMAT);
-            }
-            
-            // если не передан TASK_ID
-            if (!$task_id = $this->request->getPost('task_id')) {
-                throw new ApiException(ApiException::PARAM_FORMAT);
-            }
-            
-            // если объекта TASK не существует
-            if (!$task = Task::findFirstById($task_id)){
-                throw new ApiException(ApiException::OBJECT_NOT_FOUND);
-            }
-            
-            // если такой цели не существует
-            if (!$target = Target::findFirstById($id)) {
-                throw new ApiException(ApiException::OBJECT_NOT_FOUND);
-            }
-            
-            // если нет такой зависимости
-            if (!$usedTargets = $task->Targets->toArray()) { throw new ApiException(ApiException::OBJECT_NOT_FOUND); }
-            
-            $usedTargetsIds = [];
-            
-            foreach($usedTargets as $item){
-                $usedTargetsIds[$item['id']] = $item['id'];
-            }
-            
-            // если в задании не существует требуемой цели
-            if(!isset($usedTargetsIds[$id])){
-                throw new ApiException(ApiException::PARAM_FORMAT);
-            }
-            
-            // все уже использование ID цели
-            $histsByTaskIds = [];
-            $histsByTask = History::find([
-                'conditions' => 'user_id = '.$this->token->user_id.' AND task_id = '.$task_id,
+            $data = $this->request->getPost();
+            $rules = [
+                'task_id' => 'required|integer',
+                'target_id' => 'required|integer'
+            ];
+
+            //валидация данных
+            if (!Task::validateData($rules, $data)) throw new ValidationException(Task::$validationMessages);
+
+            //если не существует задания или связки задание-цель
+            if (!$task = Task::findFirstById($data['task_id'])) throw new ApiException(ApiException::OBJECT_NOT_FOUND);
+            $relation = Task2Target::findFirst([
+                'conditions' => 'target_id = :target_id: and task_id = :task_id:',
+                'bind' => ['target_id' => $data['target_id'], 'task_id' => $data['task_id']]
             ]);
-            
-            foreach($histsByTask as $item){
-                $histsByTaskIds[$item->target_id] = $item->target_id;
-            }
-            
-            // массив использованных ID
-            $histsByTaskIds = array_merge($histsByTaskIds,$usedTargetsIds);
-            
-            // если цели закончились
-            if(count($histsByTaskIds) >= Target::count('salary = '.$this->token->user->salary)){
-                foreach($histsByTask as $itmHist){
-                    $itmHist->delete();
-                }
-                $histsByTaskIds = $usedTargetsIds;
-            }
+            if (!$relation) throw new ApiException(ApiException::OBJECT_NOT_FOUND);
 
-            // если существует, удаление элемента из Task2Target
-            unset($usedTargetsIds[$id]);
-            Task2Target::find('target_id = '.$id.' AND task_id = '.$task_id)->delete();
-                
-            // отметка о использовании определенной цели
-            $hist = new History();
-            $hist->user_id = $this->token->user_id;
-            $hist->task_id = $task_id;
-            $hist->target_id = $id;
-            $hist->save();
+            $relation->delete();
             
-            $itemTarget = [];
-                
-            // если есть массив использованных ID целей
-            if($histsByTaskIds){
-                $itemTarget = Target::find([
-                    'conditions' => 'id NOT IN ('.implode(',',$histsByTaskIds).') AND salary = '.$this->token->user->salary,
-                    'limit' => 1,
-                    'order' => 'start_count ASC',
-                ])->toArray();
-            } else {
-                $itemTarget = Target::find([
-                    'conditions' => 'salary = '.$this->token->user->salary,
-                    'limit' => 1,
-                    'order' => 'start_count ASC',
-                ])->toArray();
-            }
-            
-            // Создание новой зависимости
-            $taskTarget = new Task2Target();
-            $taskTarget->task_id = $task->id;
-            $taskTarget->target_id = $itemTarget[0]['id'];
-            $taskTarget->save();
-                
-            $target = $itemTarget;
+            $targets = $task->generate($this->token->user->salary, 1);
 
-            return [ 'target' => $target ];
+            return [
+                'response' => $targets[0]
+            ];
             
-        } catch (BaseException $e) { return $this->errorException($e); }
+        } catch (BaseException $e) { 
+            return $this->errorException($e); 
+        }
     }
-    
     
 }

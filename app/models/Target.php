@@ -74,8 +74,11 @@ class Target extends Model
         'start_count' => 'integer',
         'finish_count' => 'integer'
     ];
+
+    public static $fields = ['id', 'name', 'description', 'category_id', 'salary', 'start_count', 'finish_count', 'tags', 'is_hide'];
     
-    public static function getFiltered($query,$data) { 
+    public static function getFiltered($query,$data)
+    {
         if (isset($data['name']) && !empty($data['name'])) self::filterLike($query, 'name', $data['name']);
         if (isset($data['description']) && !empty($data['description'])) self::filterLike($query, 'description', $data['description']);
         if (isset($data['finish_count']) && !empty($data['finish_count'])) self::filterInterval($query, 'finish_count', $data['finish_count']);
@@ -83,13 +86,27 @@ class Target extends Model
     }
     
     /**
-     * 
-     * @param int $categoryId - ID категории
+     * @param int $categoryId ID категории
+     * @return integer
      */
-    public static function countTargetsByCategory($categoryId){
+    public static function countTargetsByCategory($categoryId)
+    {
         return self::count('category_id = '.$categoryId);
-        
-        
+    }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
+
+        $result = parent::toArray($columns);
+        if ($columns != null && in_array('tags', $columns) && $this->tags) {
+            $result['tags'] = [];
+            $tags = $this->tags;
+            /** @var Tag $tag */
+            foreach ($tags as $tag) $result['tags'][] = $tag->toArray();
+        }
+
+        return $result;
     }
     
 }

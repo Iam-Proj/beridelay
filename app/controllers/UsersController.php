@@ -3,6 +3,7 @@
 use BeriDelay\Exceptions\ApiException;
 use BeriDelay\Exceptions\UserException;
 use BeriDelay\Models\User;
+use BeriDelay\Models\Task;
 use BeriDelay\Models\Token;
 use BeriDelay\Models\Invite;
 use System\Exceptions\ValidationException;
@@ -21,13 +22,26 @@ class UsersController extends ApiBaseController
             $user = User::registration($this->request->getPost());
             $token = Token::add($user->id);
 
-            //TODO: Сгенерировать новое задание и передать его в ответе
+            //генерируем новое задание для пользователя
+            $task = new Task();
+            $task->user_id = $user->id;
+            $task->save();
+
+            $targets = $task->generate($user->salary);
 
         } catch (BaseException $e) {
             return $this->errorException($e);
         }
 
-        return ['response' => ['token_access' => $token->value]];
+        return [
+            'response' => [
+                'token_access' => $token->value,
+                'task' => [
+                    'id' => $task->id,
+                    'targets' => $targets
+                ]
+            ]
+        ];
     }
 
     /**

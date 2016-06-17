@@ -26,11 +26,7 @@ class Tag extends Model
         'System\Behaviors\Loggable'
     ];
     
-    public static $fields = [
-        'id',
-        'name',
-        'color',
-    ];
+    public static $fields = ['id', 'name', 'color'];
     
     public $validation = [
         'name' => 'required',
