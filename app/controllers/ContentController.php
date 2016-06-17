@@ -46,7 +46,9 @@ class ContentController extends ApiBaseController
 
             $rules = [
                 'history_id' => 'required|integer',
-                'content_type' => 'required|in:0,1'
+                'content_type' => 'required|in:0,1',
+                'photos' => 'required_id:content_type,0',
+                'video' => 'required_id:content_type,1',
             ];
 
             if (!Content::validateData($rules, $data)) throw new ValidationException(Content::$validationMessages);

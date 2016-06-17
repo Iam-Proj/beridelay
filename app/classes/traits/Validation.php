@@ -4,7 +4,7 @@ use Illuminate\Validation\Validator;
 use Phalcon\Mvc\Model\Message;
 use Symfony\Component\Translation\Translator;
 use System\Exceptions\ValidationException;
-
+use System\Helpers\Captcha;
 
 /**
  * Трайт "Валидация"
@@ -41,8 +41,12 @@ trait Validation
         ];
 
         if (!count($rules)) return true;
-
+        
         $validation = new Validator(new Translator('ru'), $data, $rules);
+
+        $validation->addExtension('captcha', function($attribute, $value, $parameters, $validator) {
+            return Captcha::checkCaptcha($value);
+        });
 
         if ($validation->fails()) {
             $required = [];

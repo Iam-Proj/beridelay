@@ -3,8 +3,11 @@
 use BeriDelay\Exceptions\UserException;
 use BeriDelay\Models\User;
 use BeriDelay\Models\Token;
+use BeriDelay\Models\Session;
 use System\Exceptions\ValidationException;
 use System\Exceptions\BaseException;
+use Carbon\Carbon;
+use System\Helpers\Captcha;
 
 class AuthController extends ApiBaseController
 {
@@ -15,6 +18,25 @@ class AuthController extends ApiBaseController
     public function signinAction()
     {
         try {
+            //получим запись по IP пользователя
+            $session = Session::findLastAuth();
+
+            //если сессия уже есть, то надо проверить дату последней пробы
+            if ($session) {
+                $time = Carbon::createFromTimestamp($session->created_at->sec);
+                if ($time->addHour() > Carbon::now()) {
+                    $rules = [Captcha::$fieldName => 'required|captcha'];
+                    if (!User::validateData($rules, $this->request->getPost())) throw new ValidationException(User::$validationMessages);
+                } else {
+                    $session->created_at = new \MongoDate(time());
+                    $session->save();
+                }
+            } else {
+                $session = new Session();
+                $session->user_id = 0;
+                $session->save();
+            }
+
             $user = User::signin($this->request->getPost('email'), $this->request->getPost('password'));
             $token = Token::add($user->id);
         } catch (BaseException $e) {
