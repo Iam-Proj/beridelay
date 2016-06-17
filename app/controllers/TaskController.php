@@ -125,6 +125,7 @@ class TaskController extends ApiBaseController {
             'conditions' => 'salary = '.$this->token->user->salary,
             'limit' => Target::$countTargetUser,
             'order' => 'start_count ASC',
+            'group' => 'category_id',
         ]);
         
         foreach($targets as $item){

@@ -53,7 +53,7 @@ class Task extends Model
         30 => 'заблокировано',
     ];
     
-    public $dates = ['finished_at'];
+    public static $dates = ['finished_at'];
 
     protected $hasManyToMany = [
         'Targets' => [
