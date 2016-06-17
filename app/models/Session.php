@@ -2,6 +2,7 @@
 
 use System\Models\Collection;
 use Carbon\Carbon;
+use System\Helpers\Client;
 use MongoRegex;
 /**
  * Model Session
@@ -31,7 +32,7 @@ class Session extends Collection
 
     public function beforeCreate()
     {
-        $this->ip = isset($_SERVER['HTTP_X_REAL_IP']) && strlen($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : $_SERVER['REMOTE_ADDR'];
+        $this->ip = Client::getIp();
         $this->created_at = new \MongoDate(time());
     }
 
@@ -43,6 +44,18 @@ class Session extends Collection
         $params = parent::getFilters($data, $params);
 
         return $params;
+    }
+
+    /**
+     * Возвращает последнюю сессию указанного IP. Если IP не указан - получает IP текущего клиента
+     * @param string|null $ip
+     * @return Session
+     */
+    public static function findLastAuth($ip = null)
+    {
+        if ($ip == null) $ip = Client::getIp();
+
+        return static::findFirst(['conditions' => ['ip' => $ip, 'user_id' => 0]]);
     }
 
 }

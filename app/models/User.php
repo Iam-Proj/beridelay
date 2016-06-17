@@ -2,6 +2,7 @@
 
 use BeriDelay\Exceptions\UserException;
 use System\Exceptions\ValidationException;
+use System\Helpers\Captcha;
 use System\Models\Model;
 use System\Traits\SoftDelete;
 use System\Traits\Filters;
@@ -209,6 +210,7 @@ class User extends Model
             'salary' => 'required|in:1,2,3',
             'invite' => 'alpha_num',
             'referral_id' => 'integer',
+            Captcha::$fieldName => 'required|captcha'
         ];
 
         if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
@@ -256,8 +258,9 @@ class User extends Model
     {
         $this->addLogEvent('auth');
 
-        //создаем сессию
-        $session = new Session();
+        //получаем текущую сессию
+        $session = Session::findLastAuth();
+        if (!$session) $session = new Session();
         $session->user_id = $this->id;
         $session->save();
 
