@@ -5,6 +5,7 @@ use System\Traits\SoftDelete;
 use System\Traits\Filters;
 use Carbon\Carbon;
 use Phalcon\Mvc\Model\Query;
+use Phalcon\Db\Column;
 
 /**
  * Модель "Задание"
@@ -40,6 +41,18 @@ class Task extends Model
      * @var Carbon Время завершения задания
      */
     public $finished_at;
+
+    public static $types = [
+        'id' => Column::TYPE_INTEGER,
+        'user_id' => Column::TYPE_INTEGER,
+        'status' => Column::TYPE_INTEGER,
+        'reason' => Column::TYPE_TEXT,
+        'comment' => Column::TYPE_TEXT,
+        'finished_at' => Column::TYPE_TIMESTAMP,
+        'created_at' => Column::TYPE_TIMESTAMP,
+        'updated_at' => Column::TYPE_TIMESTAMP,
+        'deleted_at' => Column::TYPE_TIMESTAMP,
+    ];
 
     public $behaviors = [
         'System\Behaviors\Loggable'

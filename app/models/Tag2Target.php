@@ -1,8 +1,7 @@
 <?php namespace BeriDelay\Models;
 
 use System\Models\Model;
-use BeriDelay\Models\Tag;
-use BeriDelay\Models\Target;
+use Phalcon\Db\Column;
 
 /**
  * Модель связи тега с целью
@@ -21,6 +20,11 @@ class Tag2Target extends Model
      * @var int ID цели
      */
     public $target_id;
+
+    public static $types = [
+        'tag_id' => Column::TYPE_INTEGER,
+        'target_id' => Column::TYPE_INTEGER
+    ];
     
     /**
      * 

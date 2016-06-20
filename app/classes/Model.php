@@ -165,6 +165,12 @@ class Model extends PhalconModel
      * @var array
      */
     protected static $fields = [];
+
+    /**
+     * Типы полей таблицы
+     * @var array
+     */
+    protected static $types = [];
     
     private static $defaultBehaviors = [
         'System\Behaviors\Dates',

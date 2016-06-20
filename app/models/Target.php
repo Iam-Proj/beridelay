@@ -2,9 +2,8 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
-use BeriDelay\Models\Tag;
-use BeriDelay\Models\Tag2Target;
 use System\Traits\Filters;
+use Phalcon\Db\Column;
 
 /**
  * Модель "Цель"
@@ -49,6 +48,21 @@ class Target extends Model
      * @var int Количество завершений цели
      */
     public $finish_count;
+
+    public static $types = [
+        'id' => Column::TYPE_INTEGER,
+        'category_id' => Column::TYPE_INTEGER,
+        'name' => Column::TYPE_VARCHAR,
+        'description' => Column::TYPE_TEXT,
+        'is_hide' => Column::TYPE_INTEGER,
+        'salary' => Column::TYPE_INTEGER,
+        'content_count' => Column::TYPE_INTEGER,
+        'start_count' => Column::TYPE_INTEGER,
+        'finish_count' => Column::TYPE_INTEGER,
+        'created_at' => Column::TYPE_TIMESTAMP,
+        'updated_at' => Column::TYPE_TIMESTAMP,
+        'deleted_at' => Column::TYPE_TIMESTAMP,
+    ];
 
     public $behaviors = [
         'System\Behaviors\Loggable'

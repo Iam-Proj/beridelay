@@ -1,6 +1,7 @@
 <?php namespace BeriDelay\Models;
 
 use System\Models\Model;
+use Phalcon\Db\Column;
 
 /**
  * Модель связи цели с пользователем
@@ -20,13 +21,8 @@ class Target2User extends Model
      */
     public $user_id;
 
-    /**
-     * @var bool Цель уже отображалась пользователю
-     */
-    public $showed;
-
-    /**
-     * @var bool Цель уже выполнялась пользователем
-     */
-    public $started;
+    public static $types = [
+        'user_id' => Column::TYPE_INTEGER,
+        'target_id' => Column::TYPE_INTEGER
+    ];
 }
