@@ -117,7 +117,7 @@ class User extends Model
     /**
      * @var array Поля для вывода
      */
-    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'is_activate', 'is_admin', 'referral'];
+    public static $fields = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'is_activate', 'is_admin', 'referral', 'task'];
 
     public function beforeCreate()
     {
@@ -329,6 +329,14 @@ class User extends Model
 
         $result = parent::toArray($columns);
         if ($columns != null && in_array('referral', $columns) && $this->referral) $result['referral'] = $this->referral->toArray(['id', 'name', 'surname', 'patronim']);
+        if ($columns != null && in_array('task', $columns)) {
+            $task = Task::findFirst([
+                'conditions' => 'user_id = :user_id: and status > 0',
+                'bind' => ['user_id' => $this->id],
+                'order' => 'status asc',
+            ]);
+            if ($task) $result['task'] = $task->toArray();
+        }
 
         return $result;
     }

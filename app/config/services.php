@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Events\Event;
+use Phalcon\Db\Profiler as DbProfiler;
 
 //Устанавливаем системную локаль
 setlocale(LC_TIME, 'ru_RU.UTF-8');
@@ -83,11 +84,18 @@ $di->setShared('db', function () use ($config, $di) {
     $eventsManager = new EventsManager();
 
     $logger = new FileLogger($config->application->logsDir . "debug.log");
+    $profiler = new DbProfiler();
 
     // Слушаем все события базы данных
-    $eventsManager->attach('db', function ($event, $connection) use ($logger) {
+    $eventsManager->attach('db', function ($event, $connection) use ($logger, $profiler) {
         if ($event->getType() == 'beforeQuery') {
-            $logger->log($connection->getSQLStatement(), Logger::INFO);
+            $logger->log($connection->getSQLStatement(), Logger::DEBUG);
+            $profiler->startProfile($connection->getSQLStatement());
+        }
+        if ($event->getType() == 'afterQuery') {
+            $profiler->stopProfile();
+            $profile = $profiler->getLastProfile();
+            $logger->log("Total Elapsed Time: " . $profile->getTotalElapsedSeconds(), Logger::INFO);
         }
     });
 

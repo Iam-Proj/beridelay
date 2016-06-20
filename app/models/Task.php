@@ -71,6 +71,8 @@ class Task extends Model
         'status' => 'in:0,1,2,10,20,30',
     ];
 
+    public static $fields = ['id', 'targets', 'status', 'user_id', 'reason', 'comment', 'finished_at'];
+
     /**
      * Возвращает для текущего задания указанное количество целей
      * @param integer $salary
@@ -79,16 +81,35 @@ class Task extends Model
      */
     public function generate($salary, $count = 3)
     {
-        //Выбираем цели с минимальным количеством стартов, а также еще не просмотренные пользователем
-        $query = new Query(self::getQuery($this->user_id, $salary, $count), $this->getDI());
+        $showedTargets = Target2User::find('user_id = ' . $this->user_id);
+        $target_ids = [];
+        foreach ($showedTargets as $target) {
+            $target_ids[] = $target->target_id;
+            $table = $target->table;
+        }
+
+        // Выбираем цели с минимальным количеством стартов, а также еще не просмотренные пользователем
+        $query = new Query(self::getQuery($salary, $count, $target_ids), $this->getDI());
         $targets = $query->execute();
 
         if (count($targets) < $count) {
-            Target2User::find('user_id = ' . $this->user_id)->delete();
 
-            $query = new Query(self::getQuery($this->user_id, $salary), $this->getDI());
+            // TODO: HACK: PHQL генерирует несколько! запросов удаления (по количеству строк) вместо выполнения одного
+            // $query = new Query("DELETE FROM BeriDelay\Models\Target2User WHERE user_id = " . $this->user_id, $this->getDI());
+            // $query->execute();
+
+            $connection = $this->getDI()->getDb();
+            $table = Target2User::$table;
+            $connection->query("DELETE FROM " . $table . " WHERE user_id = " . $this->user_id);
+
+            $query = new Query(self::getQuery($salary, $count, []), $this->getDI());
             $targets = $query->execute();
         }
+
+        $ids = [];
+        foreach ($targets as $target) $ids[] = (int) $target->target_id;
+
+        $targets = Target::find('id IN (' . implode(',', $ids) . ')');
 
         $result = [];
         /** @var Target $target */
@@ -118,9 +139,9 @@ class Task extends Model
      * @param integer $limit
      * @return string
      */
-    public static function getQuery($user_id, $salary, $limit = 3)
+    public static function getQuery($salary, $count = 3, $target_ids)
     {
-        return "SELECT * 
+        /*return "SELECT *
 FROM BeriDelay\Models\Target
 WHERE id in (
 	SELECT min(id)
@@ -138,7 +159,20 @@ WHERE id in (
 	GROUP BY category_id
 )
 ORDER BY start_count
-LIMIT " . $limit;
+LIMIT " . $limit;*/
+        $notIds = count($target_ids) ? " AND t2.id NOT IN (" . implode(',', $target_ids) . ")" : "";
+        return "
+SELECT min(id) as target_id
+FROM BeriDelay\Models\Target as t1
+WHERE 
+  t1.start_count IN (
+	SELECT min(start_count) 
+	FROM BeriDelay\Models\Target as t2 
+	WHERE t1.category_id = t2.category_id AND t2.salary = " . $salary . $notIds . "
+)
+GROUP BY category_id
+LIMIT " . $count;
+
     }
 
     public static function getFiltersBase($data, $query)
@@ -147,5 +181,19 @@ LIMIT " . $limit;
         if (isset($data['status'])) self::filterValue($query, 'status', $data['status'], [0, 1, 2, 10, 20, 30]);
 
         return $query;
+    }
+
+    public function toArray($columns = null)
+    {
+        if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
+
+        $result = parent::toArray($columns);
+        if ($columns != null && in_array('targets', $columns) && $this->targets) {
+            $result['targets'] = [];
+            /** @var Target $target */
+            foreach ($this->targets as $target) $result['targets'][] = $target->toArray();
+        }
+
+        return $result;
     }
 }

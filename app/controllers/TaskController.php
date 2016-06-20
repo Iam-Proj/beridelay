@@ -43,6 +43,7 @@ class TaskController extends ApiBaseController {
         try {
             $task = new Task();
             $task->user_id = $this->token->user_id;
+            $task->finished_at = Carbon::now()->addWeek();
             $task->save();
 
             $targets = $task->generate($this->token->user->salary);

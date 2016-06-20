@@ -55,17 +55,21 @@ class UsersController extends ApiBaseController
             $token = $this->hasPrivate();
 
             $data = $this->request->getPost();
-            $filters = User::getFilters($data);
-            
-            //если фильтр заполнен
-            if ($filters->getWhere() != null) {
-                if (isset($data['referral_id']) && $data['referral_id'] == $token->user_id) return User::get(['referral_id' => $token->user_id]);
-                if (!$token->user->is_admin) throw new ApiException(ApiException::PARAM_ACCESS);
-                return User::get($data, $filters);
-            } else {
-                $user = $token->user->toArray(['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'referral']);
-                return ['response' => $user];
+
+            if (!$token->user->is_admin) {
+                $data = [];
+                $data['id'] = $token->user_id;
+                if (isset($data['referral_id']) && $data['referral_id'] == $token->user_id)
+                    $data['referral_id'] = $token->user_id;
+                else
+                    $data['id'] = $token->user_id;
+
+                $data['fields'] = ['id', 'name', 'surname', 'patronim', 'email', 'phone', 'age', 'gender', 'city', 'salary', 'referral'];
+
+                return User::get($data);
             }
+
+            return User::get($data);
 
         } catch (BaseException $e) {
             return $this->errorException($e);
