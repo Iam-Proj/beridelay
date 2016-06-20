@@ -212,6 +212,8 @@ class User extends Model
             'referral_id' => 'integer',
             Captcha::$fieldName => 'required|captcha'
         ];
+        
+        if (getenv('ENVIRONMENT') == 'dev') unset($rules[Captcha::$fieldName]);
 
         if (!self::validateData($rules, $data)) throw new ValidationException(self::$validationMessages);
 

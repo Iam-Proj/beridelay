@@ -24,7 +24,7 @@ class AuthController extends ApiBaseController
             //если сессия уже есть, то надо проверить дату последней пробы
             if ($session) {
                 $time = Carbon::createFromTimestamp($session->created_at->sec);
-                if ($time->addHour() > Carbon::now()) {
+                if ($time->addHour() > Carbon::now() and getenv('ENVIRONMENT') != 'dev') {
                     $rules = [Captcha::$fieldName => 'required|captcha'];
                     if (!User::validateData($rules, $this->request->getPost())) throw new ValidationException(User::$validationMessages);
                 } else {
