@@ -10,8 +10,6 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
-use Phalcon\Mvc\Model\MetaData\Strategy\Annotations as StrategyAnnotations;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Mvc\Dispatcher;
@@ -105,17 +103,6 @@ $di->setShared('db', function () use ($config, $di) {
     $connection->setEventsManager($eventsManager);
 
     return $connection;
-});
-
-/**
- * If the configuration specify the use of metadata adapter use it or use memory otherwise
- */
-$di->setShared('modelsMetadata', function () {
-    $metaData = new MetaDataAdapter();
-    // Изменяем стратегию интроспекции метаданных
-    //$metaData->setStrategy(new StrategyAnnotations());
-
-    return $metaData;
 });
 
 /**

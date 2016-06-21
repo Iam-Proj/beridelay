@@ -7,7 +7,6 @@ use System\Models\Model;
 use System\Traits\SoftDelete;
 use System\Traits\Filters;
 use Carbon\Carbon;
-use Phalcon\Db\Column;
 
 /**
  * Модель "Пользователь"
@@ -85,26 +84,6 @@ class User extends Model
      * @var boolean Является ли пользователь активированным
      */
     public $is_activate;
-
-    public static $types = [
-        'id' => Column::TYPE_INTEGER,
-        'email' => Column::TYPE_VARCHAR,
-        'password' => Column::TYPE_VARCHAR,
-        'name' => Column::TYPE_VARCHAR,
-        'surname' => Column::TYPE_VARCHAR,
-        'patronim' => Column::TYPE_VARCHAR,
-        'phone' => Column::TYPE_VARCHAR,
-        'age' => Column::TYPE_INTEGER,
-        'gender' => Column::TYPE_INTEGER,
-        'city' => Column::TYPE_VARCHAR,
-        'salary' => Column::TYPE_INTEGER,
-        'is_admin' => Column::TYPE_INTEGER,
-        'is_activate' => Column::TYPE_INTEGER,
-        'referral_id' => Column::TYPE_INTEGER,
-        'created_at' => Column::TYPE_TIMESTAMP,
-        'updated_at' => Column::TYPE_TIMESTAMP,
-        'deleted_at' => Column::TYPE_TIMESTAMP,
-    ];
 
     private $password_original;
     public $validationExceptions = true;

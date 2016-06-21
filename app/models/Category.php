@@ -2,7 +2,6 @@
 
 use System\Models\Model;
 use System\Traits\SoftDelete;
-use Phalcon\Db\Column;
 
 /**
  * Модель "Категория целей"
@@ -27,11 +26,6 @@ class Category extends Model
      */
     public $is_hide;
 
-    public static $types = [
-        'id'          => Column::TYPE_INTEGER,
-        'category_id' => Column::TYPE_INTEGER,
-    ];
-    
     public $behaviors = [
         'System\Behaviors\Loggable'
     ];

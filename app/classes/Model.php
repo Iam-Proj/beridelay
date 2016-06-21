@@ -4,7 +4,6 @@ use Phalcon\Mvc\Model as PhalconModel;
 use Phalcon\Text;
 use Carbon\Carbon;
 use System\Traits\Validation;
-use Phalcon\Mvc\Model\MetaData;
 
 /**
  * Базовый класс для всех моделей. Предоставляет более удобный интерфейс объявления связей между моделями.
@@ -522,10 +521,6 @@ class Model extends PhalconModel
         if ($columns == null && !empty(static::$fields)) $columns = static::$fields;
 
         return parent::toArray($columns);
-    }
-    
-    public function metaData(){
-        return [ MetaData::MODELS_DATA_TYPES => static::$types ];
     }
     
 }
